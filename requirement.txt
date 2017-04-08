@@ -1,0 +1,22 @@
+qu?n lí b?nh nhân 
+qu?n lí don thu?c
+qu?n lis d?t l?ch
+chu?n doán thu?c
+qu?n lí tài kho?n
+kê toa thu?c
+
+- login,logout
+- d?t l?ch khám
+- nh?c u?ng thu?c
+- chu?n doán b?nh
+- tìm ki?m thu?c thông qua b?nh
+- tìm ki?m ti?m thu?c, thu?c
+- liên h? d?n bác si
+- nh?c l?ch di khám
+
+b?ng
+- lòa
+
+
+1.login,logout
+2.
