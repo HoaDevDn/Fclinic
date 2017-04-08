@@ -19,10 +19,6 @@
             android:icon="@drawable/ic_setting"
             android:title="@string/title_setting"/>
         <item
-            android:id="@+id/nav_alarm"
-            android:icon="@drawable/ic_alarm"
-            android:title="@string/title_datlich"/>
-        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:title="@string/title_logout"/>
