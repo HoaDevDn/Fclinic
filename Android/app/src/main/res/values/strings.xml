@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">capstone</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_tim_lai">Tìm lại</string>
+    <string name="title_tim_nha_thuoc">Tìm nhà thuóc</string>
+    <string name="myAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="google_plus_client">712086950733-d7r7h8mfhdef0b27jotufnrtlvdvhtd5.apps.googleusercontent.com</string>
+    <string name="title_trangchu">Trang Chính</string>
+    <string name="title_thongbao">Thông Báo</string>
+    <string name="title_setting">Tùy Chỉnh</string>
+    <string name="title_datlich">Đặt Lịch</string>
+    <string name="title_logout">Đăng Xuất</string>
+    <string name="title_fclinic">F-Clinic</string>
+
+</resources>
