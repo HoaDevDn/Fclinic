@@ -29,7 +29,7 @@ public class GioiThieuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gioithieu, container, false);
-        mAdapter = new AdapterGioiThieu(getActivity().getSupportFragmentManager());
+        mAdapter = new AdapterGioiThieu(getActivity().getSupportFragmentManager(), getActivity());
         mPager = (ViewPager) view.findViewById(R.id.pager);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mPager.setAdapter(mAdapter);

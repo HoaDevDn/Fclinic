@@ -46,8 +46,11 @@ public class TrangChinhFragment extends Fragment {
                     //    Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    break;
+                   break;
             }
+            BottomNavigationView navigation = (BottomNavigationView) getActivity().findViewById(R.id
+                .navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
             return true;
         }
     };
@@ -60,5 +63,14 @@ public class TrangChinhFragment extends Fragment {
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
                                              @NonNull Fragment fragment, int frameId) {
         fragmentManager.beginTransaction().replace(frameId, fragment).commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BottomNavigationView navigation = (BottomNavigationView) getActivity().findViewById(R.id
+            .navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        addFragment(GioiThieuFragment.newInstance());
     }
 }
