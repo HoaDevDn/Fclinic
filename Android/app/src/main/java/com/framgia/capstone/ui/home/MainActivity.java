@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.ui.timkiem.TimKiemActivity;
 import com.framgia.capstone.ui.trangchinh.TrangChinhFragment;
 import com.framgia.capstone.ui.nhathuoc.NhaThuocFragment;
 import com.framgia.capstone.ui.tuychinh.TuyChinhFragment;
@@ -58,7 +59,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                startActivity(TimKiemActivity.getInstant(this));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

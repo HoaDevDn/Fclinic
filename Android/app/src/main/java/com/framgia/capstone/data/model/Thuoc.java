@@ -24,67 +24,67 @@ public class Thuoc implements Serializable {
         this.mMoTa = mMoTa;
     }
 
-    public String getmMoTa() {
-        return mMoTa;
-    }
-
-    public void setmMoTa(String mMoTa) {
-        this.mMoTa = mMoTa;
-    }
-
-    public int getmMaThuoc() {
+    public int getMaThuoc() {
         return mMaThuoc;
     }
 
-    public void setmMaThuoc(int mMaThuoc) {
-        this.mMaThuoc = mMaThuoc;
+    public void setMaThuoc(int maThuoc) {
+        mMaThuoc = maThuoc;
     }
 
-    public String getmMaLoaiThuoc() {
+    public String getMaLoaiThuoc() {
         return mMaLoaiThuoc;
     }
 
-    public void setmMaLoaiThuoc(String mMaLoaiThuoc) {
-        this.mMaLoaiThuoc = mMaLoaiThuoc;
+    public void setMaLoaiThuoc(String maLoaiThuoc) {
+        mMaLoaiThuoc = maLoaiThuoc;
     }
 
-    public String getmTenThuoc() {
+    public String getTenThuoc() {
         return mTenThuoc;
     }
 
-    public void setmTenThuoc(String mTenThuoc) {
-        this.mTenThuoc = mTenThuoc;
+    public void setTenThuoc(String tenThuoc) {
+        mTenThuoc = tenThuoc;
     }
 
-    public String getmHinhAnh() {
+    public String getHinhAnh() {
         return mHinhAnh;
     }
 
-    public void setmHinhAnh(String mHinhAnh) {
-        this.mHinhAnh = mHinhAnh;
+    public void setHinhAnh(String hinhAnh) {
+        mHinhAnh = hinhAnh;
     }
 
-    public float getmGia() {
+    public float getGia() {
         return mGia;
     }
 
-    public void setmGia(float mGia) {
-        this.mGia = mGia;
+    public void setGia(float gia) {
+        mGia = gia;
     }
 
-    public int getmMaVach() {
+    public int getMaVach() {
         return mMaVach;
     }
 
-    public void setmMaVach(int mMaVach) {
-        this.mMaVach = mMaVach;
+    public void setMaVach(int maVach) {
+        mMaVach = maVach;
     }
 
-    public int getmMaHinh() {
+    public int getMaHinh() {
         return mMaHinh;
     }
 
-    public void setmMaHinh(int mMaHinh) {
-        this.mMaHinh = mMaHinh;
+    public void setMaHinh(int maHinh) {
+        mMaHinh = maHinh;
+    }
+
+    public String getMoTa() {
+        return mMoTa;
+    }
+
+    public void setMoTa(String moTa) {
+        mMoTa = moTa;
     }
 }
