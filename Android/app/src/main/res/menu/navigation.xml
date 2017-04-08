@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_info"
+        android:icon="@drawable/ic_info"
+        android:title="@string/title_gioithieu"/>
+
+    <item
+        android:id="@+id/navigation_datlich"
+        android:icon="@drawable/ic_datlich"
+        android:title="@string/title_datlich_"/>
+
+    <item
+        android:id="@+id/navigation_canhan"
+        android:icon="@drawable/ic_account_den"
+        android:title="@string/title_canhan"/>
+
+</menu>
