@@ -1,53 +1,49 @@
 package com.framgia.capstone.ui.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.framgia.capstone.R;
-import com.framgia.capstone.data.model.Thuoc;
-import com.framgia.capstone.databinding.ItemThuocBinding;
+import com.framgia.capstone.data.model.Benh;
+import com.framgia.capstone.databinding.ItemBenhBinding;
 import java.util.List;
 
 /**
- * Created by Age on 4/8/2017.
+ * Created by Age on 4/9/2017.
  */
 
-public class ThuocAdapter extends RecyclerView.Adapter<ThuocAdapter.ViewHolder> {
+public class BenhAdapter extends RecyclerView.Adapter<BenhAdapter.ViewHolder> {
     private OnItemClickListener mItemClickListener;
-    private List<Thuoc> mList;
+    private List<Benh> mList;
     private LayoutInflater mLayoutInflater;
-    private ItemThuocBinding mDataBinding;
+    private ItemBenhBinding mDataBinding;
     private Context mContext;
 
-    public ThuocAdapter(Context Context, List<Thuoc> list) {
+    public BenhAdapter(Context Context, List<Benh> list) {
         mList = list;
         mContext = Context;
     }
 
-    public void updateData(List<Thuoc> list) {
+    public void updateData(List<Benh> list) {
         mList.clear();
         if (list != null) mList.addAll(list);
         notifyDataSetChanged();
     }
 
-
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BenhAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mLayoutInflater == null) {
             mLayoutInflater = LayoutInflater.from(parent.getContext());
         }
-        mDataBinding = ItemThuocBinding.inflate(mLayoutInflater, parent, false);
-        return new ViewHolder(mDataBinding);
+        mDataBinding = ItemBenhBinding.inflate(mLayoutInflater, parent, false);
+        return new BenhAdapter.ViewHolder(mDataBinding);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Thuoc thuoc = mList.get(position);
-        holder.bindData(thuoc);
+    public void onBindViewHolder(BenhAdapter.ViewHolder holder, int position) {
+        Benh benh = mList.get(position);
+        holder.bindData(benh);
     }
 
     @Override
@@ -60,9 +56,9 @@ public class ThuocAdapter extends RecyclerView.Adapter<ThuocAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ItemThuocBinding mDataBinding;
+        public ItemBenhBinding mDataBinding;
 
-        public ViewHolder(ItemThuocBinding dataBinding) {
+        public ViewHolder(ItemBenhBinding dataBinding) {
             super(dataBinding.getRoot());
             mDataBinding = dataBinding;
             itemView.setOnClickListener(this);
@@ -75,9 +71,9 @@ public class ThuocAdapter extends RecyclerView.Adapter<ThuocAdapter.ViewHolder> 
             }
         }
 
-        public void bindData(Thuoc thuoc) {
-            if (thuoc == null) return;
-            mDataBinding.setItemview(thuoc);
+        public void bindData(Benh benh) {
+            if (benh == null) return;
+            mDataBinding.setItemview(benh);
         }
     }
 }

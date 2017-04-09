@@ -1,6 +1,7 @@
 package com.framgia.capstone.data.resource.remote;
 
 import android.support.annotation.NonNull;
+import com.framgia.capstone.data.model.Benh;
 import com.framgia.capstone.data.model.Thuoc;
 import com.framgia.capstone.data.resource.ThuocDataSource;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ThuocRemoteDataSource implements ThuocDataSource {
     @Override
     public void getThuoc(@NonNull CallBack callback) {
         List<Thuoc> list=new ArrayList<>();
-        list.add(new Thuoc(1,"1","Levothyroxine","http://www.chuatriviemdaitrang.com/wp-content/uploads/2016/08/thuoc-1.jpg","Hormone Thyroid"));
+        list.add(new Thuoc(1,"1","Levothyroxine huy","http://www.chuatriviemdaitrang.com/wp-content/uploads/2016/08/thuoc-1.jpg","Hormone Thyroid"));
         list.add(new Thuoc(2,"2","Memantine","http://www.viemgan.com.vn/js/libs/kcfinder/upload/images/thuoc-gay-hai-cho-gan.jpg","Alzheimers"));
         list.add(new Thuoc(3,"3","Donepezil","http://tamlyhoctoipham.com/uploads/images/luu-y-khi-dung-thuoc-ha-huyet-ap-1.jpg","Alzheimers"));
         list.add(new Thuoc(4,"1","Zolpidem","http://mediplantex.com/Uploads/images/42/2013/12/12/business.jpg","An thần"));
