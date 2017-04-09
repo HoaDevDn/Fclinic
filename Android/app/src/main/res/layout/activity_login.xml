@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabDangNhap"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_blue"
-        app:tabSelectedTextColor="@color/color_white"
-        app:tabTextColor="#a6a6a6"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_blue"
+            android:src="@drawable/logo_noversion"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabDangNhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_blue"
+            app:tabSelectedTextColor="@color/color_white"
+            app:tabTextColor="#a6a6a6"/>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerDangNhap"
