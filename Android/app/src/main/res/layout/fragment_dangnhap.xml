@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <com.framgia.capstone.widge.ClearEditText
+            android:id="@+id/editTenTk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="@string/myAlphaNumeric"
+            android:hint="Tên Tài Khoản"
+            android:inputType="textFilter"
+            android:maxLength="10"
+            android:textColor="@color/colorBlack"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/colorBlack">
+
+        <com.framgia.capstone.widge.PasswordEditText
+            android:id="@+id/editMatKhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mật khẩu"
+            android:maxLength="10"
+            android:textColor="@color/colorBlack"
+            app:useStrike="true"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvQuenMatKhau"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="right"
+        android:text="Quên mật khẩu ?"
+        android:textColor="#a6a6a6"/>
+
+    <Button
+        android:id="@+id/btnDangNhap"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="ĐĂNG NHẬP"
+        android:textColor="#FFFF"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="Hoặc đăng nhập bằng"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDangNhapFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/vienfacebook"
+            android:drawableLeft="@drawable/facebookiconsmall"
+            android:text="Facebook"
+            android:textColor="@color/colorFacebook"/>
+
+        <Button
+            android:id="@+id/btnDangNhapGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/viengoogle"
+            android:drawableLeft="@drawable/googleplussmall"
+            android:text="Google"
+            android:textColor="@color/colorGoogle"/>
+    </LinearLayout>
+</LinearLayout>

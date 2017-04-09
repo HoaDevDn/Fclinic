@@ -27,6 +27,11 @@
         <activity
             android:name=".ui.home.MainActivity"
             android:label="@string/title_fclinic"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,7 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.timkiem.TimKiemActivity"/>
 
         <meta-data
@@ -43,6 +47,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBkjo2uc5s15TCldrs1y_fvz99GP0sUPEM"/>
+<!--
+        <activity android:name=".ui.login.LoginActivity"/>-->
     </application>
 
 </manifest>
