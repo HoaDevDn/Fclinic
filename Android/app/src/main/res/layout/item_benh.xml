@@ -8,7 +8,7 @@
 
         <variable
             name="itemview"
-            type="com.framgia.capstone.data.model.Thuoc"
+            type="com.framgia.capstone.data.model.Benh"
             />
     </data>
 
@@ -45,14 +45,14 @@
                     android:id="@+id/tenThuoc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{itemview.tenThuoc}"
+                    android:text="@{itemview.tenBenh}"
                     />
                 <TextView
                     android:id="@+id/moTa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:text="@{itemview.moTa}"
+                    android:text="@{itemview.trieuChung}"
                     />
             </LinearLayout>
         </LinearLayout>
