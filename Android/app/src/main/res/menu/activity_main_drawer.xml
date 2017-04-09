@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/title_trangchu"/>
+        <item
+            android:id="@+id/nav_timnhathuoc"
+            android:icon="@drawable/ic_nhathuoc"
+            android:title="@string/title_tim_nha_thuoc"/>
+        <item
+            android:id="@+id/nav_noti"
+            android:icon="@drawable/ic_notifications"
+            android:title="@string/title_thongbao"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/title_setting"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/title_logout"/>
+    </group>
+
+</menu>
