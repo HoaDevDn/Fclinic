@@ -17,14 +17,20 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.User;
+import com.framgia.capstone.ui.login.LoginActivity;
 import com.framgia.capstone.ui.timkiem.TimKiemActivity;
 import com.framgia.capstone.ui.trangchinh.TrangChinhFragment;
 import com.framgia.capstone.ui.nhathuoc.NhaThuocFragment;
 import com.framgia.capstone.ui.tuychinh.TuyChinhFragment;
 
+import static com.framgia.capstone.utils.SharedPreferencesUtils.deleteUser;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
+
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
+    private String mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_search:
                 startActivity(TimKiemActivity.getInstant(this));
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -83,6 +88,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_setting:
                 addFragment(new TuyChinhFragment(), R.string.title_setting);
+                break;
+            case R.id.nav_logout:
+                deleteUser(this);
+                startActivity(new Intent(this, LoginActivity.class));
+                this.finish();
                 break;
             default:
                 break;

@@ -1,4 +1,4 @@
-package com.tri.MedicalHandbook;
+package com.framgia.capstone.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
