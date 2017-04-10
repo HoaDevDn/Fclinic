@@ -1,109 +1,76 @@
-package com.framgia.capstone.widge;
+package com.example.duong.android_forder_01.widget.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.EditText;
 
-import com.framgia.capstone.R;
+import com.example.duong.android_forder_01.R;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-/**
- * Created by chaupham on 9/29/2016.
- */
 public class PasswordEditText extends EditText {
-    Drawable eye, eyeStrike;
-    Boolean visible = false; //mac dinh  hien thi password **** de "false"
-    Boolean useStrike = false;
-    Boolean useValidate = false;
-    Drawable drawable;
-    int ALPHA = (int) (255 * .70f);  //set độ đục cho con mắt
-    String MATCHER_PATTERN = "((?=.*\\b).{3,10})"; // (?=.*\d)
-    Pattern pattern;
-    Matcher matcher;
+    private final int ALPHA = (int) (255 * .70f);
+    private Drawable mEye, mEyeStrike;
+    private boolean mVisible;
+    private boolean mUseStrike;
+    private Drawable mDrawable;
 
     public PasswordEditText(Context context) {
         super(context);
-        khoitao(null);
+        start(null);
     }
 
     public PasswordEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        khoitao(attrs);
+        start(attrs);
     }
 
     public PasswordEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        khoitao(attrs);
+        start(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public PasswordEditText(Context context, AttributeSet attrs, int defStyleAttr,
                             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        khoitao(attrs);
+        start(attrs);
     }
 
-    private void khoitao(AttributeSet attrs) {
-        this.pattern = Pattern.compile(MATCHER_PATTERN);
+    private void start(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray array = getContext().getTheme()
                 .obtainStyledAttributes(attrs, R.styleable.PasswordEditText, 0, 0);
-            this.useStrike = array.getBoolean(R.styleable.PasswordEditText_useStrike, false);
-            this.useValidate = array.getBoolean(R.styleable.PasswordEditText_useValidate, false);
+            this.mUseStrike = array.getBoolean(R.styleable.PasswordEditText_useStrike, false);
         }
-        eye = ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_black_24dp).mutate();
-        eyeStrike = ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_off_black_24dp)
-            .mutate();
-        if (this.useValidate) {
-            setOnFocusChangeListener(new OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if (!b) {
-                        String chuoi = getText().toString();
-                        TextInputLayout textInputLayout = (TextInputLayout) view.getParent();
-                        matcher = pattern.matcher(chuoi);
-                        if (!matcher.matches()) {
-                            textInputLayout.setErrorEnabled(true);
-                            textInputLayout.setError("Mật khẩu ít nhất phải 3 kí tự");
-                        } else {
-                            textInputLayout.setErrorEnabled(false);
-                            textInputLayout.setError("");
-                        }
-                    }
-                }
-            });
-        }
-        caidat();
+        mEye = ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_black).mutate();
+        mEyeStrike =
+            ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_off_black).mutate();
+        config();
     }
 
-    private void caidat() {
+    private void config() {
         setInputType(InputType.TYPE_CLASS_TEXT |
-            (visible ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+            (mVisible ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
                 InputType.TYPE_TEXT_VARIATION_PASSWORD));
         Drawable[] drawables = getCompoundDrawables();
-        drawable = useStrike && !visible ? eyeStrike : eye;
-        drawable.setAlpha(ALPHA);
-        setCompoundDrawablesWithIntrinsicBounds(drawables[0], drawables[1], drawable, drawables[3]);
+        mDrawable = mUseStrike && !mVisible ? mEyeStrike : mEye;
+        mDrawable.setAlpha(ALPHA);
+        setCompoundDrawablesWithIntrinsicBounds(drawables[0], drawables[1], mDrawable,
+            drawables[3]);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP &&
-            event.getX() >= (getRight() - drawable.getBounds().width())) {
-            visible = !visible;
-            caidat();
-            invalidate();
+            event.getX() >= (getRight() - mDrawable.getBounds().width())) {
+            mVisible = !mVisible;
+            config();
         }
         return super.onTouchEvent(event);
     }
