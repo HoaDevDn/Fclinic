@@ -32,8 +32,7 @@ public class RestAPI {
             int readedChars = 0;
             while (readedChars != -1) {
                 readedChars = reader.read(buffer);
-                if (readedChars > 0)
-                    sb.append(buffer, 0, readedChars);
+                if (readedChars > 0) sb.append(buffer, 0, readedChars);
             }
             result = sb.toString();
         } catch (UnsupportedEncodingException e) {
@@ -42,10 +41,9 @@ public class RestAPI {
         return result;
     }
 
-
     private String load(String contents) throws IOException {
         URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setConnectTimeout(60000);
         conn.setDoOutput(true);
@@ -62,14 +60,12 @@ public class RestAPI {
         Object finalValue = null;
         if (o.getClass() == String.class) {
             finalValue = o;
-        }
-        else if (Number.class.isInstance(o)) {
+        } else if (Number.class.isInstance(o)) {
             finalValue = String.valueOf(o);
         } else if (Date.class.isInstance(o)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MMM/dd", new Locale("en", "USA"));
-            finalValue = sdf.format((Date)o);
-        }
-        else if (Collection.class.isInstance(o)) {
+            finalValue = sdf.format((Date) o);
+        } else if (Collection.class.isInstance(o)) {
             Collection<?> col = (Collection<?>) o;
             JSONArray jarray = new JSONArray();
             for (Object item : col) {
@@ -94,14 +90,13 @@ public class RestAPI {
                     }
                 }
             }
-
         }
         return finalValue;
     }
 
     public JSONObject ThemTaiKhoan(String TenDangNhap, String MatKhau, String HoTen,
-                                   String NgaySinh, String GioiTinh, String DiaChi, String SDT, String Email,
-                                   String NgayTao) throws Exception {
+            String NgaySinh, String GioiTinh, String DiaChi, String SDT, String Email,
+            String NgayTao) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -127,7 +122,7 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "LayDanhMucThuoc");
         o.put("parameters", p);
         String s = o.toString();
@@ -140,10 +135,10 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "KiemTraDangNhap");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
-        p.put("MatKhau",mapObject(MatKhau));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
+        p.put("MatKhau", mapObject(MatKhau));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -151,17 +146,17 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject TaoBaiDangThuoc(String TenDangNhap, String TieuDe, String NoiDung, String NgayDang) throws
-        Exception {
+    public JSONObject TaoBaiDangThuoc(String TenDangNhap, String TieuDe, String NoiDung,
+            String NgayDang) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "TaoBaiDangThuoc");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
-        p.put("TieuDe",mapObject(TieuDe));
-        p.put("NoiDung",mapObject(NoiDung));
-        p.put("NgayDang",mapObject(NgayDang));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
+        p.put("TieuDe", mapObject(TieuDe));
+        p.put("NoiDung", mapObject(NoiDung));
+        p.put("NgayDang", mapObject(NgayDang));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -173,7 +168,7 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "LayBaiDangThuoc");
         o.put("parameters", p);
         String s = o.toString();
@@ -182,17 +177,17 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject TaoComment(String TenDangNhap, int MaBaiDang, String NoiDung, String NgayComment) throws
-        Exception {
+    public JSONObject TaoComment(String TenDangNhap, int MaBaiDang, String NoiDung,
+            String NgayComment) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "TaoComment");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
-        p.put("MaBaiDang",mapObject(MaBaiDang));
-        p.put("NoiDung",mapObject(NoiDung));
-        p.put("NgayComment",mapObject(NgayComment));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
+        p.put("MaBaiDang", mapObject(MaBaiDang));
+        p.put("NoiDung", mapObject(NoiDung));
+        p.put("NgayComment", mapObject(NgayComment));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -204,9 +199,9 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "DanhSachComment");
-        p.put("MaBaiDang",mapObject(MaBaiDang));
+        p.put("MaBaiDang", mapObject(MaBaiDang));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -218,9 +213,9 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "KiemTraDK");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -232,9 +227,9 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "DanhSachBaiDangCuaUser");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -246,11 +241,11 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "UpdateBaiDang");
-        p.put("MaBaiDang",mapObject(MaBaiDang));
-        p.put("TieuDe",mapObject(TieuDe));
-        p.put("NoiDung",mapObject(NoiDung));
+        p.put("MaBaiDang", mapObject(MaBaiDang));
+        p.put("TieuDe", mapObject(TieuDe));
+        p.put("NoiDung", mapObject(NoiDung));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -262,9 +257,9 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "XoaBaiDang");
-        p.put("MaBaiDang",mapObject(MaBaiDang));
+        p.put("MaBaiDang", mapObject(MaBaiDang));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);

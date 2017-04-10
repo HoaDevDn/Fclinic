@@ -103,6 +103,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
                 saveUser(getActivity(), taiKhoan.getText().toString());
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 startActivity(i);
+                getActivity().finish();
             } else {
                 Toast.makeText(getActivity(), "Sai tên tài khoản hoặc mật khẩu !",
                     Toast.LENGTH_SHORT).show();
