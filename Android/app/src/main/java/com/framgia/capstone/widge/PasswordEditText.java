@@ -1,4 +1,4 @@
-package com.example.duong.android_forder_01.widget.view;
+package com.framgia.capstone.widge;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
-import com.example.duong.android_forder_01.R;
+import com.framgia.capstone.R;
 
 public class PasswordEditText extends EditText {
     private final int ALPHA = (int) (255 * .70f);
@@ -48,9 +48,9 @@ public class PasswordEditText extends EditText {
                 .obtainStyledAttributes(attrs, R.styleable.PasswordEditText, 0, 0);
             this.mUseStrike = array.getBoolean(R.styleable.PasswordEditText_useStrike, false);
         }
-        mEye = ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_black).mutate();
+        mEye = ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_black_24dp).mutate();
         mEyeStrike =
-            ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_off_black).mutate();
+            ContextCompat.getDrawable(getContext(), R.drawable.ic_visibility_off_black_24dp).mutate();
         config();
     }
 

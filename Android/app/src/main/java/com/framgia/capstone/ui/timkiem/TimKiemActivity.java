@@ -21,6 +21,8 @@ import com.framgia.capstone.data.resource.ThuocRepository;
 import com.framgia.capstone.databinding.ActivitySearchBinding;
 import com.framgia.capstone.ui.adapter.BenhAdapter;
 import com.framgia.capstone.ui.adapter.ThuocAdapter;
+import com.framgia.capstone.utils.BaseActivity;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.regex.Pattern;
  * Created by Age on 4/8/2017.
  */
 
-public class TimKiemActivity extends AppCompatActivity
+public class TimKiemActivity extends BaseActivity
         implements TimKiemContract.View, SearchView.OnQueryTextListener {
 
     private TimKiemContract.Presenter mPresenter;

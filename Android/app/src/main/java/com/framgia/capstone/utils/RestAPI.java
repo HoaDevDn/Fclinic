@@ -1,24 +1,24 @@
 /* Day la JSON Services cho Android */
-package com.tri.MedicalHandbook;
+package com.framgia.capstone.utils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.JSONObject;
-import org.json.JSONArray;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class RestAPI {
     private final String urlString = "http://vinh.somee.com/Handler1.ashx";
@@ -99,16 +99,23 @@ public class RestAPI {
         return finalValue;
     }
 
-    public JSONObject ThemTaiKhoan(String TenDangNhap,String MatKhau,String Email,String NgayTao) throws Exception {
+    public JSONObject ThemTaiKhoan(String TenDangNhap, String MatKhau, String HoTen,
+                                   String NgaySinh, String GioiTinh, String DiaChi, String SDT, String Email,
+                                   String NgayTao) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "ThemTaiKhoan");
-        p.put("TenDangNhap",mapObject(TenDangNhap));
-        p.put("MatKhau",mapObject(MatKhau));
-        p.put("Email",mapObject(Email));
-        p.put("NgayTao",mapObject(NgayTao));
+        p.put("TenDangNhap", mapObject(TenDangNhap));
+        p.put("MatKhau", mapObject(MatKhau));
+        p.put("HoTen", mapObject(HoTen));
+        p.put("NgaySinh", mapObject(NgaySinh));
+        p.put("GioiTinh", mapObject(GioiTinh));
+        p.put("DiaChi", mapObject(DiaChi));
+        p.put("SDT", mapObject(SDT));
+        p.put("Email", mapObject(Email));
+        p.put("NgayTao", mapObject(NgayTao));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -129,7 +136,7 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject KiemTraDangNhap(String TenDangNhap,String MatKhau) throws Exception {
+    public JSONObject KiemTraDangNhap(String TenDangNhap, String MatKhau) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -144,7 +151,8 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject TaoBaiDangThuoc(String TenDangNhap,String TieuDe,String NoiDung,String NgayDang) throws Exception {
+    public JSONObject TaoBaiDangThuoc(String TenDangNhap, String TieuDe, String NoiDung, String NgayDang) throws
+        Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -174,7 +182,8 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject TaoComment(String TenDangNhap,int MaBaiDang,String NoiDung,String NgayComment) throws Exception {
+    public JSONObject TaoComment(String TenDangNhap, int MaBaiDang, String NoiDung, String NgayComment) throws
+        Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -233,7 +242,7 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject UpdateBaiDang(int MaBaiDang,String TieuDe,String NoiDung) throws Exception {
+    public JSONObject UpdateBaiDang(int MaBaiDang, String TieuDe, String NoiDung) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
