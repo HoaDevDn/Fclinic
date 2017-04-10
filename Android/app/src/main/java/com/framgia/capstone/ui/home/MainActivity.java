@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity
                 addFragment(new TuyChinhFragment(), R.string.title_setting);
                 break;
             case R.id.nav_logout:
-                deleteUser(this);
                 startActivity(new Intent(this, LoginActivity.class));
+                deleteUser(this);
                 this.finish();
                 break;
             default:
