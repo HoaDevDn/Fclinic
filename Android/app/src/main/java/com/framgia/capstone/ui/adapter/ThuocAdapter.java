@@ -1,12 +1,10 @@
 package com.framgia.capstone.ui.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.Thuoc;
 import com.framgia.capstone.databinding.ItemThuocBinding;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
  */
 
 public class ThuocAdapter extends RecyclerView.Adapter<ThuocAdapter.ViewHolder> {
-    private OnItemClickListener mItemClickListener;
+    private OnItemThuocClickListener mItemClickListener;
     private List<Thuoc> mList;
     private LayoutInflater mLayoutInflater;
     private ItemThuocBinding mDataBinding;
@@ -53,7 +51,7 @@ public class ThuocAdapter extends RecyclerView.Adapter<ThuocAdapter.ViewHolder> 
         return mList == null ? 0 : mList.size();
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+    public void setOnItemClickListener(final OnItemThuocClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
 

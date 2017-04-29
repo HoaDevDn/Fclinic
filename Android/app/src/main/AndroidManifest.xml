@@ -51,6 +51,14 @@
         <activity android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity android:name=".ui.chitietbenh.ChiTietBenh"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".ui.chitietthuoc.ChiTietThuoc"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -11,17 +11,24 @@ public class Thuoc implements Serializable {
     private String mTenThuoc;
     private String mHinhAnh;
     private float mGia;
-    private int mMaVach;
-    private int mMaHinh;
-    private String mMoTa;
+    private String mMaVach;
+    private String mMaHinh;
+    private String mTacDung;
+    private String mChongChiDinh;
+    private String mTenLoaiThuoc;
 
     public Thuoc(int mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
-                 String mMoTa) {
+                 String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, float gia) {
         this.mMaThuoc = mMaThuoc;
         this.mMaLoaiThuoc = mMaLoaiThuoc;
         this.mTenThuoc = mTenThuoc;
         this.mHinhAnh = mHinhAnh;
-        this.mMoTa = mMoTa;
+        mTacDung = mMoTa;
+        mMaVach=maVach;
+        mMaHinh=maHinh;
+        mChongChiDinh=chongChiDinh;
+        mTenLoaiThuoc=tenLoaiThuoc;
+        mGia=gia;
     }
 
     public int getMaThuoc() {
@@ -64,27 +71,43 @@ public class Thuoc implements Serializable {
         mGia = gia;
     }
 
-    public int getMaVach() {
+    public String getMaVach() {
         return mMaVach;
     }
 
-    public void setMaVach(int maVach) {
+    public void setMaVach(String maVach) {
         mMaVach = maVach;
     }
 
-    public int getMaHinh() {
+    public String getMaHinh() {
         return mMaHinh;
     }
 
-    public void setMaHinh(int maHinh) {
+    public void setMaHinh(String maHinh) {
         mMaHinh = maHinh;
     }
 
-    public String getMoTa() {
-        return mMoTa;
+    public String getTacDung() {
+        return mTacDung;
     }
 
-    public void setMoTa(String moTa) {
-        mMoTa = moTa;
+    public void setTacDung(String tacDung) {
+        mTacDung = tacDung;
+    }
+
+    public String getChongChiDinh() {
+        return mChongChiDinh;
+    }
+
+    public void setChongChiDinh(String chongChiDinh) {
+        mChongChiDinh = chongChiDinh;
+    }
+
+    public String getTenLoaiThuoc() {
+        return mTenLoaiThuoc;
+    }
+
+    public void setTenLoaiThuoc(String tenLoaiThuoc) {
+        mTenLoaiThuoc = tenLoaiThuoc;
     }
 }

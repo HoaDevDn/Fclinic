@@ -7,7 +7,8 @@
         <import type="android.view.View"/>
         <variable
             name="isVisible"
-            type="boolean"/>
+            type="boolean"
+            />
         <variable
             name="viewModel"
             type="com.framgia.capstone.ui.timkiem.TimKiemActivity"
@@ -34,7 +35,6 @@
                 android:scrollbars="vertical"
                 android:visibility="@{isVisible ? View.VISIBLE : View.GONE}"
                 app:layoutManager="LinearLayoutManager"
-                app:adapter="@{viewModel.adapter}"
                 />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_benh"
@@ -43,7 +43,6 @@
                 android:scrollbars="vertical"
                 android:visibility="@{isVisible ? View.GONE : View.VISIBLE}"
                 app:layoutManager="LinearLayoutManager"
-                app:adapter="@{viewModel.adapterBenh}"
                 />
         </FrameLayout>
 
