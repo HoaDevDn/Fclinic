@@ -7,12 +7,14 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.Benh;
 import com.framgia.capstone.data.model.Thuoc;
@@ -20,7 +22,11 @@ import com.framgia.capstone.data.resource.BenhRepository;
 import com.framgia.capstone.data.resource.ThuocRepository;
 import com.framgia.capstone.databinding.ActivitySearchBinding;
 import com.framgia.capstone.ui.adapter.BenhAdapter;
+import com.framgia.capstone.ui.adapter.OnItemBenhClickListener;
+import com.framgia.capstone.ui.adapter.OnItemThuocClickListener;
 import com.framgia.capstone.ui.adapter.ThuocAdapter;
+import com.framgia.capstone.ui.chitietbenh.ChiTietBenh;
+import com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc;
 import com.framgia.capstone.utils.BaseActivity;
 
 import java.text.Normalizer;
@@ -37,8 +43,8 @@ public class TimKiemActivity extends BaseActivity
 
     private TimKiemContract.Presenter mPresenter;
     private List<Thuoc> mListTamThuoc = new ArrayList<>();
-    private ObservableField<ThuocAdapter> mAdapterThuoc  = new ObservableField<>();
-    private ObservableField<BenhAdapter> mAdapterBenh  = new ObservableField<>();
+    private ThuocAdapter mAdapterThuoc;
+    private BenhAdapter mAdapterBenh;
     private List<Thuoc> mListThuoc = new ArrayList<>();
     private List<Benh> mListBenh = new ArrayList<>();
     private List<Benh> mListTamBenh = new ArrayList<>();
@@ -56,6 +62,25 @@ public class TimKiemActivity extends BaseActivity
                 DataBindingUtil.setContentView(this, R.layout.activity_search);
         mPresenter = new TimKiemPresenter(this, ThuocRepository.getInstance(this), BenhRepository.getInstance(this));
         binding.setViewModel(this);
+
+        mAdapterThuoc=new ThuocAdapter(this,mListThuoc);
+        binding.recycleThuoc.setAdapter(mAdapterThuoc);
+        mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
+            @Override
+            public void onItemClick(Thuoc thuoc) {
+                startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
+            }
+        });
+
+        mAdapterBenh=new BenhAdapter(this,mListBenh);
+        binding.recycleBenh.setAdapter(mAdapterBenh);
+        mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
+            @Override
+            public void onItemClick(Benh benh) {
+                startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+            }
+        });
+
         ArrayAdapter spinnerAdapter =
                 new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, LoaiTK);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -64,10 +89,10 @@ public class TimKiemActivity extends BaseActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 chitietloaiTK=LoaiTK[position];
-                mAdapterThuoc.set(new ThuocAdapter(getApplication(), mListThuoc));
-                mAdapterThuoc.get().notifyDataSetChanged();
-                mAdapterBenh.set(new BenhAdapter(getApplication(), mListBenh));
-                mAdapterBenh.get().notifyDataSetChanged();
+                mAdapterThuoc=new ThuocAdapter(getApplication(), mListThuoc);
+                mAdapterThuoc.notifyDataSetChanged();
+                mAdapterBenh=new BenhAdapter(getApplication(), mListBenh);
+                mAdapterBenh.notifyDataSetChanged();
                 if(isCheck){
                     binding.setIsVisible(true);
                     isCheck=false;
@@ -83,16 +108,7 @@ public class TimKiemActivity extends BaseActivity
 
             }
         });
-        mAdapterThuoc.set(new ThuocAdapter(this, mListThuoc));
-        mAdapterBenh.set(new BenhAdapter(this, mListBenh));
         mPresenter.start();
-    }
-
-    public ObservableField<ThuocAdapter> getAdapter() {
-        return mAdapterThuoc;
-    }
-    public ObservableField<BenhAdapter> getAdapterBenh() {
-        return mAdapterBenh;
     }
 
     @Override
@@ -131,12 +147,12 @@ public class TimKiemActivity extends BaseActivity
 
     @Override
     public void showThuoc(List<Thuoc> list) {
-        mAdapterThuoc.get().updateData(list);
+        mAdapterThuoc.updateData(list);
     }
 
     @Override
     public void showBenh(List<Benh> list) {
-        mAdapterBenh.get().updateData(list);
+        mAdapterBenh.updateData(list);
     }
 
     @Override
@@ -154,8 +170,8 @@ public class TimKiemActivity extends BaseActivity
                         mListTamThuoc.add(mListThuoc.get(i));
                     }
                 }
-                mAdapterThuoc.set(new ThuocAdapter(this, mListTamThuoc));
-                mAdapterThuoc.get().notifyDataSetChanged();
+                mAdapterThuoc=new ThuocAdapter(this, mListTamThuoc);
+                mAdapterThuoc.notifyDataSetChanged();
                 break;
             case "Tìm kiếm theo triệu chứng":
                 for (int i = 0; i < mListBenh.size(); i++){
@@ -163,8 +179,8 @@ public class TimKiemActivity extends BaseActivity
                         mListTamBenh.add(mListBenh.get(i));
                     }
                 }
-                mAdapterBenh.set(new BenhAdapter(this, mListTamBenh));
-                mAdapterBenh.get().notifyDataSetChanged();
+                mAdapterBenh=new BenhAdapter(this, mListTamBenh);
+                mAdapterBenh.notifyDataSetChanged();
                 break;
             default:
                 break;

@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class BenhAdapter extends RecyclerView.Adapter<BenhAdapter.ViewHolder> {
-    private OnItemClickListener mItemClickListener;
+    private OnItemBenhClickListener mItemClickListener;
     private List<Benh> mList;
     private LayoutInflater mLayoutInflater;
     private ItemBenhBinding mDataBinding;
@@ -51,7 +51,7 @@ public class BenhAdapter extends RecyclerView.Adapter<BenhAdapter.ViewHolder> {
         return mList == null ? 0 : mList.size();
     }
 
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+    public void setOnItemClickListener(final OnItemBenhClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
     }
 

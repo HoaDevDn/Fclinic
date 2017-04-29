@@ -1,10 +1,12 @@
 package com.framgia.capstone.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Age on 4/9/2017.
  */
 
-public class Benh {
+public class Benh implements Serializable {
     private int mMaBenh;
     private String mTenBenh;
     private String mHinhAnh;
