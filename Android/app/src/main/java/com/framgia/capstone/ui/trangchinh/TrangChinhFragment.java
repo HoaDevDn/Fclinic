@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.ui.datlich.DatLichFragment;
 import com.framgia.capstone.ui.gioithieu.GioiThieuFragment;
 
 /**
@@ -40,7 +41,7 @@ public class TrangChinhFragment extends Fragment {
                     addFragment(GioiThieuFragment.newInstance());
                     break;
                 case R.id.navigation_datlich:
-                    //     Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
+                    addFragment(DatLichFragment.newInstance());
                     break;
                 case R.id.navigation_canhan:
                     //    Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
