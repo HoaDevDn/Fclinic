@@ -18,18 +18,17 @@ import java.util.List;
  * Created by tri on 30/04/2017.
  */
 
-public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.LichTrongViewHolder> {
+public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIchDaDatViewholder> {
 
     private List<LichKham> mList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ItemClickListener mClickListener;
+    private LichTrongAdapter.ItemClickListener mClickListener;
 
-    public LichTrongAdapter(Context context, List<LichKham> list, ItemClickListener clickListener) {
+    public LIchDaDatAdapter(Context context, List<LichKham> list) {
         mContext = context;
         mList = list;
         mLayoutInflater = LayoutInflater.from(context);
-        mClickListener = clickListener;
     }
 
     public void updateData(List<LichKham> list) {
@@ -42,13 +41,13 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
     }
 
     @Override
-    public LichTrongViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mLayoutInflater.inflate(R.layout.item_lich_trong, parent, false);
-        return new LichTrongViewHolder(itemView);
+    public LIchDaDatViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = mLayoutInflater.inflate(R.layout.item_lichdadat, parent, false);
+        return new LIchDaDatViewholder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(LichTrongViewHolder holder, int position) {
+    public void onBindViewHolder(LIchDaDatViewholder holder, int position) {
         holder.bindData(mList.get(position));
     }
 
@@ -59,11 +58,9 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
 
     public interface ItemClickListener {
         void onClick(int position);
-
-        void onDangKy(LichKham lichKham);
     }
 
-    public class LichTrongViewHolder extends RecyclerView.ViewHolder
+    public class LIchDaDatViewholder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         @BindView(R.id.text_mota)
         TextView mMoTa;
@@ -71,10 +68,8 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
         TextView mTime;
         @BindView(R.id.text_ngay)
         TextView mNgay;
-        @BindView(R.id.button_dangky)
-        Button mButtonDangKy;
 
-        public LichTrongViewHolder(View itemView) {
+        public LIchDaDatViewholder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
@@ -91,9 +86,5 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
             if (mClickListener != null) mClickListener.onClick(getAdapterPosition());
         }
 
-        @OnClick(R.id.button_dangky)
-        public void onDangKyCLick() {
-            mClickListener.onDangKy(mList.get(getAdapterPosition()));
-        }
     }
 }

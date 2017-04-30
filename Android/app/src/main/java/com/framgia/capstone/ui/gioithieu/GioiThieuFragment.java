@@ -3,38 +3,37 @@ package com.framgia.capstone.ui.gioithieu;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.framgia.capstone.R;
-import com.framgia.capstone.utils.ZoomOutPageTransformer;
-import com.pixelcan.inkpageindicator.InkPageIndicator;
 
 /**
  * Created by tri on 4/8/2017.
  */
 public class GioiThieuFragment extends Fragment {
-    AdapterGioiThieu mAdapter;
-    ViewPager mPager;
-    InkPageIndicator mIndicator;
+    @BindView(R.id.image_anhPK)
+    TextView mAnh;
+    @BindView(R.id.text_tenPK)
+    TextView mTenPK;
+    @BindView(R.id.text_mota)
+    TextView mMoTa;
+    @BindView(R.id.text_diachi)
+    TextView mDiaChi;
+    @BindView(R.id.text_sdt)
+    TextView mSdt;
 
     public static GioiThieuFragment newInstance() {
         return new GioiThieuFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gioithieu, container, false);
-        mAdapter = new AdapterGioiThieu(getActivity().getSupportFragmentManager(), getActivity());
-        mPager = (ViewPager) view.findViewById(R.id.pager);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mPager.setAdapter(mAdapter);
-        mIndicator = (InkPageIndicator) view.findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
+        ButterKnife.bind(getActivity());
         return view;
     }
 }
