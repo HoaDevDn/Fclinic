@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.PhongKham;
 import com.framgia.capstone.data.model.User;
 import com.framgia.capstone.ui.login.LoginActivity;
 import com.framgia.capstone.ui.timkiem.TimKiemActivity;
@@ -26,6 +27,7 @@ import com.framgia.capstone.ui.tuychinh.TuyChinhFragment;
 
 import static com.framgia.capstone.utils.SharedPreferencesUtils.deleteUser;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        PhongKham phongKham=loadPhongKham(this);
+        Toast.makeText(this, phongKham.getDiaChi()+"",Toast.LENGTH_LONG).show();
         addFragment(new TrangChinhFragment(), R.string.title_trangchu);
     }
 

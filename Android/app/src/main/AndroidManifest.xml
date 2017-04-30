@@ -59,6 +59,10 @@
         <activity android:name=".ui.chitietthuoc.ChiTietThuoc"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity android:name=".ui.chonphongkham.ChonPhongKhamActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
