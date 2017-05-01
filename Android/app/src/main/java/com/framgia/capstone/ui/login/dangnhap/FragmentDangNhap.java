@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.framgia.capstone.R;
 import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.home.MainActivity;
@@ -21,11 +20,11 @@ import com.framgia.capstone.utils.NetworkUtils;
 import com.framgia.capstone.utils.RestAPI;
 import com.framgia.capstone.widge.ClearEditText;
 import com.framgia.capstone.widge.PasswordEditText;
-
 import org.json.JSONObject;
 
 import static com.framgia.capstone.R.id.btnDangNhap;
 import static com.framgia.capstone.R.id.editTenTk;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.saveUser;
 
 /**
@@ -41,7 +40,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
     ProgressDialog progressDialog;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dangnhap, container, false);
         taiKhoan = (ClearEditText) view.findViewById(editTenTk);
         matKhau = (PasswordEditText) view.findViewById(R.id.editMatKhau);
@@ -62,7 +61,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
                 new AsyncDangNhap().execute(taikhoan, matkhau);
             } else {
                 Toast.makeText(getActivity(), "Kiểm tra kết nối mạng1...!", Toast.LENGTH_SHORT)
-                    .show();
+                        .show();
             }
         }
     }
@@ -102,12 +101,19 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
             super.onPostExecute(result);
             if (result) {
                 saveUser(getActivity(), taiKhoan.getText().toString());
-                Intent i = new Intent(getActivity(), ChonPhongKhamActivity.class);
-                startActivity(i);
-                getActivity().finish();
+
+                if (loadPhongKham(getActivity()) == null) {
+                    Intent i = new Intent(getActivity(), ChonPhongKhamActivity.class);
+                    startActivity(i);
+                    getActivity().finish();
+                } else {
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
             } else {
                 Toast.makeText(getActivity(), "Sai tên tài khoản hoặc mật khẩu !",
-                    Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();
         }

@@ -30,11 +30,11 @@ public class PagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.item_pager, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.text_pager);
+       // TextView textView = (TextView) view.findViewById(R.id.text_pager);
         ImageView imageView = (ImageView) view.findViewById(R.id.image_pager);
         mTitle = getArguments().getString("abc");
         mHinhAnh = getArguments().getInt("dfg");
-        textView.setText(mTitle);
+ //       textView.setText(mTitle);
         imageView.setImageResource(mHinhAnh);
         return view;
     }

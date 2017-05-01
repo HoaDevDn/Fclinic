@@ -17,7 +17,6 @@ import com.framgia.capstone.ui.home.MainActivity;
 public class LoginActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
-    Button btnDangNhap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

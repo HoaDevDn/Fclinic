@@ -1,16 +1,21 @@
 package com.framgia.capstone.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Age on 4/30/2017.
  */
 
-public class PhongKham {
+public class PhongKham implements Serializable {
     private int mMaPhongKham;
     private String mTenPhongKham;
     private String mMoTa;
     private String mHinhAnh;
     private String mDiaChi;
     private String mSDT;
+
+    public PhongKham() {
+    }
 
     public PhongKham(int maPhongKham, String tenPhongKham, String moTa, String hinhAnh,
             String diaChi, String SDT) {

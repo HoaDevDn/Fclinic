@@ -1,26 +1,21 @@
 package com.framgia.capstone.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.framgia.capstone.R;
 import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.home.MainActivity;
 import com.framgia.capstone.ui.login.LoginActivity;
 
-import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
 
 public class SplashScreen extends Activity {
     public void onAttachedToWindow() {
@@ -63,17 +58,19 @@ public class SplashScreen extends Activity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         SplashScreen.this.finish();
-                    }else if (loadPhongKham(getApplication())==null){
-                        Intent intent = new Intent(SplashScreen.this, ChonPhongKhamActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(intent);
-                        SplashScreen.this.finish();
-                    }
-                    else {
-                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(intent);
-                        SplashScreen.this.finish();
+                    } else {
+                        if (loadPhongKham(getApplication()) == null) {
+                            Intent intent =
+                                    new Intent(SplashScreen.this, ChonPhongKhamActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            SplashScreen.this.finish();
+                        } else {
+                            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            SplashScreen.this.finish();
+                        }
                     }
                 } catch (InterruptedException e) {
                     // do nothing
