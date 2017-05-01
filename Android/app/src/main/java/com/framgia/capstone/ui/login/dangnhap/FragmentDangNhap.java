@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.home.MainActivity;
 import com.framgia.capstone.utils.JSONParser;
 import com.framgia.capstone.utils.NetworkUtils;
@@ -101,7 +102,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
             super.onPostExecute(result);
             if (result) {
                 saveUser(getActivity(), taiKhoan.getText().toString());
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), ChonPhongKhamActivity.class);
                 startActivity(i);
                 getActivity().finish();
             } else {

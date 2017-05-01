@@ -15,10 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.framgia.capstone.R;
+import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.home.MainActivity;
 import com.framgia.capstone.ui.login.LoginActivity;
 
 import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
 
 public class SplashScreen extends Activity {
     public void onAttachedToWindow() {
@@ -61,7 +63,13 @@ public class SplashScreen extends Activity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         SplashScreen.this.finish();
-                    } else {
+                    }else if (loadPhongKham(getApplication())==null){
+                        Intent intent = new Intent(SplashScreen.this, ChonPhongKhamActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        SplashScreen.this.finish();
+                    }
+                    else {
                         Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);

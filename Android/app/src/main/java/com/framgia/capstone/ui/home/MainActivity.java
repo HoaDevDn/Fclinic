@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         PhongKham phongKham=loadPhongKham(this);
-        Toast.makeText(this, phongKham.getDiaChi()+"",Toast.LENGTH_LONG).show();
         addFragment(new TrangChinhFragment(), R.string.title_trangchu);
     }
 

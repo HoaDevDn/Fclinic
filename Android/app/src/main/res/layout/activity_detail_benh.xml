@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:car_view="http://schemas.android.com/tools"
     >
 
     <data>
@@ -16,7 +17,6 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_white"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -25,12 +25,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             >
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -42,7 +42,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white"
                 android:orientation="vertical"
                 >
                 <ImageView
@@ -56,40 +55,75 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@color/color_white"
                     android:orientation="vertical"
                     >
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Triệu Chứng"
-                        android:textColor="@color/color_blue"
-                        android:textSize="17sp"
-                        />
-                    <TextView
+                        android:elevation="5dp"
+                        car_view:cardCornerRadius="5dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="5dp"
+                            >
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Triệu Chứng"
+                                android:textColor="@color/color_blue"
+                                android:textSize="17sp"
+                                />
+                            <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@{viewModel.trieuChung}"
+                            android:textColor="@color/colorBlack"
+                            />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@{viewModel.trieuChung}"
-                        android:textColor="@color/colorBlack"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:text="Cách điều trị"
-                        android:textColor="@color/color_blue"
-                        android:textSize="17sp"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@{viewModel.cachDieuTri}"
-                        android:textColor="@color/colorBlack"
-                        />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:elevation="5dp"
+                        car_view:cardCornerRadius="5dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="5dp"
+                            >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Cách điều trị"
+                            android:textColor="@color/color_blue"
+                            android:textSize="17sp"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@{viewModel.cachDieuTri}"
+                            android:textColor="@color/colorBlack"
+                            />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
