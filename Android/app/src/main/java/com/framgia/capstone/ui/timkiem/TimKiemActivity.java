@@ -51,6 +51,8 @@ public class TimKiemActivity extends BaseActivity
     private String LoaiTK[] = { "Tìm kiếm theo tên thuốc", "Tìm kiếm theo triệu chứng" };
     private String chitietloaiTK;
     private boolean isCheck=true;
+    private ActivitySearchBinding mBinding;
+
     public static Intent getInstant(Context context) {
         return new Intent(context, TimKiemActivity.class);
     }
@@ -58,13 +60,13 @@ public class TimKiemActivity extends BaseActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActivitySearchBinding binding =
+        mBinding=
                 DataBindingUtil.setContentView(this, R.layout.activity_search);
         mPresenter = new TimKiemPresenter(this, ThuocRepository.getInstance(this), BenhRepository.getInstance(this));
-        binding.setViewModel(this);
+        mBinding.setViewModel(this);
 
         mAdapterThuoc=new ThuocAdapter(this,mListThuoc);
-        binding.recycleThuoc.setAdapter(mAdapterThuoc);
+        mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
         mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
             @Override
             public void onItemClick(Thuoc thuoc) {
@@ -73,7 +75,7 @@ public class TimKiemActivity extends BaseActivity
         });
 
         mAdapterBenh=new BenhAdapter(this,mListBenh);
-        binding.recycleBenh.setAdapter(mAdapterBenh);
+        mBinding.recycleBenh.setAdapter(mAdapterBenh);
         mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
             @Override
             public void onItemClick(Benh benh) {
@@ -84,21 +86,37 @@ public class TimKiemActivity extends BaseActivity
         ArrayAdapter spinnerAdapter =
                 new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, LoaiTK);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        binding.spinner.setAdapter(spinnerAdapter);
-        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mBinding.spinner.setAdapter(spinnerAdapter);
+        mBinding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 chitietloaiTK=LoaiTK[position];
                 mAdapterThuoc=new ThuocAdapter(getApplication(), mListThuoc);
                 mAdapterThuoc.notifyDataSetChanged();
+                mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
+                mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
+                    @Override
+                    public void onItemClick(Thuoc thuoc) {
+                        startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
+                    }
+                });
+
                 mAdapterBenh=new BenhAdapter(getApplication(), mListBenh);
                 mAdapterBenh.notifyDataSetChanged();
+                mBinding.recycleBenh.setAdapter(mAdapterBenh);
+                mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
+                    @Override
+                    public void onItemClick(Benh benh) {
+                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                    }
+                });
+
                 if(isCheck){
-                    binding.setIsVisible(true);
+                    mBinding.setIsVisible(true);
                     isCheck=false;
                 }
                 else{
-                    binding.setIsVisible(false);
+                    mBinding.setIsVisible(false);
                     isCheck=true;
                 }
             }
@@ -166,21 +184,35 @@ public class TimKiemActivity extends BaseActivity
         switch (chitietloaiTK){
             case "Tìm kiếm theo tên thuốc":
                 for (int i = 0; i < mListThuoc.size(); i++){
-                    if(mListThuoc.get(i).getTenThuoc().toLowerCase().contains(query.toString().toLowerCase())){
+                    if(mListThuoc.get(i).getTenThuoc().toLowerCase().contains(query.toLowerCase())){
                         mListTamThuoc.add(mListThuoc.get(i));
                     }
                 }
                 mAdapterThuoc=new ThuocAdapter(this, mListTamThuoc);
                 mAdapterThuoc.notifyDataSetChanged();
+                mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
+                mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
+                    @Override
+                    public void onItemClick(Benh benh) {
+                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                    }
+                });
                 break;
             case "Tìm kiếm theo triệu chứng":
                 for (int i = 0; i < mListBenh.size(); i++){
-                    if(removeAccent(mListBenh.get(i).getTrieuChung()).toLowerCase().contains(query.toString().toLowerCase())){
+                    if(removeAccent(mListBenh.get(i).getTrieuChung()).toLowerCase().contains(query.toLowerCase())){
                         mListTamBenh.add(mListBenh.get(i));
                     }
                 }
                 mAdapterBenh=new BenhAdapter(this, mListTamBenh);
                 mAdapterBenh.notifyDataSetChanged();
+                mBinding.recycleBenh.setAdapter(mAdapterBenh);
+                mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
+                    @Override
+                    public void onItemClick(Benh benh) {
+                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                    }
+                });
                 break;
             default:
                 break;
