@@ -16,21 +16,22 @@
 
         <ImageView
             android:id="@+id/image_lich_trong"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_book"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_weight="0.7"
             android:gravity="center_vertical"
             android:orientation="vertical"
             >
 
             <TextView
+                android:textSize="12dp"
                 android:id="@+id/text_mota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,12 +41,14 @@
                 />
 
             <TextView
+                android:textSize="12dp"
                 android:id="@+id/text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
 
             <TextView
+                android:textSize="12dp"
                 android:id="@+id/text_ngay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +56,6 @@
                 />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

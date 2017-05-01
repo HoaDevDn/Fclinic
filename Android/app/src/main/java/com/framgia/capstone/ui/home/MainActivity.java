@@ -3,7 +3,6 @@ package com.framgia.capstone.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,22 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.framgia.capstone.R;
-import com.framgia.capstone.data.model.PhongKham;
-import com.framgia.capstone.data.model.User;
+import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.login.LoginActivity;
+import com.framgia.capstone.ui.nhathuoc.NhaThuocFragment;
 import com.framgia.capstone.ui.timkiem.TimKiemActivity;
 import com.framgia.capstone.ui.trangchinh.TrangChinhFragment;
-import com.framgia.capstone.ui.nhathuoc.NhaThuocFragment;
-import com.framgia.capstone.ui.tuychinh.TuyChinhFragment;
 
+import static com.framgia.capstone.utils.SharedPreferencesUtils.deletePhongKham;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.deleteUser;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
-import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private String mUser;
 
@@ -41,14 +37,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, toolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+        mUser = loadUser(this);
+        Toast.makeText(this, "Xin chào" + " " + mUser, Toast.LENGTH_SHORT).show();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        PhongKham phongKham=loadPhongKham(this);
         addFragment(new TrangChinhFragment(), R.string.title_trangchu);
     }
 
@@ -89,8 +85,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_timnhathuoc:
                 addFragment(new NhaThuocFragment(), R.string.title_tim_nha_thuoc);
                 break;
-            case R.id.nav_setting:
-                addFragment(new TuyChinhFragment(), R.string.title_setting);
+            case R.id.nav_phongkham:
+                startActivity(new Intent(this, ChonPhongKhamActivity.class));
+                deletePhongKham(this);
+                this.finish();
                 break;
             case R.id.nav_logout:
                 startActivity(new Intent(this, LoginActivity.class));
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
-                                             @NonNull Fragment fragment, int frameId) {
+            @NonNull Fragment fragment, int frameId) {
         fragmentManager.beginTransaction().replace(frameId, fragment).commit();
     }
 }

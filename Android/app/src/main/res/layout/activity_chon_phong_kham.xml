@@ -12,69 +12,67 @@
             />
 
     </data>
-
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_white"
+        android:orientation="vertical"
         >
-
-        <android.support.design.widget.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_weight="0.05"
+            android:orientation="vertical"
             >
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
+                android:layout_height="220dp"
+                android:layout_weight="1"
                 />
 
-        </android.support.design.widget.AppBarLayout>
+            <com.pixelcan.inkpageindicator.InkPageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="10dip"
+                app:animationDuration="320"
+                app:currentPageIndicatorColor="@color/color_red"
+                app:dotDiameter="8dp"
+                app:dotGap="8dp"
+                app:pageIndicatorColor="@android:color/darker_gray"
+                />
 
-        <android.support.v4.widget.NestedScrollView
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:orientation="vertical"
             >
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Chọn phòng khám"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chào mừng bạn đến với FClinic"
-                    android:textSize="30sp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/colorBlack"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chọn phòng khám"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="80dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/colorBlack"
-                    android:gravity="center"
-                    />
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layoutManager="LinearLayoutManager"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.design.widget.CoordinatorLayout>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </layout>

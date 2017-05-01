@@ -15,8 +15,8 @@
             android:icon="@drawable/ic_notifications"
             android:title="@string/title_thongbao"/>
         <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_setting"
+            android:id="@+id/nav_phongkham"
+            android:icon="@drawable/ic_pk"
             android:title="@string/title_setting"/>
         <item
             android:id="@+id/nav_logout"
