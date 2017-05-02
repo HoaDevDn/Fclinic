@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
     <data>
@@ -14,37 +15,78 @@
             type="com.framgia.capstone.ui.timkiem.TimKiemActivity"
             />
     </data>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             >
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_thuoc"
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                >
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/color_blue"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    />
+            </android.support.design.widget.AppBarLayout>
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:visibility="@{isVisible ? View.VISIBLE : View.GONE}"
-                app:layoutManager="LinearLayoutManager"
-                />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_benh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:visibility="@{isVisible ? View.GONE : View.VISIBLE}"
-                app:layoutManager="LinearLayoutManager"
-                />
-        </FrameLayout>
-
-    </LinearLayout>
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_thuoc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:visibility="@{isVisible ? View.VISIBLE : View.GONE}"
+                    app:layoutManager="LinearLayoutManager"
+                    />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_benh"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:visibility="@{isVisible ? View.GONE : View.VISIBLE}"
+                    app:layoutManager="LinearLayoutManager"
+                    />
+            </FrameLayout>
+        </LinearLayout>
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:floatingSearch_close_search_on_keyboard_dismiss="false"
+            app:floatingSearch_dimBackground="false"
+            app:floatingSearch_dismissOnOutsideTouch="true"
+            app:floatingSearch_leftActionMode="showHamburger"
+            app:floatingSearch_searchBarMarginLeft="5dp"
+            app:floatingSearch_searchBarMarginRight="5dp"
+            app:floatingSearch_searchBarMarginTop="55dp"
+            app:floatingSearch_searchHint="Tìm kiếm trên F-CLinic"
+            app:floatingSearch_showSearchKey="true"
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            bind:setOnSearchListener="@{viewModel.queryTextListener}"
+            />
+    </RelativeLayout>
 </layout>

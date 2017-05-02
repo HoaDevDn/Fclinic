@@ -39,7 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.timkiem.TimKiemActivity"/>
+        <activity android:name=".ui.timkiem.TimKiemActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
