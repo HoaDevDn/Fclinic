@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.Benh;
 import com.framgia.capstone.data.model.Thuoc;
@@ -60,6 +63,7 @@ public class TimKiemActivity extends BaseActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Tìm kiếm");
         mBinding=
                 DataBindingUtil.setContentView(this, R.layout.activity_search);
         mPresenter = new TimKiemPresenter(this, ThuocRepository.getInstance(this), BenhRepository.getInstance(this));
@@ -126,6 +130,7 @@ public class TimKiemActivity extends BaseActivity
 
             }
         });
+        setUpView();
         mPresenter.start();
     }
 
@@ -152,16 +157,9 @@ public class TimKiemActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(this);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void showThuoc(List<Thuoc> list) {
@@ -222,6 +220,39 @@ public class TimKiemActivity extends BaseActivity
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(temp).replaceAll("");
+    }
+
+    public FloatingSearchView.OnSearchListener getQueryTextListener() {
+        return new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String keyWord) {
+                timkiem(keyWord);
+            }
+        };
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void setUpView() {
+        setSupportActionBar(mBinding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }
