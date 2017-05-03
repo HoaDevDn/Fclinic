@@ -11,15 +11,28 @@ public class CTToaThuoc implements Serializable {
     private int mMaThuoc;
     private String mMoTa;
     private int mSoLuong;
+    private int mStt;
+    private String mTenThuoc;
 
     public CTToaThuoc() {
     }
 
-    public CTToaThuoc(int chiTiet, int maThuoc, String moTa, int soLuong) {
+
+    public CTToaThuoc(int chiTiet, int maThuoc, String moTa, int soLuong, String tenThuoc) {
+
         mChiTiet = chiTiet;
         mMaThuoc = maThuoc;
         mMoTa = moTa;
         mSoLuong = soLuong;
+        mTenThuoc = tenThuoc;
+    }
+
+    public String getTenThuoc() {
+        return mTenThuoc;
+    }
+
+    public void setTenThuoc(String tenThuoc) {
+        mTenThuoc = tenThuoc;
     }
 
     public int getChiTiet() {
@@ -52,5 +65,13 @@ public class CTToaThuoc implements Serializable {
 
     public void setSoLuong(int soLuong) {
         mSoLuong = soLuong;
+    }
+
+    public int getStt() {
+        return mStt;
+    }
+
+    public void setStt(int stt) {
+        mStt = stt;
     }
 }

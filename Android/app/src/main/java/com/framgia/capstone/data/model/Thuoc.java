@@ -16,6 +16,7 @@ public class Thuoc implements Serializable {
     private String mTacDung;
     private String mChongChiDinh;
     private String mTenLoaiThuoc;
+    private int mStt;
 
     public Thuoc(int mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
                  String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, float gia) {
@@ -109,5 +110,13 @@ public class Thuoc implements Serializable {
 
     public void setTenLoaiThuoc(String tenLoaiThuoc) {
         mTenLoaiThuoc = tenLoaiThuoc;
+    }
+
+    public int getStt() {
+        return mStt;
+    }
+
+    public void setStt(int stt) {
+        mStt = stt;
     }
 }

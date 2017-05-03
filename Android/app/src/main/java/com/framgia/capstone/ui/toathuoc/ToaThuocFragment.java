@@ -2,12 +2,16 @@ package com.framgia.capstone.ui.toathuoc;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.ToaThuoc;
 import java.util.ArrayList;
@@ -53,6 +57,16 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
+        addFragment(ChiTietToaThuocFragment.newInstance(mList.get(position)));
+    }
+
+    public void addFragment(Fragment fragment) {
+        addFragmentToActivity(getActivity().getSupportFragmentManager(), fragment,
+                R.id.trang_chinh);
+    }
+
+    public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
+            @NonNull Fragment fragment, int frameId) {
+        fragmentManager.beginTransaction().replace(frameId, fragment).commit();
     }
 }
