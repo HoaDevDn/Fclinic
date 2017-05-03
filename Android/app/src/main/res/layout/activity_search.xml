@@ -85,8 +85,10 @@
             app:floatingSearch_searchBarMarginTop="55dp"
             app:floatingSearch_searchHint="Tìm kiếm trên F-CLinic"
             app:floatingSearch_showSearchKey="true"
+            app:floatingSearch_menu="@menu/menu_search"
             app:floatingSearch_suggestionsListAnimDuration="250"
             bind:setOnSearchListener="@{viewModel.queryTextListener}"
+            bind:setOnMenuItemClickListener="@{viewModel.onItemClickListener}"
             />
     </RelativeLayout>
 </layout>

@@ -3,19 +3,15 @@ package com.framgia.capstone.ui.timkiem;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.framgia.capstone.R;
@@ -30,6 +26,7 @@ import com.framgia.capstone.ui.adapter.OnItemThuocClickListener;
 import com.framgia.capstone.ui.adapter.ThuocAdapter;
 import com.framgia.capstone.ui.chitietbenh.ChiTietBenh;
 import com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc;
+import com.framgia.capstone.ui.timkiemOCR.TimKiemOCR;
 import com.framgia.capstone.utils.BaseActivity;
 
 import java.text.Normalizer;
@@ -156,7 +153,6 @@ public class TimKiemActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
         return true;
     }
 
@@ -232,6 +228,18 @@ public class TimKiemActivity extends BaseActivity
             @Override
             public void onSearchAction(String keyWord) {
                 timkiem(keyWord);
+            }
+        };
+    }
+
+    public FloatingSearchView.OnMenuItemClickListener getOnItemClickListener(){
+        return new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+                if (item.getItemId() == R.id.action_search) {
+                    Intent intent=new Intent(TimKiemActivity.this, TimKiemOCR.class);
+                    startActivity(intent);
+                }
             }
         };
     }
