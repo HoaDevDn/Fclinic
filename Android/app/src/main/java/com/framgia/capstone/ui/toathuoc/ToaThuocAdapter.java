@@ -1,4 +1,4 @@
-package com.framgia.capstone.ui.datlich;
+package com.framgia.capstone.ui.toathuoc;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,27 +9,29 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.framgia.capstone.R;
-import com.framgia.capstone.data.model.LichKham;
+import com.framgia.capstone.data.model.ToaThuoc;
 import java.util.List;
 
 /**
- * Created by tri on 30/04/2017.
+ * Created by tri on 03/05/2017.
  */
 
-public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIchDaDatViewholder> {
+public class ToaThuocAdapter extends RecyclerView.Adapter<ToaThuocAdapter.ToaThuocViewHolder> {
 
-    private List<LichKham> mList;
+    private List<ToaThuoc> mList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private LichTrongAdapter.ItemClickListener mClickListener;
+    private ItemClickListener mClickListener;
 
-    public LIchDaDatAdapter(Context context, List<LichKham> list) {
+    public ToaThuocAdapter(Context context, List<ToaThuoc> list,
+            ItemClickListener itemClickListener) {
         mContext = context;
         mList = list;
         mLayoutInflater = LayoutInflater.from(context);
+        mClickListener = itemClickListener;
     }
 
-    public void updateData(List<LichKham> list) {
+    public void updateData(List<ToaThuoc> list) {
         if (list != null) {
             return;
         }
@@ -39,13 +41,13 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
     }
 
     @Override
-    public LIchDaDatViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mLayoutInflater.inflate(R.layout.item_lichdadat, parent, false);
-        return new LIchDaDatViewholder(itemView);
+    public ToaThuocViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = mLayoutInflater.inflate(R.layout.item_toathuoc, parent, false);
+        return new ToaThuocViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(LIchDaDatViewholder holder, int position) {
+    public void onBindViewHolder(ToaThuocViewHolder holder, int position) {
         holder.bindData(mList.get(position));
     }
 
@@ -58,31 +60,30 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
         void onClick(int position);
     }
 
-    public class LIchDaDatViewholder extends RecyclerView.ViewHolder
+    public class ToaThuocViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+        @BindView(R.id.text_tenToa)
+        TextView mTenToa;
+        @BindView(R.id.text_tenUser)
+        TextView mTenUser;
         @BindView(R.id.text_mota)
-        TextView mMoTa;
-        @BindView(R.id.text_time)
-        TextView mTime;
-        @BindView(R.id.text_ngay)
-        TextView mNgay;
+        TextView mMota;
 
-        public LIchDaDatViewholder(View itemView) {
+        public ToaThuocViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
-        public void bindData(LichKham lichKham) {
-            mMoTa.setText(lichKham.getMota());
-            mTime.setText(lichKham.getTgBatDau() + "-" + lichKham.getTgKetThuc());
-            mNgay.setText(lichKham.getNgay());
+        public void bindData(ToaThuoc toaThuoc) {
+            mMota.setText(toaThuoc.getMoTa());
+            mTenToa.setText(toaThuoc.getTenToa());
+            mTenUser.setText(toaThuoc.getTenUser());
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onClick(getAdapterPosition());
         }
-
     }
 }
