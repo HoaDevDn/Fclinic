@@ -1,9 +1,6 @@
 /* Day la JSON Services cho Android */
 package com.framgia.capstone.utils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +16,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class RestAPI {
     private final String urlString = "http://vinh.somee.com/Handler1.ashx";
@@ -94,9 +93,8 @@ public class RestAPI {
         return finalValue;
     }
 
-    public JSONObject ThemTaiKhoan(String TenDangNhap, String MatKhau, String HoTen,
-            String NgaySinh, String GioiTinh, String DiaChi, String SDT, String Email,
-            String NgayTao) throws Exception {
+    public JSONObject ThemTaiKhoan(String TenDangNhap, String MatKhau, String Email, String NgayTao)
+            throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -104,11 +102,6 @@ public class RestAPI {
         o.put("method", "ThemTaiKhoan");
         p.put("TenDangNhap", mapObject(TenDangNhap));
         p.put("MatKhau", mapObject(MatKhau));
-        p.put("HoTen", mapObject(HoTen));
-        p.put("NgaySinh", mapObject(NgaySinh));
-        p.put("GioiTinh", mapObject(GioiTinh));
-        p.put("DiaChi", mapObject(DiaChi));
-        p.put("SDT", mapObject(SDT));
         p.put("Email", mapObject(Email));
         p.put("NgayTao", mapObject(NgayTao));
         o.put("parameters", p);

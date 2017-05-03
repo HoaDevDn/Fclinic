@@ -29,13 +29,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
             >
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_nha_thuoc2"
+                />
+
             <TextView
+                android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tên phòng khám : "
@@ -64,15 +69,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
             >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_mota"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:text="Mô Tả : "
                 android:textStyle="bold"
                 />
@@ -99,13 +110,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
             >
-
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_diachi5"
+                />
             <TextView
+                android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ : "
@@ -134,13 +149,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
             >
 
+            <ImageView
+                android:src="@drawable/ic_dien_thoai"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                />
+
             <TextView
+                android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số Điên Thoại : "

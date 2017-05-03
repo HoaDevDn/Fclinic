@@ -11,11 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.capstone.R;
-import com.framgia.capstone.data.model.PhongKham;
 import com.framgia.capstone.ui.datlich.DatLichFragment;
 import com.framgia.capstone.ui.gioithieu.GioiThieuFragment;
-
-import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
+import com.framgia.capstone.ui.toathuoc.ToaThuocFragment;
 
 /**
  * Created by tri on 4/7/2017.
@@ -23,7 +21,6 @@ import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
 public class TrangChinhFragment extends Fragment {
     public TrangChinhFragment() {
     }
-
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
@@ -47,7 +44,7 @@ public class TrangChinhFragment extends Fragment {
                             addFragment(DatLichFragment.newInstance());
                             break;
                         case R.id.navigation_canhan:
-                            //    Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
+                            addFragment(ToaThuocFragment.newInstance());
                             break;
                         default:
                             break;
