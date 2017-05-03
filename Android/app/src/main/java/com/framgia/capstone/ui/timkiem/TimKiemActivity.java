@@ -51,7 +51,7 @@ public class TimKiemActivity extends BaseActivity
     private List<Thuoc> mListThuoc = new ArrayList<>();
     private List<Benh> mListBenh = new ArrayList<>();
     private List<Benh> mListTamBenh = new ArrayList<>();
-    private String LoaiTK[] = { "Tìm kiếm theo tên thuốc", "Tìm kiếm theo triệu chứng" };
+    private String LoaiTK[] = { "Tìm kiếm thuốc theo tên", "Tìm bệnh theo triệu chứng" };
     private String chitietloaiTK;
     private boolean isCheck=true;
     private ActivitySearchBinding mBinding;
@@ -180,7 +180,7 @@ public class TimKiemActivity extends BaseActivity
         mListTamThuoc.clear();
         mListTamBenh.clear();
         switch (chitietloaiTK){
-            case "Tìm kiếm theo tên thuốc":
+            case "Tìm kiếm thuốc theo tên":
                 for (int i = 0; i < mListThuoc.size(); i++){
                     if(mListThuoc.get(i).getTenThuoc().toLowerCase().contains(query.toLowerCase())){
                         mListTamThuoc.add(mListThuoc.get(i));
@@ -189,14 +189,14 @@ public class TimKiemActivity extends BaseActivity
                 mAdapterThuoc=new ThuocAdapter(this, mListTamThuoc);
                 mAdapterThuoc.notifyDataSetChanged();
                 mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
-                mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
+                mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
                     @Override
-                    public void onItemClick(Benh benh) {
-                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                    public void onItemClick(Thuoc thuoc) {
+                        startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
                     }
                 });
                 break;
-            case "Tìm kiếm theo triệu chứng":
+            case "Tìm bệnh theo triệu chứng":
                 for (int i = 0; i < mListBenh.size(); i++){
                     if(removeAccent(mListBenh.get(i).getTrieuChung()).toLowerCase().contains(query.toLowerCase())){
                         mListTamBenh.add(mListBenh.get(i));
