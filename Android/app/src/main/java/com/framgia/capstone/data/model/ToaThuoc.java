@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class ToaThuoc implements Serializable {
-    private int mMaToaThuoc;
+    private int mMaToaThuoc;   ss
     private String mTenToa;
     private String mMoTa;
     private int mMaPK;
