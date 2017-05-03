@@ -65,7 +65,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
             @NonNull Fragment fragment, int frameId) {
         fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_right_out)
+                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_top_out)
                 .replace(frameId, fragment)
                 .commit();
     }

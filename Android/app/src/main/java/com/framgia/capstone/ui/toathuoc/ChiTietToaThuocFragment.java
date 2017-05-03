@@ -1,5 +1,6 @@
 package com.framgia.capstone.ui.toathuoc;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
+import com.framgia.capstone.data.model.NhacThuoc;
 import com.framgia.capstone.data.model.ToaThuoc;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ChiTietToaThuocFragment extends Fragment
         implements View.OnClickListener, ChiTietToaThuocAdapter.ItemClickListener {
@@ -26,11 +31,19 @@ public class ChiTietToaThuocFragment extends Fragment
     TextView mTenUser;
     TextView mMota;
 
+    Switch mSwitch;
+
+    SharedPreferences preferences;
+
     private ToaThuoc mToaThuoc;
 
     private RecyclerView mRecyclerView;
     private ChiTietToaThuocAdapter mAdapter;
     private List<CTToaThuoc> mList = new ArrayList<>();
+
+    private RecyclerView mRecyclerViewTime;
+    private List<NhacThuoc> mNhacThuocs = new ArrayList<>();
+    private NhacThuocAdapter mNhacThuocAdapter;
 
     public static ChiTietToaThuocFragment newInstance(ToaThuoc toaThuoc) {
         ChiTietToaThuocFragment fragment = new ChiTietToaThuocFragment();
@@ -50,6 +63,12 @@ public class ChiTietToaThuocFragment extends Fragment
             toaThuoc.setSoLuong(3);
             mList.add(toaThuoc);
         }
+
+        for (int i = 0; i < 2; i++) {
+            NhacThuoc nhacThuoc = new NhacThuoc();
+            nhacThuoc.setTime("10:10 PM");
+            mNhacThuocs.add(nhacThuoc);
+        }
     }
 
     @Override
@@ -67,15 +86,37 @@ public class ChiTietToaThuocFragment extends Fragment
         mTenUser.setText(mToaThuoc.getTenUser() + "");
         mMota.setText(mToaThuoc.getMoTa() + "");
 
+        mSwitch = (Switch) view.findViewById(R.id.switch1);
+
         back = (ImageView) view.findViewById(R.id.image_back);
         back.setOnClickListener(this);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_listThuoc);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_listThuoc);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new ChiTietToaThuocAdapter(getActivity(), mList, this);
         mRecyclerView.setAdapter(mAdapter);
+
+        LinearLayoutManager manager2 = new LinearLayoutManager(getActivity());
+        mRecyclerViewTime = (RecyclerView) view.findViewById(R.id.recycle_time);
+        mRecyclerViewTime.setLayoutManager(manager2);
+        mRecyclerViewTime.setHasFixedSize(true);
+        mNhacThuocAdapter = new NhacThuocAdapter(getActivity(), mNhacThuocs);
+        mRecyclerViewTime.setAdapter(mNhacThuocAdapter);
+
+        
+        preferences = getActivity().getPreferences(MODE_PRIVATE);
+        boolean tgpref = preferences.getBoolean("tgpref", true);  //default is true
+        if (tgpref = true) //if (tgpref) may be enough, not sure
+        {
+            mSwitch.setChecked(true);
+        }
+        else
+        {
+            mSwitch.setChecked(false);
+        }
+
         return view;
     }
 
@@ -83,6 +124,19 @@ public class ChiTietToaThuocFragment extends Fragment
     public void onClick(View v) {
         if (v.getId() == R.id.image_back) {
             addFragment(ToaThuocFragment.newInstance());
+        }
+
+        if((mSwitch.isChecked()))
+        {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("tgpref", true); // value to store
+            editor.commit();
+        }
+        else
+        {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("tgpref", false); // value to store
+            editor.commit();
         }
     }
 
