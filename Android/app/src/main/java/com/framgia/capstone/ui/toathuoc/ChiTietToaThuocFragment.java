@@ -50,7 +50,6 @@ public class ChiTietToaThuocFragment extends Fragment
             toaThuoc.setSoLuong(3);
             mList.add(toaThuoc);
         }
-
     }
 
     @Override
@@ -94,7 +93,10 @@ public class ChiTietToaThuocFragment extends Fragment
 
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
             @NonNull Fragment fragment, int frameId) {
-        fragmentManager.beginTransaction().replace(frameId, fragment).commit();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_bottom_in, R.anim.slide_bottom_out)
+                .replace(frameId, fragment)
+                .commit();
     }
 
     @Override
