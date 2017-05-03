@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -84,6 +85,8 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
             mMoTa.setText(lichKham.getMota());
             mTime.setText(lichKham.getTgBatDau() + "-" + lichKham.getTgKetThuc());
             mNgay.setText(lichKham.getNgay());
+            itemView.startAnimation(AnimationUtils.loadAnimation(mContext.getApplicationContext(),
+                   R.anim.slide_top_out));
         }
 
         @Override

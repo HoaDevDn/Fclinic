@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +80,8 @@ public class ToaThuocAdapter extends RecyclerView.Adapter<ToaThuocAdapter.ToaThu
             mMota.setText(toaThuoc.getMoTa());
             mTenToa.setText(toaThuoc.getTenToa());
             mTenUser.setText(toaThuoc.getTenUser());
+            itemView.startAnimation(AnimationUtils.loadAnimation(mContext.getApplicationContext(),
+                    android.R.anim.slide_in_left));
         }
 
         @Override

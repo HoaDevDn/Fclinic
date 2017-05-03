@@ -1,7 +1,6 @@
 package com.framgia.capstone.ui.toathuoc;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.ToaThuoc;
 import java.util.ArrayList;
@@ -67,6 +64,9 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
 
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
             @NonNull Fragment fragment, int frameId) {
-        fragmentManager.beginTransaction().replace(frameId, fragment).commit();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_right_out)
+                .replace(frameId, fragment)
+                .commit();
     }
 }
