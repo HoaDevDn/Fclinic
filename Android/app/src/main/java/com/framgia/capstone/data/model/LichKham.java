@@ -3,7 +3,7 @@ package com.framgia.capstone.data.model;
 import java.io.Serializable;
 
 /**
- * Created by tri on 30/04/2017.
+ * Created by tri on 03/05/2017.
  */
 
 public class LichKham implements Serializable {
