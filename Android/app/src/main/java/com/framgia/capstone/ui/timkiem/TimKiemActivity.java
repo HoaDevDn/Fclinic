@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.Benh;
 import com.framgia.capstone.data.model.Thuoc;
+import com.framgia.capstone.data.model.ThuocRealm;
 import com.framgia.capstone.data.resource.BenhRepository;
 import com.framgia.capstone.data.resource.ThuocRepository;
 import com.framgia.capstone.databinding.ActivitySearchBinding;
@@ -28,8 +30,8 @@ import com.framgia.capstone.ui.chitietbenh.ChiTietBenh;
 import com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc;
 import com.framgia.capstone.ui.timkiemOCR.TimKiemOCR;
 import com.framgia.capstone.utils.BaseActivity;
-
 import io.realm.Realm;
+import io.realm.RealmResults;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +53,11 @@ public class TimKiemActivity extends BaseActivity
     private List<Benh> mListTamBenh = new ArrayList<>();
     private String LoaiTK[] = { "Tìm kiếm thuốc theo tên", "Tìm bệnh theo triệu chứng" };
     private String chitietloaiTK;
-    private boolean isCheck=true;
+    private boolean isCheck = true;
     private ActivitySearchBinding mBinding;
 
     private Realm mRealm;
+
     public static Intent getInstant(Context context) {
         return new Intent(context, TimKiemActivity.class);
     }
@@ -64,16 +67,32 @@ public class TimKiemActivity extends BaseActivity
         super.onCreate(savedInstanceState);
 
         Realm.init(this);
-        mRealm= Realm.getDefaultInstance();
+        mRealm = Realm.getDefaultInstance();
+
+        Toast.makeText(this,getList().size()+"",Toast.LENGTH_SHORT).show();
+
+        for (ThuocRealm thuocRealm : getList()) {
+
+            Thuoc thuoc = new Thuoc();
+
+        //    thuoc.setMaThuoc(Integer.parseInt(thuocRealm.getMaThuoc()));
+            thuoc.setTenLoaiThuoc(thuocRealm.getTenLoaiThuoc());
+      //      thuoc.setGia(Float.parseFloat(thuocRealm.getGia()));
+            thuoc.setHinhAnh(thuocRealm.getHinhAnh());
+            thuoc.setTenThuoc(thuocRealm.getTenThuoc());
+            thuoc.setTacDung(thuocRealm.getTacDung());
+            mListThuoc.add(thuoc);
+        }
+
 
 
         setTitle("Tìm kiếm");
-        mBinding=
-                DataBindingUtil.setContentView(this, R.layout.activity_search);
-        mPresenter = new TimKiemPresenter(this, ThuocRepository.getInstance(this), BenhRepository.getInstance(this));
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        mPresenter = new TimKiemPresenter(this, ThuocRepository.getInstance(this),
+                BenhRepository.getInstance(this));
         mBinding.setViewModel(this);
 
-        mAdapterThuoc=new ThuocAdapter(this,mListThuoc);
+        mAdapterThuoc = new ThuocAdapter(this, mListThuoc);
         mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
         mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
             @Override
@@ -82,7 +101,7 @@ public class TimKiemActivity extends BaseActivity
             }
         });
 
-        mAdapterBenh=new BenhAdapter(this,mListBenh);
+        mAdapterBenh = new BenhAdapter(this, mListBenh);
         mBinding.recycleBenh.setAdapter(mAdapterBenh);
         mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
             @Override
@@ -91,6 +110,8 @@ public class TimKiemActivity extends BaseActivity
             }
         });
 
+        mAdapterThuoc.updateData(mListThuoc);
+
         ArrayAdapter spinnerAdapter =
                 new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, LoaiTK);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -98,34 +119,35 @@ public class TimKiemActivity extends BaseActivity
         mBinding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                chitietloaiTK=LoaiTK[position];
-                mAdapterThuoc=new ThuocAdapter(getApplication(), mListThuoc);
+                chitietloaiTK = LoaiTK[position];
+                mAdapterThuoc = new ThuocAdapter(getApplication(), mListThuoc);
                 mAdapterThuoc.notifyDataSetChanged();
                 mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
                 mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
                     @Override
                     public void onItemClick(Thuoc thuoc) {
-                        startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
+                        startActivity(
+                                new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
                     }
                 });
 
-                mAdapterBenh=new BenhAdapter(getApplication(), mListBenh);
+                mAdapterBenh = new BenhAdapter(getApplication(), mListBenh);
                 mAdapterBenh.notifyDataSetChanged();
                 mBinding.recycleBenh.setAdapter(mAdapterBenh);
                 mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
                     @Override
                     public void onItemClick(Benh benh) {
-                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                        startActivity(
+                                new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
                     }
                 });
 
-                if(isCheck){
+                if (isCheck) {
                     mBinding.setIsVisible(true);
-                    isCheck=false;
-                }
-                else{
+                    isCheck = false;
+                } else {
                     mBinding.setIsVisible(false);
-                    isCheck=true;
+                    isCheck = true;
                 }
             }
 
@@ -163,7 +185,6 @@ public class TimKiemActivity extends BaseActivity
         return true;
     }
 
-
     @Override
     public void showThuoc(List<Thuoc> list) {
         mAdapterThuoc.updateData(list);
@@ -179,39 +200,45 @@ public class TimKiemActivity extends BaseActivity
 
     }
 
-    public void timkiem(String query){
+    public void timkiem(String query) {
         mListTamThuoc.clear();
         mListTamBenh.clear();
-        switch (chitietloaiTK){
+        switch (chitietloaiTK) {
             case "Tìm kiếm thuốc theo tên":
-                for (int i = 0; i < mListThuoc.size(); i++){
-                    if(mListThuoc.get(i).getTenThuoc().toLowerCase().contains(query.toLowerCase())){
+                for (int i = 0; i < mListThuoc.size(); i++) {
+                    if (mListThuoc.get(i)
+                            .getTenThuoc()
+                            .toLowerCase()
+                            .contains(query.toLowerCase())) {
                         mListTamThuoc.add(mListThuoc.get(i));
                     }
                 }
-                mAdapterThuoc=new ThuocAdapter(this, mListTamThuoc);
+                mAdapterThuoc = new ThuocAdapter(this, mListTamThuoc);
                 mAdapterThuoc.notifyDataSetChanged();
                 mBinding.recycleThuoc.setAdapter(mAdapterThuoc);
                 mAdapterThuoc.setOnItemClickListener(new OnItemThuocClickListener() {
                     @Override
                     public void onItemClick(Thuoc thuoc) {
-                        startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
+                        startActivity(
+                                new Intent(ChiTietThuoc.getThuocIntent(getApplication(), thuoc)));
                     }
                 });
                 break;
             case "Tìm bệnh theo triệu chứng":
-                for (int i = 0; i < mListBenh.size(); i++){
-                    if(removeAccent(mListBenh.get(i).getTrieuChung()).toLowerCase().contains(query.toLowerCase())){
+                for (int i = 0; i < mListBenh.size(); i++) {
+                    if (removeAccent(mListBenh.get(i).getTrieuChung()).toLowerCase()
+                            .contains(query.toLowerCase())) {
                         mListTamBenh.add(mListBenh.get(i));
                     }
                 }
-                mAdapterBenh=new BenhAdapter(this, mListTamBenh);
+                mAdapterBenh = new BenhAdapter(this, mListTamBenh);
                 mAdapterBenh.notifyDataSetChanged();
                 mBinding.recycleBenh.setAdapter(mAdapterBenh);
                 mAdapterBenh.setOnItemClickListener(new OnItemBenhClickListener() {
                     @Override
                     public void onItemClick(Benh benh) {
-                        startActivity(new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
+                        startActivity(
+                                new Intent(ChiTietBenh.getBenhIntent(getApplication(), benh)));
                     }
                 });
                 break;
@@ -219,6 +246,7 @@ public class TimKiemActivity extends BaseActivity
                 break;
         }
     }
+
     public static String removeAccent(String s) {
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -239,12 +267,12 @@ public class TimKiemActivity extends BaseActivity
         };
     }
 
-    public FloatingSearchView.OnMenuItemClickListener getOnItemClickListener(){
+    public FloatingSearchView.OnMenuItemClickListener getOnItemClickListener() {
         return new FloatingSearchView.OnMenuItemClickListener() {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
                 if (item.getItemId() == R.id.action_search) {
-                    Intent intent=new Intent(TimKiemActivity.this, TimKiemOCR.class);
+                    Intent intent = new Intent(TimKiemActivity.this, TimKiemOCR.class);
                     startActivity(intent);
                 }
             }
@@ -270,4 +298,8 @@ public class TimKiemActivity extends BaseActivity
         }
     }
 
+    public RealmResults<ThuocRealm> getList() {
+        RealmResults<ThuocRealm> realms = mRealm.where(ThuocRealm.class).findAll();
+        return realms;
+    }
 }
