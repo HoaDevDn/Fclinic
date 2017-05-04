@@ -25,8 +25,7 @@ public class TimKiemPresenter implements TimKiemContract.Presenter {
 
     @Override
     public void start() {
-        getThuoc();
-        getBenh();
+
     }
 
     @Override

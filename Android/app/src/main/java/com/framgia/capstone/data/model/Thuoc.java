@@ -19,6 +19,9 @@ public class Thuoc implements Serializable {
     private String mTenLoaiThuoc;
     private int mStt;
 
+    public Thuoc() {
+    }
+
     public Thuoc(int mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
                  String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, float gia) {
         this.mMaThuoc = mMaThuoc;
