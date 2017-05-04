@@ -1,17 +1,17 @@
 package com.framgia.capstone.data.model;
 
 import io.realm.RealmObject;
-import java.io.Serializable;
 
 /**
- * Created by tri on 4/7/2017.
+ * Created by tri on 04/05/2017.
  */
-public class Thuoc implements Serializable {
-    private int mMaThuoc;
+
+public class ThuocRealm extends RealmObject {
+    private String mMaThuoc;
     private String mMaLoaiThuoc;
     private String mTenThuoc;
     private String mHinhAnh;
-    private float mGia;
+    private String mGia;
     private String mMaVach;
     private String mMaHinh;
     private String mTacDung;
@@ -19,25 +19,22 @@ public class Thuoc implements Serializable {
     private String mTenLoaiThuoc;
     private int mStt;
 
-    public Thuoc(int mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
-                 String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, float gia) {
-        this.mMaThuoc = mMaThuoc;
-        this.mMaLoaiThuoc = mMaLoaiThuoc;
-        this.mTenThuoc = mTenThuoc;
-        this.mHinhAnh = mHinhAnh;
-        mTacDung = mMoTa;
-        mMaVach=maVach;
-        mMaHinh=maHinh;
-        mChongChiDinh=chongChiDinh;
-        mTenLoaiThuoc=tenLoaiThuoc;
-        mGia=gia;
+    public String getGia() {
+        return mGia;
     }
 
-    public int getMaThuoc() {
+    public void setGia(String gia) {
+        mGia = gia;
+    }
+
+    public ThuocRealm() {
+    }
+
+    public String getMaThuoc() {
         return mMaThuoc;
     }
 
-    public void setMaThuoc(int maThuoc) {
+    public void setMaThuoc(String maThuoc) {
         mMaThuoc = maThuoc;
     }
 
@@ -63,14 +60,6 @@ public class Thuoc implements Serializable {
 
     public void setHinhAnh(String hinhAnh) {
         mHinhAnh = hinhAnh;
-    }
-
-    public float getGia() {
-        return mGia;
-    }
-
-    public void setGia(float gia) {
-        mGia = gia;
     }
 
     public String getMaVach() {

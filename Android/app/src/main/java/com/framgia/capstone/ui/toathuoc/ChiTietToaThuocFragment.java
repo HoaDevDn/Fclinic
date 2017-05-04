@@ -17,7 +17,10 @@ import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
+import com.framgia.capstone.data.model.NhacUongThuoc;
 import com.framgia.capstone.data.model.ToaThuoc;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class ChiTietToaThuocFragment extends Fragment
     TextView mTenUser;
     TextView mMota;
 
+    Realm mRealm;
     Switch mSwitch;
 
     SharedPreferences preferences;
@@ -67,14 +71,20 @@ public class ChiTietToaThuocFragment extends Fragment
         for (int i = 0; i < 2; i++) {
             NhacThuoc nhacThuoc = new NhacThuoc();
             nhacThuoc.setTime("10:10 PM");
+            nhacThuoc.setStatus(1);
+            nhacThuoc.setMatoa(1);
             mNhacThuocs.add(nhacThuoc);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
+
+        Realm.init(getActivity());
+        mRealm= Realm.getDefaultInstance();
 
         mTenToa = (TextView) view.findViewById(R.id.text_tentoathuoc_ct);
         mTenUser = (TextView) view.findViewById(R.id.text_user_ct);
@@ -87,6 +97,7 @@ public class ChiTietToaThuocFragment extends Fragment
         mMota.setText(mToaThuoc.getMoTa() + "");
 
         mSwitch = (Switch) view.findViewById(R.id.switch1);
+        mSwitch.setOnClickListener(this);
 
         back = (ImageView) view.findViewById(R.id.image_back);
         back.setOnClickListener(this);
@@ -105,17 +116,14 @@ public class ChiTietToaThuocFragment extends Fragment
         mNhacThuocAdapter = new NhacThuocAdapter(getActivity(), mNhacThuocs);
         mRecyclerViewTime.setAdapter(mNhacThuocAdapter);
 
-        
-        preferences = getActivity().getPreferences(MODE_PRIVATE);
-        boolean tgpref = preferences.getBoolean("tgpref", true);  //default is true
-        if (tgpref = true) //if (tgpref) may be enough, not sure
+
+
+      /*  if (true)
         {
             mSwitch.setChecked(true);
-        }
-        else
-        {
+        } else {
             mSwitch.setChecked(false);
-        }
+        }*/
 
         return view;
     }
@@ -126,17 +134,13 @@ public class ChiTietToaThuocFragment extends Fragment
             addFragment(ToaThuocFragment.newInstance());
         }
 
-        if((mSwitch.isChecked()))
-        {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("tgpref", true); // value to store
-            editor.commit();
-        }
-        else
-        {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("tgpref", false); // value to store
-            editor.commit();
+        if ((mSwitch.isChecked())) {
+            Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
+
+
         }
     }
 

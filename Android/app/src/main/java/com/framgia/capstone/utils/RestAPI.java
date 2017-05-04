@@ -259,6 +259,19 @@ public class RestAPI {
         result = new JSONObject(r);
         return result;
     }
+
+    public JSONObject LayDanhSachThuoc() throws Exception {
+        JSONObject result = null;
+        JSONObject o = new JSONObject();
+        JSONObject p = new JSONObject();
+        o.put("interface","RestAPI");
+        o.put("method", "LayDanhSachThuoc");
+        o.put("parameters", p);
+        String s = o.toString();
+        String r = load(s);
+        result = new JSONObject(r);
+        return result;
+    }
 }
 
 

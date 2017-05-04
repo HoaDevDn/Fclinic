@@ -1,9 +1,11 @@
 package com.framgia.capstone.ui.home;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -11,15 +13,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.ThuocRealm;
 import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.login.LoginActivity;
 import com.framgia.capstone.ui.nhathuoc.NhaThuocFragment;
 import com.framgia.capstone.ui.timkiem.TimKiemActivity;
 import com.framgia.capstone.ui.trangchinh.TrangChinhFragment;
+import com.framgia.capstone.utils.RestAPI;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import static com.framgia.capstone.utils.SharedPreferencesUtils.deletePhongKham;
 import static com.framgia.capstone.utils.SharedPreferencesUtils.deleteUser;
@@ -29,10 +40,16 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private String mUser;
+    private Realm mRealm;
+    private List<ThuocRealm> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+        mRealm = Realm.getDefaultInstance();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,10 +59,21 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         mUser = loadUser(this);
-        Toast.makeText(this, "Xin chào" + " " + mUser, Toast.LENGTH_SHORT).show();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         addFragment(new TrangChinhFragment(), R.string.title_trangchu);
+
+        Snackbar snackbar =
+                Snackbar.make(findViewById(android.R.id.content), "Xin chào" + " " + mUser,
+                        Snackbar.LENGTH_LONG);
+        snackbar.show();
+
+
+        new AsyncDanhSach().execute();
+
+     //   Toast.makeText(this, getList().size() + "", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -110,5 +138,72 @@ public class MainActivity extends AppCompatActivity
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
             @NonNull Fragment fragment, int frameId) {
         fragmentManager.beginTransaction().replace(frameId, fragment).commit();
+    }
+
+    public class AsyncDanhSach extends AsyncTask<Void, JSONObject, List<ThuocRealm>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            delete();
+        }
+
+        @Override
+        protected List<ThuocRealm> doInBackground(Void... params) {
+            RestAPI api = new RestAPI();
+            try {
+                mList = new ArrayList<>();
+
+                JSONObject jsonObj = api.LayDanhSachThuoc();
+
+                JSONArray jsonArray = jsonObj.getJSONArray("Value");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObj = jsonArray.getJSONObject(i);
+
+                    ThuocRealm thuocRealm = new ThuocRealm();
+
+                    thuocRealm.setTenThuoc(jsonObj.getString("TenThuoc"));
+                    thuocRealm.setMaThuoc(jsonObj.getString("MaThuoc"));
+                    thuocRealm.setHinhAnh(jsonObj.getString("HinhAnh"));
+                    thuocRealm.setTacDung(jsonObj.getString("TacDung"));
+                    thuocRealm.setGia(jsonObj.getString("Gia"));
+                    thuocRealm.setChongChiDinh(jsonObj.getString("ChongChiDinh"));
+
+                    mList.add(thuocRealm);
+
+                }
+            } catch (Exception e) {
+                Log.d("Loi", e.getMessage());
+            }
+            return mList;
+        }
+
+        @Override
+        protected void onPostExecute(final List<ThuocRealm> result) {
+            super.onPostExecute(result);
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(result);
+                }
+            });
+        }
+    }
+
+    public RealmResults<ThuocRealm> getList() {
+        RealmResults<ThuocRealm> realms = mRealm.where(ThuocRealm.class).findAll();
+        return realms;
+    }
+
+    public void delete() {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<ThuocRealm> thuocRealms = realm.where(ThuocRealm.class).findAll();
+                if (thuocRealms.size() != 0) {
+                    thuocRealms.deleteAllFromRealm();
+                }
+            }
+        });
     }
 }

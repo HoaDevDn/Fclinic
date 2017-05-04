@@ -1,29 +1,34 @@
 package com.framgia.capstone.data.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import java.io.Serializable;
 
 /**
  * Created by tri on 03/05/2017.
  */
 
-public class NhacUongThuoc implements Serializable {
-    private int mMaToaThuoc;
+public class NhacUongThuoc extends RealmObject {
+
+    private int mId;
+    private int mMatoa;
     private String mTime;
+    private int mStatus;
 
-    public NhacUongThuoc(int maToaThuoc, String time) {
-        mMaToaThuoc = maToaThuoc;
-        mTime = time;
+    public int getId() {
+        return mId;
     }
 
-    public NhacUongThuoc() {
+    public void setId(int id) {
+        mId = id;
     }
 
-    public int getMaToaThuoc() {
-        return mMaToaThuoc;
+    public int getMatoa() {
+        return mMatoa;
     }
 
-    public void setMaToaThuoc(int maToaThuoc) {
-        mMaToaThuoc = maToaThuoc;
+    public void setMatoa(int matoa) {
+        mMatoa = matoa;
     }
 
     public String getTime() {
@@ -32,5 +37,22 @@ public class NhacUongThuoc implements Serializable {
 
     public void setTime(String time) {
         mTime = time;
+    }
+
+    public NhacUongThuoc(int id, int matoa, String time) {
+        mId = id;
+        mMatoa = matoa;
+        mTime = time;
+    }
+
+    public NhacUongThuoc() {
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(int status) {
+        mStatus = status;
     }
 }

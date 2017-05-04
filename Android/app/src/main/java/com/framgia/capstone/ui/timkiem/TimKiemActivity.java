@@ -29,6 +29,7 @@ import com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc;
 import com.framgia.capstone.ui.timkiemOCR.TimKiemOCR;
 import com.framgia.capstone.utils.BaseActivity;
 
+import io.realm.Realm;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class TimKiemActivity extends BaseActivity
     private boolean isCheck=true;
     private ActivitySearchBinding mBinding;
 
+    private Realm mRealm;
     public static Intent getInstant(Context context) {
         return new Intent(context, TimKiemActivity.class);
     }
@@ -60,6 +62,11 @@ public class TimKiemActivity extends BaseActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+        mRealm= Realm.getDefaultInstance();
+
+
         setTitle("Tìm kiếm");
         mBinding=
                 DataBindingUtil.setContentView(this, R.layout.activity_search);
