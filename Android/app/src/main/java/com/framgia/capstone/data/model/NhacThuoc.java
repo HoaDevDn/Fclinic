@@ -1,15 +1,17 @@
 package com.framgia.capstone.data.model;
 
+import io.realm.RealmObject;
 import java.io.Serializable;
 
 /**
  * Created by tri on 03/05/2017.
  */
 
-public class NhacThuoc implements Serializable {
+public class NhacThuoc extends RealmObject implements Serializable {
     private int mId;
     private int mMatoa;
     private String mTime;
+    private int mStatus;
 
     public int getId() {
         return mId;
@@ -42,5 +44,13 @@ public class NhacThuoc implements Serializable {
     }
 
     public NhacThuoc() {
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(int status) {
+        mStatus = status;
     }
 }
