@@ -19,11 +19,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.PhongKham;
+import com.framgia.capstone.data.model.Thuoc;
+import com.framgia.capstone.ui.adapter.OnItemPhongKhamClickListener;
+import com.framgia.capstone.ui.adapter.OnItemThuocClickListener;
+import com.framgia.capstone.ui.adapter.ThuocAdapter;
+import com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc;
+import com.framgia.capstone.ui.home.MainActivity;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.framgia.capstone.utils.SharedPreferencesUtils.savePhongKham;
 
 /**
  * Created by Age on 5/3/2017.
@@ -38,6 +49,8 @@ public class TimKiemOCR extends AppCompatActivity {
     private static final int REQUEST_WRITE_PERMISSION = 1;
     private static final String SAVED_INSTANCE_URI = "uri";
     private static final String SAVED_INSTANCE_RESULT = "result";
+    private List<Thuoc> mThuocs = new ArrayList<>();
+    private ThuocAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +70,7 @@ public class TimKiemOCR extends AppCompatActivity {
                         String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
             }
         });
+        mAdapter=new ThuocAdapter(this, mThuocs);
     }
 
     @Override
@@ -89,7 +103,16 @@ public class TimKiemOCR extends AppCompatActivity {
                     if (textBlocks.size() == 0) {
                         scanResults.setText("Scan Failed: Found nothing to scan");
                     } else {
-                        scanResults.setText(scanResults.getText() + blocks + "\n");
+                        loadThuoc();
+                        for (int i = 0; i < mThuocs.size(); i++){
+                            if(blocks.toLowerCase().contains(mThuocs.get(i).getTenThuoc().toLowerCase())){
+                                scanResults.setText("Đã tìm thấy "+mThuocs.get(i).getTenThuoc());
+                                startActivity(new Intent(ChiTietThuoc.getThuocIntent(getApplication(), mThuocs.get(i))));
+                            }
+                            else {
+                                scanResults.setText("Không tìm thấy thuốc");
+                            }
+                        }
                     }
                 } else {
                     scanResults.setText("Could not set up the detector!");
@@ -139,5 +162,25 @@ public class TimKiemOCR extends AppCompatActivity {
 
         return BitmapFactory.decodeStream(ctx.getContentResolver()
                 .openInputStream(uri), null, bmOptions);
+    }
+
+    public void loadThuoc(){
+        List<Thuoc> list=new ArrayList<>();
+        list.add(new Thuoc(1,"1","Levothyroxine","http://www.chuatriviemdaitrang.com/wp-content/uploads/2016/08/thuoc-1.jpg","Hormone Thyroid","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(2,"2","Memantine","http://www.viemgan.com.vn/js/libs/kcfinder/upload/images/thuoc-gay-hai-cho-gan.jpg","Alzheimers","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(3,"3","Donepezil","http://tamlyhoctoipham.com/uploads/images/luu-y-khi-dung-thuoc-ha-huyet-ap-1.jpg","Alzheimers","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(4,"1","Zolpidem","http://mediplantex.com/Uploads/images/42/2013/12/12/business.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(5,"2","Eszopiclone","http://thoibaotaichinhvietnam.vn/Pictures102015/nguyenthiphuong-tbtc/thuocngoai.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(6,"2","Temazepam","http://www.yeutretho.vn/files/2015/10/31/14-sai-lam-te-hai-khi-uong-thuoc-khien-benh-them-nang-7.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(7,"3","Ticagrelor","http://thoatvidiadem.net/wp-content/uploads/thuoc-ho-tro-dieu-tri-thoai-hoa-cot-song.jpg","Bệnh tim mạch","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(8,"3","Etonogestrel +","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQFdVNRvDIeMhHyryZXzA1zp1VjtcUkI1on-gwFFaIvFJIzILHi","Biện pháp tránh thai","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(9,"1","Folic Acid","http://giaoduc.net.vn/Uploaded/phamlieu/2013_05_15/luu-y-khi-uong-thuoc-giaoduc.net.vn2.jpg","Bổ sung acid folic","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc(10,"3","Testosterone","http://baohaiphong.com.vn/dataimages/201511/original/images1200436_sleepingpills.jpg","Bổ sung vitamin D","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        updateData(list);
+    }
+
+    public void updateData(List<Thuoc> thuocs) {
+        mThuocs.addAll(thuocs);
+        mAdapter.notifyDataSetChanged();
     }
 }

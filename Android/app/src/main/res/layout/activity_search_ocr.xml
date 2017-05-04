@@ -36,7 +36,8 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteY="38dp"
+        app:layout_constraintHorizontal_bias="0.501"
         />
 
     <ScrollView
@@ -67,7 +68,10 @@
                 android:id="@+id/results_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:textSize="17sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_constraintLeft_creator="1"
