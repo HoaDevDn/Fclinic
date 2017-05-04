@@ -187,7 +187,7 @@ public class TimKiemActivity extends BaseActivity
 
     @Override
     public void showThuoc(List<Thuoc> list) {
-        mAdapterThuoc.updateData(list);
+     //   mAdapterThuoc.updateData(list);
     }
 
     @Override
