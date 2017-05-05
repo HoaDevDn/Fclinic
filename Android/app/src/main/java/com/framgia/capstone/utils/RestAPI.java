@@ -184,8 +184,22 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "LayDanhSachBenh");
+        o.put("parameters", p);
+        String s = o.toString();
+        String r = load(s);
+        result = new JSONObject(r);
+        return result;
+    }
+
+    public JSONObject ListChiTietToaThuoc(int maToaThuoc) throws Exception {
+        JSONObject result = null;
+        JSONObject o = new JSONObject();
+        JSONObject p = new JSONObject();
+        o.put("interface", "RestAPI");
+        o.put("method", "ListChiTietToaThuoc");
+        p.put("maToaThuoc", mapObject(maToaThuoc));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);

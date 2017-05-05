@@ -1,12 +1,14 @@
 package com.framgia.capstone.ui.toathuoc;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +19,14 @@ import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
-import com.framgia.capstone.data.model.NhacThuocRealm;
 import com.framgia.capstone.data.model.ToaThuoc;
+import com.framgia.capstone.utils.RestAPI;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ChiTietToaThuocFragment extends Fragment
         implements View.OnClickListener, ChiTietToaThuocAdapter.ItemClickListener {
@@ -35,13 +39,15 @@ public class ChiTietToaThuocFragment extends Fragment
     Realm mRealm;
     Switch mSwitch;
 
+    private int mMatoa;
+
     SharedPreferences preferences;
 
     private ToaThuoc mToaThuoc;
 
     private RecyclerView mRecyclerView;
     private ChiTietToaThuocAdapter mAdapter;
-    private List<CTToaThuoc> mList = new ArrayList<>();
+    private List<CTToaThuoc> mCTToaThuocs = new ArrayList<>();
 
     private RecyclerView mRecyclerViewTime;
     private List<NhacThuoc> mNhacThuocs = new ArrayList<>();
@@ -58,13 +64,13 @@ public class ChiTietToaThuocFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
             CTToaThuoc toaThuoc = new CTToaThuoc();
             toaThuoc.setTenThuoc("Levothyroxine");
             toaThuoc.setMoTa("Ngày 3 lần, mỗi lần 1 viên");
             toaThuoc.setSoLuong(3);
-            mList.add(toaThuoc);
-        }
+            mCTToaThuocs.add(toaThuoc);
+        }*/
     }
 
     @Override
@@ -73,6 +79,8 @@ public class ChiTietToaThuocFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
         mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
+
+        mMatoa = mToaThuoc.getMaToaThuoc();
 
         Realm.init(getActivity());
         mRealm = Realm.getDefaultInstance();
@@ -103,7 +111,7 @@ public class ChiTietToaThuocFragment extends Fragment
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_listThuoc);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new ChiTietToaThuocAdapter(getActivity(), mList, this);
+        mAdapter = new ChiTietToaThuocAdapter(getActivity(), mCTToaThuocs, this);
         mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager manager2 = new LinearLayoutManager(getActivity());
@@ -113,11 +121,14 @@ public class ChiTietToaThuocFragment extends Fragment
         mNhacThuocAdapter = new NhacThuocAdapter(getActivity(), mNhacThuocs);
         mRecyclerViewTime.setAdapter(mNhacThuocAdapter);
 
+        new AsynListThuoc().execute();
+
        /* mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<NhacThuoc> realms =
-                        mRealm.where(NhacThuoc.class).equalTo("mMatoa", mToaThuoc.getMaToaThuoc()).findAll();
+                        mRealm.where(NhacThuoc.class).equalTo("mMatoa", mToaThuoc.getMaToaThuoc()
+                        ).findAll();
 
                 if (realms.size() == 0) {
                     for (NhacThuoc nhacThuoc : mNhacThuocs) {
@@ -137,7 +148,7 @@ public class ChiTietToaThuocFragment extends Fragment
             }
         });
 
-        Toast.makeText(getActivity(), getList().size() + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getCTToaThuocs().size() + "", Toast.LENGTH_SHORT).show();
 */
 
 
@@ -189,7 +200,53 @@ public class ChiTietToaThuocFragment extends Fragment
         Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
     }
 
-    public RealmResults<NhacThuoc> getList() {
+    public class AsynListThuoc extends AsyncTask<Void, JSONObject, List<CTToaThuoc>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<CTToaThuoc> doInBackground(Void... params) {
+            RestAPI api = new RestAPI();
+            List<CTToaThuoc> list = new ArrayList<>();
+            try {
+                list = new ArrayList<>();
+
+                JSONObject jsonObj = api.ListChiTietToaThuoc(mMatoa);
+
+                JSONArray jsonArray = jsonObj.getJSONArray("Value");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObj = jsonArray.getJSONObject(i);
+
+                    CTToaThuoc toaThuoc = new CTToaThuoc();
+                    toaThuoc.setSoLuong(jsonObj.getString("SoLuong"));
+                    toaThuoc.setMoTa(jsonObj.getString("MoTaCTTT"));
+                    toaThuoc.setTenThuoc(jsonObj.getString("TenThuoc"));
+                    toaThuoc.setMaToa(mMatoa);
+                    list.add(toaThuoc);
+                }
+            } catch (Exception e) {
+                Log.d("Loi", e.getMessage());
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(final List<CTToaThuoc> result) {
+            super.onPostExecute(result);
+            Toast.makeText(getActivity(), result.size() + "", Toast.LENGTH_SHORT).show();
+            updateDataListThuoc(result);
+        }
+    }
+
+    public void updateDataListThuoc(List<CTToaThuoc> toaThuocs) {
+        mCTToaThuocs.addAll(toaThuocs);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public RealmResults<NhacThuoc> getCTToaThuocs() {
         RealmResults<NhacThuoc> realms = mRealm.where(NhacThuoc.class).findAll();
         return realms;
     }

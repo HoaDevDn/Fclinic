@@ -9,9 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.framgia.capstone.R;
-import com.framgia.capstone.data.model.Benh;
 import com.framgia.capstone.data.model.Thuoc;
-import com.framgia.capstone.databinding.ActivityDetailBenhBinding;
 import com.framgia.capstone.databinding.ActivityDetailThuocBinding;
 
 /**
@@ -32,6 +30,7 @@ public class ChiTietThuoc extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_thuoc);
         mThuoc = (Thuoc) getIntent().getSerializableExtra(EXTRA_THUOC);
         setTitle(mThuoc.getTenThuoc());
@@ -58,23 +57,31 @@ public class ChiTietThuoc extends AppCompatActivity {
         }
     }
 
-    public String getHinhAnh(){
+    public String getHinhAnh() {
         return mThuoc.getHinhAnh();
     }
 
-    public String getTacDung(){
+    public String getTacDung() {
         return mThuoc.getTacDung();
     }
 
-    public String getTenLoaiThuoc(){
+    public String getTenLoaiThuoc() {
         return mThuoc.getTenLoaiThuoc();
     }
 
-    public String getChongChiDinh(){
+    public String getMaVach() {
+        return mThuoc.getMaVach();
+    }
+
+    public String getMaHinh() {
+        return mThuoc.getMaHinh();
+    }
+
+    public String getChongChiDinh() {
         return mThuoc.getChongChiDinh();
     }
 
-    public String getGia(){
-        return mThuoc.getGia()+"";
+    public String getGia() {
+        return mThuoc.getGia() + "";
     }
 }

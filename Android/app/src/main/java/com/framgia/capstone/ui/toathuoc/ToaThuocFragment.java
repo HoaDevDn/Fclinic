@@ -1,5 +1,6 @@
 package com.framgia.capstone.ui.toathuoc;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +30,8 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     private List<ToaThuoc> mList = new ArrayList<>();
     private String mUser;
 
+    int mCurCheckPosition;
+
     public ToaThuocFragment() {
     }
 
@@ -39,14 +42,14 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (int i = 0; i < 10; i++) {
+       /* for (int i = 0; i < 10; i++) {
             ToaThuoc toaThuoc = new ToaThuoc();
             toaThuoc.setMaToaThuoc(1);
             toaThuoc.setMoTa("Toa thuốc ho");
             toaThuoc.setTenToa("Thuốc Ho");
             toaThuoc.setTenUser("TMT");
             mList.add(toaThuoc);
-        }
+        }*/
     }
 
     @Override
@@ -63,7 +66,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
         mAdapter = new ToaThuocAdapter(getActivity(), mList, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        //     new AsyncDanhSachToaThuoc().execute();
+        new AsyncDanhSachToaThuoc().execute();
 
         return view;
     }
@@ -88,6 +91,8 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
 
     public class AsyncDanhSachToaThuoc extends AsyncTask<Void, JSONObject, List<ToaThuoc>> {
 
+        ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -111,6 +116,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
                     toaThuoc.setTenToa(jsonObj.getString("TenToaThuoc"));
                     toaThuoc.setTenUser(mUser);
                     toaThuoc.setMoTa(jsonObj.getString("MoTa"));
+
                     list.add(toaThuoc);
                 }
             } catch (Exception e) {
@@ -122,13 +128,12 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
         @Override
         protected void onPostExecute(final List<ToaThuoc> result) {
             super.onPostExecute(result);
-            Toast.makeText(getActivity(), result.size() + "", Toast.LENGTH_SHORT).show();
             updateData(result);
         }
     }
 
     public void updateData(List<ToaThuoc> toaThuocs) {
-        toaThuocs.addAll(toaThuocs);
+        mList.addAll(toaThuocs);
         mAdapter.notifyDataSetChanged();
     }
 }
