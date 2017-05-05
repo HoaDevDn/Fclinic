@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 
 public class Benh implements Serializable {
-    private int mMaBenh;
+    private String mMaBenh;
     private String mTenBenh;
     private String mHinhAnh;
     private String mTrieuChung;
     private String mCachDieuTri;
 
-    public Benh(int maBenh, String tenBenh, String hinhAnh, String trieuChung, String cachDieuTri) {
+    public Benh(String maBenh, String tenBenh, String hinhAnh, String trieuChung, String cachDieuTri) {
         mMaBenh = maBenh;
         mTenBenh = tenBenh;
         mHinhAnh = hinhAnh;
@@ -21,11 +21,11 @@ public class Benh implements Serializable {
         mCachDieuTri = cachDieuTri;
     }
 
-    public int getMaBenh() {
+    public String getMaBenh() {
         return mMaBenh;
     }
 
-    public void setMaBenh(int maBenh) {
+    public void setMaBenh(String maBenh) {
         mMaBenh = maBenh;
     }
 

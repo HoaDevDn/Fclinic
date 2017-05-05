@@ -7,11 +7,11 @@ import java.io.Serializable;
  * Created by tri on 4/7/2017.
  */
 public class Thuoc implements Serializable {
-    private int mMaThuoc;
+    private String mMaThuoc;
     private String mMaLoaiThuoc;
     private String mTenThuoc;
     private String mHinhAnh;
-    private float mGia;
+    private String mGia;
     private String mMaVach;
     private String mMaHinh;
     private String mTacDung;
@@ -22,8 +22,8 @@ public class Thuoc implements Serializable {
     public Thuoc() {
     }
 
-    public Thuoc(int mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
-                 String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, float gia) {
+    public Thuoc(String mMaThuoc, String mMaLoaiThuoc, String mTenThuoc, String mHinhAnh,
+            String mMoTa, String maVach, String maHinh, String chongChiDinh, String tenLoaiThuoc, String gia) {
         this.mMaThuoc = mMaThuoc;
         this.mMaLoaiThuoc = mMaLoaiThuoc;
         this.mTenThuoc = mTenThuoc;
@@ -36,12 +36,20 @@ public class Thuoc implements Serializable {
         mGia=gia;
     }
 
-    public int getMaThuoc() {
+    public String getMaThuoc() {
         return mMaThuoc;
     }
 
-    public void setMaThuoc(int maThuoc) {
+    public void setMaThuoc(String maThuoc) {
         mMaThuoc = maThuoc;
+    }
+
+    public String getGia() {
+        return mGia;
+    }
+
+    public void setGia(String gia) {
+        mGia = gia;
     }
 
     public String getMaLoaiThuoc() {
@@ -66,14 +74,6 @@ public class Thuoc implements Serializable {
 
     public void setHinhAnh(String hinhAnh) {
         mHinhAnh = hinhAnh;
-    }
-
-    public float getGia() {
-        return mGia;
-    }
-
-    public void setGia(float gia) {
-        mGia = gia;
     }
 
     public String getMaVach() {
