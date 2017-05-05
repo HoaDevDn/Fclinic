@@ -1,6 +1,8 @@
 package com.framgia.capstone.data.model;
 
-public class NhaThuoc {
+import io.realm.RealmObject;
+
+public class NhaThuoc extends RealmObject {
     private String mTenNhaThuoc;
     private String mDiaChi;
     private String mLatitude;

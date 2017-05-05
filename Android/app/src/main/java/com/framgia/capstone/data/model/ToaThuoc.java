@@ -11,21 +11,11 @@ public class ToaThuoc implements Serializable {
     private int mMaToaThuoc;
     private String mTenToa;
     private String mMoTa;
-    private int mMaPK;
     private String mChiTiet;
     private String mTenUser;
     private List<CTToaThuoc> mCTToaThuocList;
 
-    public ToaThuoc(int maToaThuoc, String tenToa, String moTa, int maPK, String chiTiet,
-            String tenUser, List<CTToaThuoc> CTToaThuocList) {
-        mMaToaThuoc = maToaThuoc;
-        mTenToa = tenToa;
-        mMoTa = moTa;
-        mMaPK = maPK;
-        mChiTiet = chiTiet;
-        mTenUser = tenUser;
-        mCTToaThuocList = CTToaThuocList;
-    }
+
 
     public String getTenUser() {
         return mTenUser;
@@ -60,14 +50,6 @@ public class ToaThuoc implements Serializable {
 
     public void setMoTa(String moTa) {
         mMoTa = moTa;
-    }
-
-    public int getMaPK() {
-        return mMaPK;
-    }
-
-    public void setMaPK(int maPK) {
-        mMaPK = maPK;
     }
 
     public String getChiTiet() {

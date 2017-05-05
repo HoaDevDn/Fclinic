@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.BenhRealm;
 import com.framgia.capstone.data.model.ThuocRealm;
 import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.login.LoginActivity;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
         new AsyncDanhSach().execute();
 
-     //   Toast.makeText(this, getList().size() + "", Toast.LENGTH_SHORT).show();
+        new AsyncDanhSachBenh().execute();
 
     }
 
@@ -190,9 +191,54 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public RealmResults<ThuocRealm> getList() {
-        RealmResults<ThuocRealm> realms = mRealm.where(ThuocRealm.class).findAll();
-        return realms;
+    public class AsyncDanhSachBenh extends AsyncTask<Void, JSONObject, List<BenhRealm>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            deleteBenh();
+        }
+
+        @Override
+        protected List<BenhRealm> doInBackground(Void... params) {
+            RestAPI api = new RestAPI();
+
+            List<BenhRealm> benhRealms = new ArrayList<>();
+            try {
+                benhRealms = new ArrayList<>();
+
+                JSONObject jsonObj = api.LayDanhSachBenh();
+
+                JSONArray jsonArray = jsonObj.getJSONArray("Value");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObj = jsonArray.getJSONObject(i);
+
+                    BenhRealm benhRealm = new BenhRealm();
+                    benhRealm.setMaBenh(jsonObj.getString("MaBenh"));
+                    benhRealm.setHinhAnh(jsonObj.getString("HinhAnh"));
+                    benhRealm.setCachDieuTri(jsonObj.getString("CachDieuTri"));
+                    benhRealm.setTrieuChung(jsonObj.getString("TrieuChung"));
+                    benhRealm.setTenBenh(jsonObj.getString("TenBenh"));
+
+                    benhRealms.add(benhRealm);
+
+                }
+            } catch (Exception e) {
+                Log.d("Loi", e.getMessage());
+            }
+            return benhRealms;
+        }
+
+        @Override
+        protected void onPostExecute(final List<BenhRealm> result) {
+            super.onPostExecute(result);
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(result);
+                }
+            });
+        }
     }
 
     public void delete() {
@@ -200,6 +246,19 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void execute(Realm realm) {
                 RealmResults<ThuocRealm> thuocRealms = realm.where(ThuocRealm.class).findAll();
+                if (thuocRealms.size() != 0) {
+                    thuocRealms.deleteAllFromRealm();
+                }
+            }
+        });
+    }
+
+
+    public void deleteBenh() {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<BenhRealm> thuocRealms = realm.where(BenhRealm.class).findAll();
                 if (thuocRealms.size() != 0) {
                     thuocRealms.deleteAllFromRealm();
                 }

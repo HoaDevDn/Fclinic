@@ -17,14 +17,12 @@ import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
-import com.framgia.capstone.data.model.NhacUongThuoc;
+import com.framgia.capstone.data.model.NhacThuocRealm;
 import com.framgia.capstone.data.model.ToaThuoc;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ChiTietToaThuocFragment extends Fragment
         implements View.OnClickListener, ChiTietToaThuocAdapter.ItemClickListener {
@@ -67,15 +65,6 @@ public class ChiTietToaThuocFragment extends Fragment
             toaThuoc.setSoLuong(3);
             mList.add(toaThuoc);
         }
-
-        for (int i = 0; i < 2; i++) {
-            NhacThuoc nhacThuoc = new NhacThuoc();
-            nhacThuoc.setTime("10:10 PM");
-            nhacThuoc.setStatus(1);
-            nhacThuoc.setMatoa(1);
-            mNhacThuocs.add(nhacThuoc);
-        }
-
     }
 
     @Override
@@ -83,14 +72,22 @@ public class ChiTietToaThuocFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
+        mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
+
         Realm.init(getActivity());
-        mRealm= Realm.getDefaultInstance();
+        mRealm = Realm.getDefaultInstance();
+
+        for (int i = 0; i < 2; i++) {
+            NhacThuoc nhacThuoc = new NhacThuoc();
+            nhacThuoc.setTime("10:10 PM" + " " + i);
+            nhacThuoc.setId(1 + i);
+            nhacThuoc.setMatoa(mToaThuoc.getMaToaThuoc());
+            mNhacThuocs.add(nhacThuoc);
+        }
 
         mTenToa = (TextView) view.findViewById(R.id.text_tentoathuoc_ct);
         mTenUser = (TextView) view.findViewById(R.id.text_user_ct);
         mMota = (TextView) view.findViewById(R.id.text_mota_ct);
-
-        mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
 
         mTenToa.setText(mToaThuoc.getTenToa() + "");
         mTenUser.setText(mToaThuoc.getTenUser() + "");
@@ -116,6 +113,32 @@ public class ChiTietToaThuocFragment extends Fragment
         mNhacThuocAdapter = new NhacThuocAdapter(getActivity(), mNhacThuocs);
         mRecyclerViewTime.setAdapter(mNhacThuocAdapter);
 
+       /* mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<NhacThuoc> realms =
+                        mRealm.where(NhacThuoc.class).equalTo("mMatoa", mToaThuoc.getMaToaThuoc()).findAll();
+
+                if (realms.size() == 0) {
+                    for (NhacThuoc nhacThuoc : mNhacThuocs) {
+                        nhacThuoc.setStatus(1);
+                        realm.insertOrUpdate(nhacThuoc);
+                    }
+                } else {
+                    for (NhacThuoc nhacThuoc : mNhacThuocs) {
+                        for (NhacThuoc thuoc : realms) {
+                            if (thuoc.getId() != nhacThuoc.getId()) {
+                                nhacThuoc.setStatus(1);
+                                realm.insertOrUpdate(nhacThuoc);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        Toast.makeText(getActivity(), getList().size() + "", Toast.LENGTH_SHORT).show();
+*/
 
 
       /*  if (true)
@@ -137,10 +160,14 @@ public class ChiTietToaThuocFragment extends Fragment
         if ((mSwitch.isChecked())) {
             Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
 
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+                }
+            });
         } else {
             Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
-
-
         }
     }
 
@@ -160,5 +187,10 @@ public class ChiTietToaThuocFragment extends Fragment
     @Override
     public void onClick(int position) {
         Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
+    }
+
+    public RealmResults<NhacThuoc> getList() {
+        RealmResults<NhacThuoc> realms = mRealm.where(NhacThuoc.class).findAll();
+        return realms;
     }
 }
