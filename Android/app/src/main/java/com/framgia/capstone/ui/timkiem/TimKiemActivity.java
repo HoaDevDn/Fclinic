@@ -17,6 +17,7 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.Benh;
+import com.framgia.capstone.data.model.BenhRealm;
 import com.framgia.capstone.data.model.Thuoc;
 import com.framgia.capstone.data.model.ThuocRealm;
 import com.framgia.capstone.data.resource.BenhRepository;
@@ -68,23 +69,6 @@ public class TimKiemActivity extends BaseActivity
 
         Realm.init(this);
         mRealm = Realm.getDefaultInstance();
-
-        Toast.makeText(this,getList().size()+"",Toast.LENGTH_SHORT).show();
-
-        for (ThuocRealm thuocRealm : getList()) {
-
-            Thuoc thuoc = new Thuoc();
-
-        //    thuoc.setMaThuoc(Integer.parseInt(thuocRealm.getMaThuoc()));
-            thuoc.setTenLoaiThuoc(thuocRealm.getTenLoaiThuoc());
-      //      thuoc.setGia(Float.parseFloat(thuocRealm.getGia()));
-            thuoc.setHinhAnh(thuocRealm.getHinhAnh());
-            thuoc.setTenThuoc(thuocRealm.getTenThuoc());
-            thuoc.setTacDung(thuocRealm.getTacDung());
-            mListThuoc.add(thuoc);
-        }
-
-
 
         setTitle("Tìm kiếm");
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
@@ -158,6 +142,8 @@ public class TimKiemActivity extends BaseActivity
         });
         setUpView();
         mPresenter.start();
+        loadListThuoc(getListThuoc());
+        loadListBenh(getListBenh());
     }
 
     @Override
@@ -298,8 +284,41 @@ public class TimKiemActivity extends BaseActivity
         }
     }
 
-    public RealmResults<ThuocRealm> getList() {
+    public RealmResults<ThuocRealm> getListThuoc() {
         RealmResults<ThuocRealm> realms = mRealm.where(ThuocRealm.class).findAll();
         return realms;
+    }
+
+    public RealmResults<BenhRealm> getListBenh() {
+        RealmResults<BenhRealm> realms = mRealm.where(BenhRealm.class).findAll();
+        return realms;
+    }
+
+    public void loadListThuoc(List<ThuocRealm> thuocRealms) {
+        if (thuocRealms == null) {
+            return;
+        }
+        List<Thuoc> list = new ArrayList<>();
+        for (int i = 0; i < thuocRealms.size(); i++) {
+            list.add(new Thuoc(thuocRealms.get(i).getMaThuoc(), thuocRealms.get(i).getMaLoaiThuoc(),
+                    thuocRealms.get(i).getTenThuoc(), thuocRealms.get(i).getHinhAnh(),
+                    thuocRealms.get(i).getGia(), thuocRealms.get(i).getMaVach(),
+                    thuocRealms.get(i).getMaHinh(), thuocRealms.get(i).getTacDung(),
+                    thuocRealms.get(i).getChongChiDinh(), thuocRealms.get(i).getTenLoaiThuoc()));
+        }
+        mAdapterThuoc.updateData(list);
+    }
+
+    public void loadListBenh(List<BenhRealm> benhRealms) {
+        if (benhRealms == null) {
+            return;
+        }
+        List<Benh> list = new ArrayList<>();
+        for (int i = 0; i < benhRealms.size(); i++) {
+            list.add(new Benh(benhRealms.get(i).getMaBenh(), benhRealms.get(i).getTenBenh(),
+                    benhRealms.get(i).getHinhAnh(), benhRealms.get(i).getTrieuChung(),
+                    benhRealms.get(i).getCachDieuTri()));
+        }
+        mAdapterBenh.updateData(list);
     }
 }
