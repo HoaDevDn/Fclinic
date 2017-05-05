@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by tri on 03/05/2017.
  */
 
-public class NhacUongThuoc extends RealmObject {
+public class NhacThuocRealm extends RealmObject {
 
     private int mId;
     private int mMatoa;
@@ -39,13 +39,13 @@ public class NhacUongThuoc extends RealmObject {
         mTime = time;
     }
 
-    public NhacUongThuoc(int id, int matoa, String time) {
+    public NhacThuocRealm(int id, int matoa, String time) {
         mId = id;
         mMatoa = matoa;
         mTime = time;
     }
 
-    public NhacUongThuoc() {
+    public NhacThuocRealm() {
     }
 
     public int getStatus() {
