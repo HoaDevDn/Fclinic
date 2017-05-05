@@ -101,7 +101,7 @@ public class TimKiemOCR extends AppCompatActivity {
                         blocks = blocks + tBlock.getValue() + "\n" + "\n";
                     }
                     if (textBlocks.size() == 0) {
-                        scanResults.setText("Scan Failed: Found nothing to scan");
+                        scanResults.setText("Scan thất bại: không có gì để scan");
                     } else {
                         loadThuoc();
                         for (int i = 0; i < mThuocs.size(); i++){
@@ -115,10 +115,10 @@ public class TimKiemOCR extends AppCompatActivity {
                         }
                     }
                 } else {
-                    scanResults.setText("Could not set up the detector!");
+                    scanResults.setText("Không thể thiết lập máy dò!");
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Không thể tải hình ảnh", Toast.LENGTH_SHORT)
                         .show();
             }
         }
@@ -166,16 +166,16 @@ public class TimKiemOCR extends AppCompatActivity {
 
     public void loadThuoc(){
         List<Thuoc> list=new ArrayList<>();
-        list.add(new Thuoc(1,"1","Levothyroxine","http://www.chuatriviemdaitrang.com/wp-content/uploads/2016/08/thuoc-1.jpg","Hormone Thyroid","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(2,"2","Memantine","http://www.viemgan.com.vn/js/libs/kcfinder/upload/images/thuoc-gay-hai-cho-gan.jpg","Alzheimers","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(3,"3","Donepezil","http://tamlyhoctoipham.com/uploads/images/luu-y-khi-dung-thuoc-ha-huyet-ap-1.jpg","Alzheimers","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(4,"1","Zolpidem","http://mediplantex.com/Uploads/images/42/2013/12/12/business.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(5,"2","Eszopiclone","http://thoibaotaichinhvietnam.vn/Pictures102015/nguyenthiphuong-tbtc/thuocngoai.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(6,"2","Temazepam","http://www.yeutretho.vn/files/2015/10/31/14-sai-lam-te-hai-khi-uong-thuoc-khien-benh-them-nang-7.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(7,"3","Ticagrelor","http://thoatvidiadem.net/wp-content/uploads/thuoc-ho-tro-dieu-tri-thoai-hoa-cot-song.jpg","Bệnh tim mạch","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(8,"3","Etonogestrel +","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQFdVNRvDIeMhHyryZXzA1zp1VjtcUkI1on-gwFFaIvFJIzILHi","Biện pháp tránh thai","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(9,"1","Folic Acid","http://giaoduc.net.vn/Uploaded/phamlieu/2013_05_15/luu-y-khi-uong-thuoc-giaoduc.net.vn2.jpg","Bổ sung acid folic","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
-        list.add(new Thuoc(10,"3","Testosterone","http://baohaiphong.com.vn/dataimages/201511/original/images1200436_sleepingpills.jpg","Bổ sung vitamin D","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm",5000));
+        list.add(new Thuoc("1","1","Levothyroxine","http://www.chuatriviemdaitrang.com/wp-content/uploads/2016/08/thuoc-1.jpg","Hormone Thyroid","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("2","2","Memantine","http://www.viemgan.com.vn/js/libs/kcfinder/upload/images/thuoc-gay-hai-cho-gan.jpg","Alzheimers","893460200107","893460200107", "phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("3","3","Donepezil","http://tamlyhoctoipham.com/uploads/images/luu-y-khi-dung-thuoc-ha-huyet-ap-1.jpg","Alzheimers","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("4","1","Zolpidem","http://mediplantex.com/Uploads/images/42/2013/12/12/business.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("5","2","Eszopiclone","http://thoibaotaichinhvietnam.vn/Pictures102015/nguyenthiphuong-tbtc/thuocngoai.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("6","2","Temazepam","http://www.yeutretho.vn/files/2015/10/31/14-sai-lam-te-hai-khi-uong-thuoc-khien-benh-them-nang-7.jpg","An thần","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("7","3","Ticagrelor","http://thoatvidiadem.net/wp-content/uploads/thuoc-ho-tro-dieu-tri-thoai-hoa-cot-song.jpg","Bệnh tim mạch","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("8","3","Etonogestrel +","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQFdVNRvDIeMhHyryZXzA1zp1VjtcUkI1on-gwFFaIvFJIzILHi","Biện pháp tránh thai","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("9","1","Folic Acid","http://giaoduc.net.vn/Uploaded/phamlieu/2013_05_15/luu-y-khi-uong-thuoc-giaoduc.net.vn2.jpg","Bổ sung acid folic","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
+        list.add(new Thuoc("10","3","Testosterone","http://baohaiphong.com.vn/dataimages/201511/original/images1200436_sleepingpills.jpg","Bổ sung vitamin D","893460200107","893460200107","phụ nữ có thai, phụ nữ cho con bú, trẻ em, trẻ vị thành niên dưới 18 tuổi do chưa có số liệu về độ an toàn và hiệu quả điều trị.","Thuốc trị cảm","5000"));
         updateData(list);
     }
 
