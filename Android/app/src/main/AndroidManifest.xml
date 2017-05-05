@@ -68,8 +68,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".ui.timkiemOCR.TimKiemOCR"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ui.timkiemOCR.TimKiemOCR"
+            android:parentActivityName=".ui.timkiem.TimKiemActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.timkiem.TimKiemActivity"/>
         </activity>
     </application>
 

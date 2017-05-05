@@ -63,6 +63,7 @@ public class TimKiemOCR extends AppCompatActivity {
         Realm.init(this);
         mRealm = Realm.getDefaultInstance();
 
+        setTitle("Scan");
         button = (Button) findViewById(R.id.button_scan);
         scanResults = (TextView) findViewById(R.id.results_scan);
         if (savedInstanceState != null) {

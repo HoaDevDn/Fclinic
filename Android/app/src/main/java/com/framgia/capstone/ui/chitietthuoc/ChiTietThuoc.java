@@ -70,14 +70,6 @@ public class ChiTietThuoc extends AppCompatActivity {
         return mThuoc.getTenLoaiThuoc();
     }
 
-    public String getMaVach(){
-        return mThuoc.getMaVach();
-    }
-
-    public String getMaHinh(){
-        return mThuoc.getMaHinh();
-    }
-
     public String getChongChiDinh(){
         return mThuoc.getChongChiDinh();
     }
