@@ -80,7 +80,7 @@ public class ChiTietToaThuocAdapter
         public void bindData(CTToaThuoc toaThuoc) {
             mTenThuoc.setText(toaThuoc.getTenThuoc());
             mMota.setText(toaThuoc.getMoTa());
-            mSoLuong.setText(toaThuoc.getSoLuong() + "");
+            mSoLuong.setText(toaThuoc.getSoLuong());
             mStt.setText(getAdapterPosition() + 1 + "");
         }
 

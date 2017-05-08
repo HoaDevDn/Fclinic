@@ -18,8 +18,8 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <declare-styleable name="PasswordEditText">
-        <attr name="useStrike" format="boolean"/>
-        <attr name="useValidate" format="boolean"/>
+        <attr format="boolean" name="useStrike"/>
+        <attr format="boolean" name="useValidate"/>
     </declare-styleable>
 
     <style name="Widget.Button" parent="android:Widget">

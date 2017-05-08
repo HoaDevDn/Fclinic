@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.BenhRealm;
 import com.framgia.capstone.data.model.ThuocRealm;
@@ -70,11 +69,9 @@ public class MainActivity extends AppCompatActivity
                         Snackbar.LENGTH_LONG);
         snackbar.show();
 
-
         new AsyncDanhSach().execute();
 
         new AsyncDanhSachBenh().execute();
-
     }
 
     @Override
@@ -171,7 +168,6 @@ public class MainActivity extends AppCompatActivity
                     thuocRealm.setChongChiDinh(jsonObj.getString("ChongChiDinh"));
 
                     mList.add(thuocRealm);
-
                 }
             } catch (Exception e) {
                 Log.d("Loi", e.getMessage());
@@ -221,7 +217,6 @@ public class MainActivity extends AppCompatActivity
                     benhRealm.setTenBenh(jsonObj.getString("TenBenh"));
 
                     benhRealms.add(benhRealm);
-
                 }
             } catch (Exception e) {
                 Log.d("Loi", e.getMessage());
@@ -252,7 +247,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
 
     public void deleteBenh() {
         mRealm.executeTransaction(new Realm.Transaction() {

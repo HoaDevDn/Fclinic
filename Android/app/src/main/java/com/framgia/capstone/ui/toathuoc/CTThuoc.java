@@ -1,4 +1,4 @@
-package com.framgia.capstone.ui.chitietthuoc;
+package com.framgia.capstone.ui.toathuoc;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,21 +9,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.Thuoc;
-import com.framgia.capstone.databinding.ActivityDetailThuocBinding;
+import com.framgia.capstone.data.model.ThuocRealm;
+import com.framgia.capstone.databinding.ActivityThuocBinding;
+import io.realm.Realm;
 
-/**
- * Created by Age on 4/29/2017.
- */
+public class CTThuoc extends AppCompatActivity {
 
-public class ChiTietThuoc extends AppCompatActivity {
     private static final String EXTRA_THUOC = "EXTRA_THUOC";
     private Thuoc mThuoc;
-    private ActivityDetailThuocBinding mBinding;
+    private ActivityThuocBinding mBinding;
+    private CTToaThuoc mCTToaThuoc;
+    private Realm mRealm;
 
-    public static Intent getThuocIntent(Context context, Thuoc thuoc) {
-        Intent intent = new Intent(context, ChiTietThuoc.class);
-        intent.putExtra(EXTRA_THUOC, thuoc);
+    public static Intent getThuocIntent(Context context, CTToaThuoc toaThuoc) {
+        Intent intent = new Intent(context, CTThuoc.class);
+        intent.putExtra("qwe", toaThuoc);
         return intent;
     }
 
@@ -31,8 +33,17 @@ public class ChiTietThuoc extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_thuoc);
-        mThuoc = (Thuoc) getIntent().getSerializableExtra(EXTRA_THUOC);
+        Realm.init(this);
+        mRealm = Realm.getDefaultInstance();
+
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_thuoc);
+
+        mCTToaThuoc = (CTToaThuoc) getIntent().getSerializableExtra("qwe");
+
+        //  if (mThuoc == null) return;
+
+        mThuoc = getThuoc();
+
         setTitle(mThuoc.getTenThuoc());
         setUpView();
         mBinding.setViewModel(this);
@@ -69,19 +80,26 @@ public class ChiTietThuoc extends AppCompatActivity {
         return mThuoc.getTenLoaiThuoc();
     }
 
-    public String getMaVach() {
-        return mThuoc.getMaVach();
-    }
-
-    public String getMaHinh() {
-        return mThuoc.getMaHinh();
-    }
-
     public String getChongChiDinh() {
         return mThuoc.getChongChiDinh();
     }
 
     public String getGia() {
         return mThuoc.getGia() + "";
+    }
+
+    public Thuoc getThuoc() {
+        ThuocRealm thuocRealm = mRealm.where(ThuocRealm.class)
+                .equalTo("mTenThuoc", mCTToaThuoc.getTenThuoc())
+                .findFirst();
+
+        Thuoc thuoc = new Thuoc();
+        thuoc.setTenThuoc(thuocRealm.getTenThuoc());
+        thuoc.setHinhAnh(thuocRealm.getHinhAnh());
+        thuoc.setTenLoaiThuoc(thuocRealm.getTenLoaiThuoc());
+        thuoc.setGia(thuocRealm.getGia());
+        thuoc.setTacDung(thuocRealm.getTacDung());
+        thuoc.setChongChiDinh(thuocRealm.getChongChiDinh());
+        return thuoc;
     }
 }

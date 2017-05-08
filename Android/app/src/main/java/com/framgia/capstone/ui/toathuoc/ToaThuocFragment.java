@@ -1,5 +1,6 @@
 package com.framgia.capstone.ui.toathuoc;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,10 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.Status;
 import com.framgia.capstone.data.model.ToaThuoc;
 import com.framgia.capstone.utils.RestAPI;
+import io.realm.Realm;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -28,6 +30,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     private ToaThuocAdapter mAdapter;
     private List<ToaThuoc> mList = new ArrayList<>();
     private String mUser;
+    private Realm mRealm;
 
     public ToaThuocFragment() {
     }
@@ -39,14 +42,14 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (int i = 0; i < 10; i++) {
+       /* for (int i = 0; i < 10; i++) {
             ToaThuoc toaThuoc = new ToaThuoc();
             toaThuoc.setMaToaThuoc(1);
             toaThuoc.setMoTa("Toa thuốc ho");
             toaThuoc.setTenToa("Thuốc Ho");
             toaThuoc.setTenUser("TMT");
             mList.add(toaThuoc);
-        }
+        }*/
     }
 
     @Override
@@ -56,6 +59,9 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
 
         mUser = loadUser(getActivity());
 
+        Realm.init(getActivity());
+        mRealm = Realm.getDefaultInstance();
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_toathuoc);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
@@ -63,13 +69,27 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
         mAdapter = new ToaThuocAdapter(getActivity(), mList, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        //     new AsyncDanhSachToaThuoc().execute();
+        new AsyncDanhSachToaThuoc().execute();
 
         return view;
     }
 
     @Override
-    public void onClick(int position) {
+    public void onClick(final int position) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Status sta = realm.where(Status.class)
+                        .equalTo("mMaToa", mList.get(position).getMaToaThuoc())
+                        .findFirst();
+                if (sta == null) {
+                    Status status = new Status();
+                    status.setTrangThai(0);
+                    status.setMaToa(mList.get(position).getMaToaThuoc());
+                    realm.insertOrUpdate(status);
+                }
+            }
+        });
         addFragment(ChiTietToaThuocFragment.newInstance(mList.get(position)));
     }
 
@@ -87,6 +107,8 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     }
 
     public class AsyncDanhSachToaThuoc extends AsyncTask<Void, JSONObject, List<ToaThuoc>> {
+
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
@@ -111,6 +133,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
                     toaThuoc.setTenToa(jsonObj.getString("TenToaThuoc"));
                     toaThuoc.setTenUser(mUser);
                     toaThuoc.setMoTa(jsonObj.getString("MoTa"));
+
                     list.add(toaThuoc);
                 }
             } catch (Exception e) {
@@ -122,13 +145,12 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
         @Override
         protected void onPostExecute(final List<ToaThuoc> result) {
             super.onPostExecute(result);
-            Toast.makeText(getActivity(), result.size() + "", Toast.LENGTH_SHORT).show();
             updateData(result);
         }
     }
 
     public void updateData(List<ToaThuoc> toaThuocs) {
-        toaThuocs.addAll(toaThuocs);
+        mList.addAll(toaThuocs);
         mAdapter.notifyDataSetChanged();
     }
 }

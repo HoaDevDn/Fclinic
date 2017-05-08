@@ -7,25 +7,15 @@ import java.io.Serializable;
  */
 
 public class CTToaThuoc implements Serializable {
-    private int mChiTiet;
-    private int mMaThuoc;
+    private int mMaToa;
     private String mMoTa;
-    private int mSoLuong;
+    private String mSoLuong;
     private int mStt;
     private String mTenThuoc;
 
     public CTToaThuoc() {
     }
 
-
-    public CTToaThuoc(int chiTiet, int maThuoc, String moTa, int soLuong, String tenThuoc) {
-
-        mChiTiet = chiTiet;
-        mMaThuoc = maThuoc;
-        mMoTa = moTa;
-        mSoLuong = soLuong;
-        mTenThuoc = tenThuoc;
-    }
 
     public String getTenThuoc() {
         return mTenThuoc;
@@ -35,20 +25,12 @@ public class CTToaThuoc implements Serializable {
         mTenThuoc = tenThuoc;
     }
 
-    public int getChiTiet() {
-        return mChiTiet;
+    public int getMaToa() {
+        return mMaToa;
     }
 
-    public void setChiTiet(int chiTiet) {
-        mChiTiet = chiTiet;
-    }
-
-    public int getMaThuoc() {
-        return mMaThuoc;
-    }
-
-    public void setMaThuoc(int maThuoc) {
-        mMaThuoc = maThuoc;
+    public void setMaToa(int maToa) {
+        mMaToa = maToa;
     }
 
     public String getMoTa() {
@@ -59,11 +41,11 @@ public class CTToaThuoc implements Serializable {
         mMoTa = moTa;
     }
 
-    public int getSoLuong() {
+    public String getSoLuong() {
         return mSoLuong;
     }
 
-    public void setSoLuong(int soLuong) {
+    public void setSoLuong(String soLuong) {
         mSoLuong = soLuong;
     }
 

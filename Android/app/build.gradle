@@ -29,6 +29,7 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 
+
   compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
   compile 'com.pacioianu.david:ink-page-indicator:1.2.0'
   compile 'com.android.support:appcompat-v7:25.2.0'
@@ -47,7 +48,6 @@ dependencies {
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   compile 'com.github.arimorty:floatingsearchview:2.0.4'
   compile 'com.google.android.gms:play-services-vision:10.2.0'
-
   testCompile 'junit:junit:4.12'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
