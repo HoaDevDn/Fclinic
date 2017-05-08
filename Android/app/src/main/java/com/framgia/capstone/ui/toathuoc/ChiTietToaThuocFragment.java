@@ -1,5 +1,6 @@
 package com.framgia.capstone.ui.toathuoc;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
+import com.framgia.capstone.data.model.Status;
 import com.framgia.capstone.data.model.ToaThuoc;
 import com.framgia.capstone.utils.RestAPI;
 import io.realm.Realm;
@@ -123,41 +125,29 @@ public class ChiTietToaThuocFragment extends Fragment
 
         new AsynListThuoc().execute();
 
-       /* mRealm.executeTransaction(new Realm.Transaction() {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            RealmResults<NhacThuoc> realms =
+                    mRealm.where(NhacThuoc.class).equalTo("mMatoa", mMatoa).findAll();
+
             @Override
             public void execute(Realm realm) {
-                RealmResults<NhacThuoc> realms =
-                        mRealm.where(NhacThuoc.class).equalTo("mMatoa", mToaThuoc.getMaToaThuoc()
-                        ).findAll();
-
                 if (realms.size() == 0) {
                     for (NhacThuoc nhacThuoc : mNhacThuocs) {
-                        nhacThuoc.setStatus(1);
                         realm.insertOrUpdate(nhacThuoc);
-                    }
-                } else {
-                    for (NhacThuoc nhacThuoc : mNhacThuocs) {
-                        for (NhacThuoc thuoc : realms) {
-                            if (thuoc.getId() != nhacThuoc.getId()) {
-                                nhacThuoc.setStatus(1);
-                                realm.insertOrUpdate(nhacThuoc);
-                            }
-                        }
                     }
                 }
             }
         });
 
-        Toast.makeText(getActivity(), getCTToaThuocs().size() + "", Toast.LENGTH_SHORT).show();
-*/
-
-
-      /*  if (true)
-        {
-            mSwitch.setChecked(true);
+      /*  if (getNhacThuoc().size() == 0) {
+            return null;
         } else {
-            mSwitch.setChecked(false);
+            Toast.makeText(getActivity(), getNhacThuoc().size() + "", Toast.LENGTH_SHORT).show();
         }*/
+
+        if (getStatusSW().getTrangThai() == 1) mSwitch.setChecked(true);
+
+        if (getStatusSW().getTrangThai() == 0) mSwitch.setChecked(false);
 
         return view;
     }
@@ -169,16 +159,24 @@ public class ChiTietToaThuocFragment extends Fragment
         }
 
         if ((mSwitch.isChecked())) {
-            Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
+                    status.setTrangThai(1);
+                }
+            });
+        } else {
+            //   Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
 
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-
+                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
+                    status.setTrangThai(0);
                 }
             });
-        } else {
-            Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -197,7 +195,8 @@ public class ChiTietToaThuocFragment extends Fragment
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
+        startActivity(
+                new Intent(CTThuoc.getThuocIntent(getActivity(), mCTToaThuocs.get(position))));
     }
 
     public class AsynListThuoc extends AsyncTask<Void, JSONObject, List<CTToaThuoc>> {
@@ -236,7 +235,6 @@ public class ChiTietToaThuocFragment extends Fragment
         @Override
         protected void onPostExecute(final List<CTToaThuoc> result) {
             super.onPostExecute(result);
-            Toast.makeText(getActivity(), result.size() + "", Toast.LENGTH_SHORT).show();
             updateDataListThuoc(result);
         }
     }
@@ -246,8 +244,14 @@ public class ChiTietToaThuocFragment extends Fragment
         mAdapter.notifyDataSetChanged();
     }
 
-    public RealmResults<NhacThuoc> getCTToaThuocs() {
-        RealmResults<NhacThuoc> realms = mRealm.where(NhacThuoc.class).findAll();
+    public RealmResults<NhacThuoc> getNhacThuoc() {
+        RealmResults<NhacThuoc> realms =
+                mRealm.where(NhacThuoc.class).equalTo("mMatoa", mMatoa).findAll();
         return realms;
+    }
+
+    public Status getStatusSW() {
+        Status status = mRealm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
+        return status;
     }
 }

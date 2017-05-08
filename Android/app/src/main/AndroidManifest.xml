@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true"/>
@@ -42,7 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.timkiem.TimKiemActivity"
+        <activity
+            android:name=".ui.timkiem.TimKiemActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
@@ -52,28 +54,33 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBkjo2uc5s15TCldrs1y_fvz99GP0sUPEM"/>
 
-        <activity android:name=".ui.login.LoginActivity"
+        <activity
+            android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name=".ui.chitietbenh.ChiTietBenh"
+        <activity
+            android:name=".ui.chitietbenh.ChiTietBenh"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name=".ui.chitietthuoc.ChiTietThuoc"
+        <activity
+            android:name=".ui.chitietthuoc.ChiTietThuoc"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name=".ui.chonphongkham.ChonPhongKhamActivity"
+        <activity
+            android:name=".ui.chonphongkham.ChonPhongKhamActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
             android:name=".ui.timkiemOCR.TimKiemOCR"
             android:parentActivityName=".ui.timkiem.TimKiemActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.timkiem.TimKiemActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.toathuoc.CTThuoc"
+            android:label="@string/title_activity_ctthuoc"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

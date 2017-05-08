@@ -12,10 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.Status;
 import com.framgia.capstone.data.model.ToaThuoc;
 import com.framgia.capstone.utils.RestAPI;
+import io.realm.Realm;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -29,8 +30,7 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     private ToaThuocAdapter mAdapter;
     private List<ToaThuoc> mList = new ArrayList<>();
     private String mUser;
-
-    int mCurCheckPosition;
+    private Realm mRealm;
 
     public ToaThuocFragment() {
     }
@@ -59,6 +59,9 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
 
         mUser = loadUser(getActivity());
 
+        Realm.init(getActivity());
+        mRealm = Realm.getDefaultInstance();
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_toathuoc);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
@@ -72,7 +75,21 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     }
 
     @Override
-    public void onClick(int position) {
+    public void onClick(final int position) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Status sta = realm.where(Status.class)
+                        .equalTo("mMaToa", mList.get(position).getMaToaThuoc())
+                        .findFirst();
+                if (sta == null) {
+                    Status status = new Status();
+                    status.setTrangThai(0);
+                    status.setMaToa(mList.get(position).getMaToaThuoc());
+                    realm.insertOrUpdate(status);
+                }
+            }
+        });
         addFragment(ChiTietToaThuocFragment.newInstance(mList.get(position)));
     }
 

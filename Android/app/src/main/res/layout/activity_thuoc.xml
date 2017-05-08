@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.capstone.ui.chitietthuoc.ChiTietThuoc"
+            type="com.framgia.capstone.ui.toathuoc.CTThuoc"
             />
 
     </data>

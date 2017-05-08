@@ -142,7 +142,6 @@ public class TimKiemActivity extends BaseActivity
         });
         setUpView();
         mPresenter.start();
-        Toast.makeText(this,""+getListThuoc().size(),Toast.LENGTH_SHORT).show();
         loadListThuoc(getListThuoc());
         loadListBenh(getListBenh());
     }
