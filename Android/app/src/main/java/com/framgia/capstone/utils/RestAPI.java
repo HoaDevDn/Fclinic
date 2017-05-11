@@ -211,9 +211,9 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "ListNhacNhoUongThuoc");
-        p.put("maToaThuoc",mapObject(maToaThuoc));
+        p.put("maToaThuoc", mapObject(maToaThuoc));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);
@@ -221,12 +221,46 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject ListTime() throws Exception {
+    public JSONObject ListTime(String maPhongKham) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "ListTime");
+        p.put("maPhongKham", mapObject(maPhongKham));
+        o.put("parameters", p);
+        String s = o.toString();
+        String r = load(s);
+        result = new JSONObject(r);
+        return result;
+    }
+
+    public JSONObject DatLichKham(String pkTaiKhoan, String pkMaPhongKham, String pkThoigian)
+            throws Exception {
+        JSONObject result = null;
+        JSONObject o = new JSONObject();
+        JSONObject p = new JSONObject();
+        o.put("interface", "RestAPI");
+        o.put("method", "DatLichKham");
+        p.put("pkTaiKhoan", mapObject(pkTaiKhoan));
+        p.put("pkMaPhongKham", mapObject(pkMaPhongKham));
+        p.put("pkThoigian", mapObject(pkThoigian));
+        o.put("parameters", p);
+        String s = o.toString();
+        String r = load(s);
+        result = new JSONObject(r);
+        return result;
+    }
+
+    public JSONObject LoadDanhSachLichKham(String pkTaiKhoan, String pkMaPhongKham)
+            throws Exception {
+        JSONObject result = null;
+        JSONObject o = new JSONObject();
+        JSONObject p = new JSONObject();
+        o.put("interface", "RestAPI");
+        o.put("method", "LoadDanhSachLichKham");
+        p.put("pkTaiKhoan", mapObject(pkTaiKhoan));
+        p.put("pkMaPhongKham", mapObject(pkMaPhongKham));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);

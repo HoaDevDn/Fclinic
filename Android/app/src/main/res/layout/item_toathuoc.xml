@@ -44,13 +44,17 @@
                 android:id="@+id/text_tenUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
                 />
 
             <TextView
                 android:id="@+id/text_mota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:paddingTop="5dp"
+                android:textColor="@android:color/black"
                 />
 
         </LinearLayout>
