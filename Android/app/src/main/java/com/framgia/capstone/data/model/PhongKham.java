@@ -74,4 +74,6 @@ public class PhongKham implements Serializable {
     public void setSDT(String SDT) {
         mSDT = SDT;
     }
+
+
 }
