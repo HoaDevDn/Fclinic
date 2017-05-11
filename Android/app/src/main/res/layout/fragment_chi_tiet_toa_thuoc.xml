@@ -27,8 +27,8 @@
                 android:id="@+id/image_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_left"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_back_white"
                 />
             <TextView
                 android:id="@+id/textView7"

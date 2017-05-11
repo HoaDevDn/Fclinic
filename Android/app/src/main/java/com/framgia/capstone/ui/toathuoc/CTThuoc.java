@@ -4,10 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.Thuoc;
@@ -22,6 +29,8 @@ public class CTThuoc extends AppCompatActivity {
     private ActivityThuocBinding mBinding;
     private CTToaThuoc mCTToaThuoc;
     private Realm mRealm;
+
+    ImageView back;
 
     public static Intent getThuocIntent(Context context, CTToaThuoc toaThuoc) {
         Intent intent = new Intent(context, CTThuoc.class);
@@ -38,15 +47,23 @@ public class CTThuoc extends AppCompatActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_thuoc);
 
+
         mCTToaThuoc = (CTToaThuoc) getIntent().getSerializableExtra("qwe");
 
         //  if (mThuoc == null) return;
 
         mThuoc = getThuoc();
-
         setTitle(mThuoc.getTenThuoc());
         setUpView();
         mBinding.setViewModel(this);
+    }
+
+    private void setUpView() {
+        setSupportActionBar(mBinding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -60,16 +77,12 @@ public class CTThuoc extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void setUpView() {
-        setSupportActionBar(mBinding.toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
     public String getHinhAnh() {
         return mThuoc.getHinhAnh();
+    }
+
+    public String getTen() {
+        return mThuoc.getTenThuoc();
     }
 
     public String getTacDung() {
@@ -102,4 +115,6 @@ public class CTThuoc extends AppCompatActivity {
         thuoc.setChongChiDinh(thuocRealm.getChongChiDinh());
         return thuoc;
     }
+
+
 }

@@ -49,17 +49,19 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:text="@{itemview.tenThuoc}"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="#004d4d"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     />
                 <TextView
+                    android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@{itemview.tacDung}"
                     />
                 <TextView
+                    android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
