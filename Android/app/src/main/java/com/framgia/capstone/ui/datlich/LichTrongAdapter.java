@@ -83,7 +83,7 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
 
         public void bindData(LichKham lichKham) {
             mMoTa.setText(lichKham.getMota());
-            mTime.setText(lichKham.getTgBatDau() + "-" + lichKham.getTgKetThuc());
+            mTime.setText(lichKham.getTgBatDau() + " -" + lichKham.getTgKetThuc());
             mNgay.setText(lichKham.getNgay());
             itemView.startAnimation(AnimationUtils.loadAnimation(mContext.getApplicationContext(),
                     R.anim.slide_left_in));

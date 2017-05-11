@@ -13,6 +13,7 @@ public class LichKham implements Serializable {
     private String mTgKetThuc;
     private String mNgay;
     private String mTrangThai;
+    private String mTime;
 
     public LichKham() {
     }
@@ -25,6 +26,14 @@ public class LichKham implements Serializable {
         mTgKetThuc = tgKetThuc;
         mNgay = ngay;
         mTrangThai = trangThai;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        mTime = time;
     }
 
     public int getMa() {

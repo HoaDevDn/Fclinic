@@ -18,6 +18,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1.6"
             android:src="@drawable/icon_thuoct"
+            android:textColor="@android:color/black"
             />
 
         <LinearLayout
@@ -47,6 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="5dp"
+                        android:textColor="@android:color/black"
                         android:textStyle="bold"
                         />
 
@@ -54,6 +56,7 @@
                         android:id="@+id/text_mota"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         />
                 </LinearLayout>
 
@@ -63,6 +66,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textColor="@android:color/black"
                     />
 
             </LinearLayout>

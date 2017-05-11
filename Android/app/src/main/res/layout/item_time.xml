@@ -10,6 +10,7 @@
     >
 
     <TextView
+        android:textColor="@android:color/black"
         android:text="10:10"
         android:id="@+id/text_time_toa"
         android:layout_width="match_parent"

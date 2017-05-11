@@ -75,6 +75,7 @@
                         android:textSize="15dp"
                         />
                     <TextView
+                        android:textColor="@android:color/black"
                         android:id="@+id/text_tentoathuoc_ct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,6 +97,7 @@
                         android:textSize="15dp"
                         />
                     <TextView
+                        android:textColor="@android:color/black"
                         android:id="@+id/text_user_ct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -118,6 +120,7 @@
                         android:textSize="15dp"
                         />
                     <TextView
+                        android:textColor="@android:color/black"
                         android:id="@+id/text_mota_ct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

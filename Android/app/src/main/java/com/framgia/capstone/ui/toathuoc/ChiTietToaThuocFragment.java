@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
@@ -85,9 +86,6 @@ public class ChiTietToaThuocFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
-        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
-
         mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
 
         mMatoa = mToaThuoc.getMaToaThuoc();
@@ -95,13 +93,13 @@ public class ChiTietToaThuocFragment extends Fragment
         Realm.init(getActivity());
         mRealm = Realm.getDefaultInstance();
 
-        for (int i = 0; i < 2; i++) {
+      /*  for (int i = 0; i < 2; i++) {
             NhacThuoc nhacThuoc = new NhacThuoc();
             nhacThuoc.setTime("10:10 PM" + " " + i);
             nhacThuoc.setId(1 + i);
             nhacThuoc.setMatoa(mToaThuoc.getMaToaThuoc());
             mNhacThuocs.add(nhacThuoc);
-        }
+        }*/
 
         mTenToa = (TextView) view.findViewById(R.id.text_tentoathuoc_ct);
         mTenUser = (TextView) view.findViewById(R.id.text_user_ct);
@@ -133,25 +131,7 @@ public class ChiTietToaThuocFragment extends Fragment
 
         new AsynListThuoc().execute();
 
-        mRealm.executeTransaction(new Realm.Transaction() {
-            RealmResults<NhacThuoc> realms =
-                    mRealm.where(NhacThuoc.class).equalTo("mMatoa", mMatoa).findAll();
-
-            @Override
-            public void execute(Realm realm) {
-                if (realms.size() == 0) {
-                    for (NhacThuoc nhacThuoc : mNhacThuocs) {
-                        realm.insertOrUpdate(nhacThuoc);
-                    }
-                }
-            }
-        });
-
-      /*  if (getNhacThuoc().size() == 0) {
-            return null;
-        } else {
-            Toast.makeText(getActivity(), getNhacThuoc().size() + "", Toast.LENGTH_SHORT).show();
-        }*/
+        new AsynListNhacThuoc().execute();
 
         if (getStatusSW().getTrangThai() == 1) mSwitch.setChecked(true);
 
@@ -168,9 +148,7 @@ public class ChiTietToaThuocFragment extends Fragment
 
         if ((mSwitch.isChecked())) {
             //    Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
-
             start();
-
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -207,8 +185,8 @@ public class ChiTietToaThuocFragment extends Fragment
 
     @Override
     public void onClick(int position) {
-        startActivity(new Intent(
-                CTThuoc.getThuocIntent(getActivity(), mCTToaThuocs.get(position))));
+        startActivity(
+                new Intent(CTThuoc.getThuocIntent(getActivity(), mCTToaThuocs.get(position))));
     }
 
     public class AsynListThuoc extends AsyncTask<Void, JSONObject, List<CTToaThuoc>> {
@@ -256,6 +234,65 @@ public class ChiTietToaThuocFragment extends Fragment
         mAdapter.notifyDataSetChanged();
     }
 
+    public class AsynListNhacThuoc extends AsyncTask<Void, JSONObject, List<NhacThuoc>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<NhacThuoc> doInBackground(Void... params) {
+            RestAPI api = new RestAPI();
+            List<NhacThuoc> list = new ArrayList<>();
+            try {
+                list = new ArrayList<>();
+
+                JSONObject jsonObj = api.ListNhacNhoUongThuoc(mMatoa);
+
+                JSONArray jsonArray = jsonObj.getJSONArray("Value");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObj = jsonArray.getJSONObject(i);
+
+                    NhacThuoc nhacThuoc = new NhacThuoc();
+                    nhacThuoc.setMatoa(mMatoa);
+                    nhacThuoc.setTime(jsonObj.getString("Time"));
+                    nhacThuoc.setId(jsonObj.getInt("IdRemindUongThuoc"));
+
+                    list.add(nhacThuoc);
+                }
+            } catch (Exception e) {
+                Log.d("Loi", e.getMessage());
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(final List<NhacThuoc> result) {
+            super.onPostExecute(result);
+            updateDataListNhacThuoc(result);
+
+            mRealm.executeTransaction(new Realm.Transaction() {
+                RealmResults<NhacThuoc> realms =
+                        mRealm.where(NhacThuoc.class).equalTo("mMatoa", mMatoa).findAll();
+
+                @Override
+                public void execute(Realm realm) {
+                    if (realms.size() == 0) {
+                        for (NhacThuoc nhacThuoc : result) {
+                            realm.insertOrUpdate(nhacThuoc);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public void updateDataListNhacThuoc(List<NhacThuoc> nhacThuocs) {
+        mNhacThuocs.addAll(nhacThuocs);
+        mNhacThuocAdapter.notifyDataSetChanged();
+    }
+
     public RealmResults<NhacThuoc> getNhacThuoc() {
         RealmResults<NhacThuoc> realms =
                 mRealm.where(NhacThuoc.class).equalTo("mMatoa", mMatoa).findAll();
@@ -270,15 +307,30 @@ public class ChiTietToaThuocFragment extends Fragment
     public void start() {
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 5);
-        calendar.set(Calendar.MINUTE, 53);
+        for (int i = 0; i < getNhacThuoc().size(); i++) {
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, mPendingIntent);
+            NhacThuoc nhacThuoc = getNhacThuoc().get(i);
+
+            int gio = Integer.parseInt(nhacThuoc.getTime().substring(0, 2));
+            int phut = Integer.parseInt(nhacThuoc.getTime().substring(3, 5));
+
+            Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+            mPendingIntent = PendingIntent.getBroadcast(getActivity(), i, alarmIntent, 0);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, gio);
+            calendar.set(Calendar.MINUTE, phut);
+
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, mPendingIntent);
+        }
     }
 
     public void cancel() {
+
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
+
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         manager.cancel(mPendingIntent);
     }
