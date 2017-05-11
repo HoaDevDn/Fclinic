@@ -1,7 +1,9 @@
 package com.framgia.capstone.ui.toathuoc;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +28,7 @@ import com.framgia.capstone.utils.RestAPI;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,13 +40,16 @@ public class ChiTietToaThuocFragment extends Fragment
     TextView mTenToa;
     TextView mTenUser;
     TextView mMota;
+    private TextView alarmTextView;
+
+    private PendingIntent mPendingIntent;
 
     Realm mRealm;
     Switch mSwitch;
 
     private int mMatoa;
 
-    SharedPreferences preferences;
+    private static ChiTietToaThuocFragment inst;
 
     private ToaThuoc mToaThuoc;
 
@@ -79,6 +85,9 @@ public class ChiTietToaThuocFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
+
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
         mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
 
@@ -160,6 +169,9 @@ public class ChiTietToaThuocFragment extends Fragment
 
         if ((mSwitch.isChecked())) {
             //    Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
+
+            start();
+
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -169,6 +181,7 @@ public class ChiTietToaThuocFragment extends Fragment
             });
         } else {
             //   Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
+            cancel();
 
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -253,5 +266,21 @@ public class ChiTietToaThuocFragment extends Fragment
     public Status getStatusSW() {
         Status status = mRealm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
         return status;
+    }
+
+    public void start() {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 5);
+        calendar.set(Calendar.MINUTE, 53);
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, mPendingIntent);
+    }
+
+    public void cancel() {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(mPendingIntent);
     }
 }
