@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
@@ -208,8 +207,8 @@ public class ChiTietToaThuocFragment extends Fragment
 
     @Override
     public void onClick(int position) {
-        startActivity(
-                new Intent(CTThuoc.getThuocIntent(getActivity(), mCTToaThuocs.get(position))));
+        startActivity(new Intent(
+                CTThuoc.getThuocIntent(getActivity(), mCTToaThuocs.get(position))));
     }
 
     public class AsynListThuoc extends AsyncTask<Void, JSONObject, List<CTToaThuoc>> {

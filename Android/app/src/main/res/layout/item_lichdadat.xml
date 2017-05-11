@@ -31,27 +31,29 @@
             >
 
             <TextView
-                android:textSize="15dp"
                 android:id="@+id/text_mota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:textColor="#004d4d"
+                android:textSize="15dp"
                 />
 
             <TextView
-                android:textSize="12dp"
                 android:id="@+id/text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="12dp"
                 />
 
             <TextView
-                android:textSize="12dp"
                 android:id="@+id/text_ngay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="12dp"
                 />
 
         </LinearLayout>
