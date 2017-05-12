@@ -86,6 +86,10 @@ public class ChiTietToaThuocFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
+     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
+*/
+
         mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
 
         mMatoa = mToaThuoc.getMaToaThuoc();
@@ -317,6 +321,8 @@ public class ChiTietToaThuocFragment extends Fragment
             Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
             mPendingIntent = PendingIntent.getBroadcast(getActivity(), i, alarmIntent, 0);
 
+            Toast.makeText(getActivity(), gio + "," + phut, Toast.LENGTH_SHORT).show();
+
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, gio);
             calendar.set(Calendar.MINUTE, phut);
@@ -324,6 +330,14 @@ public class ChiTietToaThuocFragment extends Fragment
             manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, mPendingIntent);
         }
+
+      /*  Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 7);
+        calendar.set(Calendar.MINUTE, 31);
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, mPendingIntent);*/
+
     }
 
     public void cancel() {

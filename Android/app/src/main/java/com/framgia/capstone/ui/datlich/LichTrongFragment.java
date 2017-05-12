@@ -1,6 +1,7 @@
 package com.framgia.capstone.ui.datlich;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static com.framgia.capstone.utils.SharedPreferencesUtils.loadPhongKham;
+import static com.framgia.capstone.utils.SharedPreferencesUtils.loadUser;
 
 /**
  * Created by tri on 30/04/2017.
@@ -45,6 +47,7 @@ public class LichTrongFragment extends Fragment
 
     private Calendar mCalendar = Calendar.getInstance();
     private PhongKham mPhongKham;
+    private String mUser;
 
     SimpleDateFormat mFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -55,14 +58,6 @@ public class LichTrongFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(getActivity());
-    /*    for (int i = 0; i < 10; i++) {
-            LichKham lichKham = new LichKham();
-            lichKham.setMota("Ngay thu " + i);
-            lichKham.setNgay("10/10/2017");
-            lichKham.setTgBatDau("10:10");
-            lichKham.setTgKetThuc("11:12");
-            mList.add(lichKham);
-        }*/
     }
 
     @Override
@@ -78,8 +73,10 @@ public class LichTrongFragment extends Fragment
         mCalendar = Calendar.getInstance();
 
         mPhongKham = loadPhongKham(getActivity());
+        mUser = loadUser(getActivity());
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_lichtrong);
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
@@ -101,7 +98,11 @@ public class LichTrongFragment extends Fragment
 
     @Override
     public void onDangKy(LichKham lichKham) {
-        Toast.makeText(getActivity(), "ssssssss", Toast.LENGTH_SHORT).show();
+
+        lichKham.setMaPk(mPhongKham.getMaPhongKham());
+        lichKham.setTenTK(mUser);
+
+        new AsynDatLich().execute(lichKham);
     }
 
     @Override
@@ -165,13 +166,11 @@ public class LichTrongFragment extends Fragment
                     jsonObj = jsonArray.getJSONObject(i);
 
                     LichKham lichKham = new LichKham();
-                    lichKham.setMa(jsonObj.getInt("Id"));
-                    
+                    lichKham.setMa(jsonObj.getString("Id"));
                     lichKham.setNgay(jsonObj.getString("Ngay").substring(0, 10));
-                    //       lichKham.setNgay(mFormat.format(jsonObj.getString("Ngay")));
-                    //           lichKham.setTgBatDau(jsonObj.getString("TGBatDau"));
-                    //            lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc"));
-                              lichKham.setMota(jsonObj.getString("MoTaTime"));
+                    lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
+                    lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
+                    lichKham.setMota(jsonObj.getString("MoTaTime"));
 
                     list.add(lichKham);
                 }
@@ -189,7 +188,42 @@ public class LichTrongFragment extends Fragment
     }
 
     public void update(List<LichKham> lichKhams) {
+        mList.clear();
         mList.addAll(lichKhams);
         mAdapter.notifyDataSetChanged();
+    }
+
+    public class AsynDatLich extends AsyncTask<LichKham, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Đang xử lý ...");
+                progressDialog.show();
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(LichKham... params) {
+            RestAPI api = new RestAPI();
+            try {
+                api.DatLichKham(params[0].getTenTK(), params[0].getMaPk(), params[0].getMa());
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Toast.makeText(getActivity().getApplicationContext(), "Đăng kí thành công !",
+                    Toast.LENGTH_SHORT).show();
+            new AsynListLich().execute();
+            progressDialog.dismiss();
+        }
     }
 }

@@ -27,7 +27,15 @@ public class TrangChinhFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trangchinh, container, false);
         BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        addFragment(GioiThieuFragment.newInstance());
+
+        if (!isAdded()) {
+            return null;
+        }
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.trang_chinh);
+        if (fragment == null) {
+            addFragment(GioiThieuFragment.newInstance());
+        }
+
         return view;
     }
 
@@ -67,12 +75,12 @@ public class TrangChinhFragment extends Fragment {
         fragmentManager.beginTransaction().replace(frameId, fragment).commit();
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         BottomNavigationView navigation =
                 (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         addFragment(GioiThieuFragment.newInstance());
-    }
+    }*/
 }

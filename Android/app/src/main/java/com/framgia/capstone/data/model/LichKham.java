@@ -7,26 +7,44 @@ import java.io.Serializable;
  */
 
 public class LichKham implements Serializable {
-    private int mMa;
+    private String mMa;
     private String mMota;
     private String mTgBatDau;
     private String mTgKetThuc;
     private String mNgay;
     private String mTrangThai;
     private String mTime;
+    private String mTenPK;
+    private String mTenTK;
+    private int mMaPk;
+
+    public String getTenTK() {
+        return mTenTK;
+    }
+
+    public void setTenTK(String tenTK) {
+        mTenTK = tenTK;
+    }
+
+    public int getMaPk() {
+        return mMaPk;
+    }
+
+    public void setMaPk(int maPk) {
+        mMaPk = maPk;
+    }
 
     public LichKham() {
     }
 
-    public LichKham(int ma, String mota, String tgBatDau, String tgKetThuc, String ngay,
-            String trangThai) {
-        mMa = ma;
-        mMota = mota;
-        mTgBatDau = tgBatDau;
-        mTgKetThuc = tgKetThuc;
-        mNgay = ngay;
-        mTrangThai = trangThai;
+    public String getTenPK() {
+        return mTenPK;
     }
+
+    public void setTenPK(String tenPK) {
+        mTenPK = tenPK;
+    }
+
 
     public String getTime() {
         return mTime;
@@ -36,11 +54,11 @@ public class LichKham implements Serializable {
         mTime = time;
     }
 
-    public int getMa() {
+    public String getMa() {
         return mMa;
     }
 
-    public void setMa(int ma) {
+    public void setMa(String ma) {
         mMa = ma;
     }
 
