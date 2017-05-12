@@ -78,8 +78,6 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
             mMoTa.setText(lichKham.getMota());
             mTime.setText(lichKham.getTgBatDau() + " -" + lichKham.getTgKetThuc());
             mNgay.setText(lichKham.getNgay());
-            itemView.startAnimation(AnimationUtils.loadAnimation(mContext.getApplicationContext(),
-                    android.R.anim.slide_in_left));
         }
 
         @Override
