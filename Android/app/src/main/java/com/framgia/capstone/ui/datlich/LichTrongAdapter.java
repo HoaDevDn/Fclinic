@@ -86,7 +86,7 @@ public class LichTrongAdapter extends RecyclerView.Adapter<LichTrongAdapter.Lich
             mTime.setText(lichKham.getTgBatDau() + " -" + lichKham.getTgKetThuc());
             mNgay.setText(lichKham.getNgay());
             itemView.startAnimation(AnimationUtils.loadAnimation(mContext.getApplicationContext(),
-                    R.anim.slide_left_in));
+                    android.R.anim.slide_in_left));
         }
 
         @Override

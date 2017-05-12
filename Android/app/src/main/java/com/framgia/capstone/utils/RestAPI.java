@@ -235,7 +235,7 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject DatLichKham(String pkTaiKhoan, String pkMaPhongKham, String pkThoigian)
+    public JSONObject DatLichKham(String pkTaiKhoan, int pkMaPhongKham, String pkThoigian)
             throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();

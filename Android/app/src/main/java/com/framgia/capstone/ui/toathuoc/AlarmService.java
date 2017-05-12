@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 
 /**
@@ -32,6 +33,8 @@ public class AlarmService extends IntentService {
     }
 
     private void sendNotification(String msg) {
+
+        Toast.makeText(getApplication(),"Thong bao Service",Toast.LENGTH_SHORT).show();
 
         alarmNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);

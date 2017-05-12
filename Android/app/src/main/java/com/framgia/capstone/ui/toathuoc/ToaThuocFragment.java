@@ -150,7 +150,11 @@ public class ToaThuocFragment extends Fragment implements ToaThuocAdapter.ItemCl
     }
 
     public void updateData(List<ToaThuoc> toaThuocs) {
-        mList.addAll(toaThuocs);
+        mList.clear();
+        for (int i = toaThuocs.size() - 1; i >= 0; i--) {
+            ToaThuoc toaThuoc = toaThuocs.get(i);
+            mList.add(toaThuoc);
+        }
         mAdapter.notifyDataSetChanged();
     }
 }
