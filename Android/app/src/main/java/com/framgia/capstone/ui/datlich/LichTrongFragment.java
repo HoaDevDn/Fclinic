@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,7 +50,9 @@ public class LichTrongFragment extends Fragment
     private PhongKham mPhongKham;
     private String mUser;
 
-    SimpleDateFormat mFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat mFormat = new SimpleDateFormat("M/dd/yyyy");
+
+    SimpleDateFormat mFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 
     public LichTrongFragment() {
     }
@@ -98,10 +101,8 @@ public class LichTrongFragment extends Fragment
 
     @Override
     public void onDangKy(LichKham lichKham) {
-
         lichKham.setMaPk(mPhongKham.getMaPhongKham());
         lichKham.setTenTK(mUser);
-
         new AsynDatLich().execute(lichKham);
     }
 
@@ -127,22 +128,24 @@ public class LichTrongFragment extends Fragment
             datePickerDialog.show();
         }
         if (v.getId() == R.id.text_all) {
-            Toast.makeText(getActivity(), "all" + "", Toast.LENGTH_SHORT).show();
+            mMgay.setText("");
+            new AsynListLich().execute();
         }
     }
 
     public void updateLich(Date date) {
         List<LichKham> list = new ArrayList<>();
-        mMgay.setText(mFormat.format(date));
 
-        String abc = mMgay.getText().toString();
+        mMgay.setText(mFormat1.format(date));
 
         for (LichKham lichKham : mList) {
-            if (lichKham.getNgay().equals(abc)) {
-                //     list.add(lichKham);
+            if (lichKham.getNgay().equals(mMgay.getText().toString())) {
+                list.add(lichKham);
             }
         }
-        Toast.makeText(getActivity(), list.size() + "", Toast.LENGTH_SHORT).show();
+        if (list.size() == 0) {
+            Toast.makeText(getActivity(), "Không có lịch cho ngày này", Toast.LENGTH_SHORT).show();
+        }
         update(list);
     }
 
@@ -167,7 +170,7 @@ public class LichTrongFragment extends Fragment
 
                     LichKham lichKham = new LichKham();
                     lichKham.setMa(jsonObj.getString("Id"));
-                    lichKham.setNgay(jsonObj.getString("Ngay").substring(0, 10));
+                    lichKham.setNgay(jsonObj.getString("Ngay").substring(0, 9));
                     lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
                     lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));
@@ -224,6 +227,15 @@ public class LichTrongFragment extends Fragment
                     Toast.LENGTH_SHORT).show();
             new AsynListLich().execute();
             progressDialog.dismiss();
+        }
+    }
+
+    private static Date convertStringToDate(String date) {
+        SimpleDateFormat parser = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        try {
+            return parser.parse(date);
+        } catch (java.text.ParseException e) {
+            return new Date();
         }
     }
 }

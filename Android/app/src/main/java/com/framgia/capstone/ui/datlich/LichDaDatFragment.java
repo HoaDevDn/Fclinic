@@ -121,22 +121,6 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
         mAdapter.notifyDataSetChanged();
     }
 
-  /*  @Override
-    public void onResume() {
-        super.onResume();
-        init();
-    }*/
-
-  /*  public void init() {
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycle_lichđadat);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setHasFixedSize(true);
-        mAdapter = new LIchDaDatAdapter(getActivity(), mList);
-        mRecyclerView.setAdapter(mAdapter);
-        new AsynListLich().execute();
-    }*/
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
