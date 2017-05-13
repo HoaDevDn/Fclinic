@@ -137,9 +137,12 @@ public class ChiTietToaThuocFragment extends Fragment
 
         new AsynListNhacThuoc().execute();
 
-        if (getStatusSW().getTrangThai() == 1) mSwitch.setChecked(true);
+        if (getStatusSW().getTrangThai() == 0) {
+            mSwitch.setChecked(true);
+            start();
+        }
 
-        if (getStatusSW().getTrangThai() == 0) mSwitch.setChecked(false);
+        if (getStatusSW().getTrangThai() == 1) mSwitch.setChecked(false);
 
         return view;
     }
@@ -320,8 +323,6 @@ public class ChiTietToaThuocFragment extends Fragment
 
             Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
             mPendingIntent = PendingIntent.getBroadcast(getActivity(), i, alarmIntent, 0);
-
-            Toast.makeText(getActivity(), gio + "," + phut, Toast.LENGTH_SHORT).show();
 
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, gio);

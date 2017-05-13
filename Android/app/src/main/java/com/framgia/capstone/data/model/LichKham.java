@@ -1,5 +1,6 @@
 package com.framgia.capstone.data.model;
 
+import io.realm.RealmObject;
 import java.io.Serializable;
 
 /**
@@ -44,7 +45,6 @@ public class LichKham implements Serializable {
     public void setTenPK(String tenPK) {
         mTenPK = tenPK;
     }
-
 
     public String getTime() {
         return mTime;
