@@ -1,7 +1,10 @@
 package com.framgia.capstone.data.model;
 
-import io.realm.RealmObject;
+import android.text.TextUtils;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * Created by tri on 03/05/2017.
@@ -87,18 +90,28 @@ public class LichKham implements Serializable {
     }
 
     public String getNgay() {
-        return mNgay;
+        return convertUiFormatToDataFormat(mNgay, INPUT_TIME_FORMAT, OUTPUT_DATE_FORMAT);
     }
 
     public void setNgay(String ngay) {
         mNgay = ngay;
     }
 
-    public String getTrangThai() {
-        return mTrangThai;
+    public static String convertUiFormatToDataFormat(String date, String inputFormat,
+            String outputFormat) {
+        if (TextUtils.isEmpty(date)) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(inputFormat, Locale.ENGLISH);
+        SimpleDateFormat newSdf = new SimpleDateFormat(outputFormat, Locale.ENGLISH);
+        try {
+            return newSdf.format(sdf.parse(date));
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
-    public void setTrangThai(String trangThai) {
-        mTrangThai = trangThai;
-    }
+    public static final String INPUT_TIME_FORMAT = "MM/dd/yyyy hh:mm:ss aa";
+    public static final String OUTPUT_DATE_FORMAT = "dd-MM-yyyy";
+
 }
