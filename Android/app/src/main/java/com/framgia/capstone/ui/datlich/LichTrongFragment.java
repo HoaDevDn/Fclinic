@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +20,11 @@ import com.framgia.capstone.data.model.LichKham;
 import com.framgia.capstone.data.model.PhongKham;
 import com.framgia.capstone.utils.RestAPI;
 import io.realm.Realm;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -57,9 +54,6 @@ public class LichTrongFragment extends Fragment
     private Realm mRealm;
 
     SimpleDateFormat mFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-    public static final String INPUT_TIME_FORMAT = "MM/dd/yyyy hh:mm:ss aa";
-    public static final String OUTPUT_DATE_FORMAT = "dd-MM-yyyy";
 
     public LichTrongFragment() {
     }
@@ -118,6 +112,7 @@ public class LichTrongFragment extends Fragment
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.text_chonNgay) {
+            mKhongLich.setText("");
             new AsynListLich1().execute();
             final DatePickerDialog.OnDateSetListener dateSetListener =
                     new DatePickerDialog.OnDateSetListener() {
@@ -183,8 +178,7 @@ public class LichTrongFragment extends Fragment
                     lichKham.setMa(jsonObj.getString("Id"));
                     lichKham.setMaPk(mPhongKham.getMaPhongKham());
                     lichKham.setTenTK(mUser);
-                    lichKham.setNgay(convertUiFormatToDataFormat(jsonObj.getString("Ngay"),
-                            INPUT_TIME_FORMAT, OUTPUT_DATE_FORMAT));
+                    lichKham.setNgay(jsonObj.getString("Ngay"));
                     lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
                     lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));
@@ -200,7 +194,6 @@ public class LichTrongFragment extends Fragment
         @Override
         protected void onPostExecute(final List<LichKham> result) {
             super.onPostExecute(result);
-            mKhongLich.setText("");
             update(result);
         }
     }
@@ -245,20 +238,6 @@ public class LichTrongFragment extends Fragment
         }
     }
 
-    public static String convertUiFormatToDataFormat(String time, String inputFormat,
-            String outputFormat) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat(inputFormat, Locale.getDefault());
-        SimpleDateFormat newSdf = new SimpleDateFormat(outputFormat, Locale.getDefault());
-        try {
-            return newSdf.format(sdf.parse(time));
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
     public class AsynListLich1 extends AsyncTask<Void, JSONObject, List<LichKham>> {
 
         @Override
@@ -282,8 +261,7 @@ public class LichTrongFragment extends Fragment
                     lichKham.setMa(jsonObj.getString("Id"));
                     lichKham.setMaPk(mPhongKham.getMaPhongKham());
                     lichKham.setTenTK(mUser);
-                    lichKham.setNgay(convertUiFormatToDataFormat(jsonObj.getString("Ngay"),
-                            INPUT_TIME_FORMAT, OUTPUT_DATE_FORMAT));
+                    lichKham.setNgay(jsonObj.getString("Ngay"));
                     lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
                     lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));

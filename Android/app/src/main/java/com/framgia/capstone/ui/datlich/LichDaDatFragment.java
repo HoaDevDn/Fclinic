@@ -91,7 +91,7 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
 
                     LichKham lichKham = new LichKham();
                     lichKham.setMa(jsonObj.getString("MaDatLich"));
-                    lichKham.setNgay(jsonObj.getString("Ngay").substring(0, 10));
+                    lichKham.setNgay(jsonObj.getString("Ngay"));
                     lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
                     lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));
