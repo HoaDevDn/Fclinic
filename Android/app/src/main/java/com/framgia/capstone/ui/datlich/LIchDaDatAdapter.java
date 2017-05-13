@@ -76,7 +76,7 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
 
         public void bindData(LichKham lichKham) {
             mMoTa.setText(lichKham.getMota());
-            mTime.setText(lichKham.getTgBatDau() + " -" + lichKham.getTgKetThuc());
+            mTime.setText(lichKham.getTgBatDau() + " - " + lichKham.getTgKetThuc());
             mNgay.setText(lichKham.getNgay());
         }
 

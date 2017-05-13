@@ -19,18 +19,21 @@
             android:layout_weight="1.1"
             android:background="@drawable/custom"
             android:gravity="center"
-            android:text="Chọn Ngày :"
+            android:text="Chọn Ngày"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             />
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/text_ngay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="10dp"
-            android:textColor="#009973"
+            android:textColor="@color/color_red"
+            android:textSize="17dp"
+            android:textStyle="italic"
             />
 
         <TextView
@@ -47,12 +50,24 @@
 
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_lichtrong"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/textKhongLich"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/color_red"
+            android:textSize="17dp"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_lichtrong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </FrameLayout>
 
 </LinearLayout>
