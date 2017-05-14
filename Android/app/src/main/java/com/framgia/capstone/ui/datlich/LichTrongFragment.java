@@ -127,6 +127,7 @@ public class LichTrongFragment extends Fragment
         calendar.set(Calendar.HOUR_OF_DAY, gio - 1);
         calendar.set(Calendar.MINUTE, phut);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(calendar.MILLISECOND, 0);
         //   calendar.set(Calendar.MONTH, thang);
         calendar.set(Calendar.DAY_OF_MONTH, ngay);
         //   calendar.set(Calendar.YEAR, nam);
@@ -228,7 +229,26 @@ public class LichTrongFragment extends Fragment
 
     public void update(final List<LichKham> lichKhams) {
         mList.clear();
-        mList.addAll(lichKhams);
+        Calendar calendar = Calendar.getInstance();
+
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = calendar.get(Calendar.MINUTE);
+        int currentNgay = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentThang = calendar.get(Calendar.MONTH);
+
+        for (LichKham lichKham : lichKhams) {
+            int thang = Integer.parseInt(lichKham.getNgay().substring(3, 5));
+            int ngay = Integer.parseInt(lichKham.getNgay().substring(0, 2));
+            int gio = Integer.parseInt(lichKham.getTgBatDau().substring(0, 2));
+            if (thang > 5 || (thang == 5 && ngay > currentNgay) || (thang == 5
+                    && ngay == currentNgay
+                    && gio > currentHour)) {
+                mList.add(lichKham);
+            }
+        }
+        if (mList.size() == 0) {
+            Toast.makeText(getActivity(), "Không có lịch hiện tại", Toast.LENGTH_SHORT).show();
+        }
         mAdapter.notifyDataSetChanged();
     }
 
