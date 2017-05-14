@@ -1,5 +1,6 @@
 package com.framgia.capstone.ui.datlich;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.LichKham;
 import com.framgia.capstone.data.model.PhongKham;
@@ -59,7 +61,7 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new LIchDaDatAdapter(getActivity(), mList);
+        mAdapter = new LIchDaDatAdapter(getActivity(), mList, this);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -67,6 +69,11 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
 
     @Override
     public void onClick(int position) {
+    }
+
+    @Override
+    public void onHuy(LichKham lichKham) {
+        new AsynHuyLich().execute(lichKham);
     }
 
     public class AsynListLich extends AsyncTask<Void, JSONObject, List<LichKham>> {
@@ -126,6 +133,40 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             new AsynListLich().execute();
+        }
+    }
+
+    public class AsynHuyLich extends AsyncTask<LichKham, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Đang xử lý ...");
+                progressDialog.show();
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(LichKham... params) {
+            RestAPI api = new RestAPI();
+            try {
+                api.HuyLichKham(Integer.parseInt(params[0].getMa()));
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Toast.makeText(getActivity().getApplicationContext(), "Hủy lich thành công !",
+                    Toast.LENGTH_SHORT).show();
+            new AsynListLich().execute();
+            progressDialog.dismiss();
         }
     }
 }

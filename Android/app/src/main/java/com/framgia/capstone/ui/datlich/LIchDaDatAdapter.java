@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.LichKham;
 import java.util.List;
@@ -22,12 +24,13 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
     private List<LichKham> mList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private LichTrongAdapter.ItemClickListener mClickListener;
+    private ItemClickListener mClickListener;
 
-    public LIchDaDatAdapter(Context context, List<LichKham> list) {
+    public LIchDaDatAdapter(Context context, List<LichKham> list, ItemClickListener itemClickListener) {
         mContext = context;
         mList = list;
         mLayoutInflater = LayoutInflater.from(context);
+        mClickListener = itemClickListener;
     }
 
     public void updateData(List<LichKham> list) {
@@ -57,6 +60,7 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
 
     public interface ItemClickListener {
         void onClick(int position);
+        void onHuy(LichKham lichKham);
     }
 
     public class LIchDaDatViewholder extends RecyclerView.ViewHolder
@@ -67,6 +71,8 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
         TextView mTime;
         @BindView(R.id.text_ngay)
         TextView mNgay;
+        @BindView(R.id.button_huy)
+        Button mButtonHuy;
 
         public LIchDaDatViewholder(View itemView) {
             super(itemView);
@@ -84,6 +90,9 @@ public class LIchDaDatAdapter extends RecyclerView.Adapter<LIchDaDatAdapter.LIch
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onClick(getAdapterPosition());
         }
-
+        @OnClick(R.id.button_huy)
+        public void onHuyClick() {
+            mClickListener.onHuy(mList.get(getAdapterPosition()));
+        }
     }
 }
