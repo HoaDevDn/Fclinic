@@ -29,7 +29,6 @@ import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,6 +47,8 @@ public class ChiTietToaThuocFragment extends Fragment
     Switch mSwitch;
 
     private int mMatoa;
+
+    private List<PendingIntent> list;
 
     private static ChiTietToaThuocFragment inst;
 
@@ -299,8 +300,8 @@ public class ChiTietToaThuocFragment extends Fragment
     }
 
     public void start() {
-        AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        list = new ArrayList<>();
 
         for (int i = 0; i < getNhacThuoc().size(); i++) {
 
@@ -312,13 +313,15 @@ public class ChiTietToaThuocFragment extends Fragment
             int gio = Integer.parseInt(nhacThuoc.getTime().substring(0, 2));
             int phut = Integer.parseInt(nhacThuoc.getTime().substring(3, 5));
 
-            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+            Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, gio);
             calendar.set(Calendar.MINUTE, phut);
             calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
 
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, mPendingIntent);
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, mPendingIntent);
+            list.add(mPendingIntent);
         }
 
      /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
@@ -336,10 +339,17 @@ public class ChiTietToaThuocFragment extends Fragment
 
     public void cancel() {
 
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
-        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
+     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);*/
 
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         manager.cancel(mPendingIntent);
+
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                manager.cancel(list.get(i));
+            }
+            list.clear();
+        }
     }
 }
