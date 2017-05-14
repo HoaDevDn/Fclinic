@@ -22,6 +22,25 @@ public class LichKham implements Serializable {
     private String mTenTK;
     private int mMaPk;
 
+    private String mStart;
+    private String mEnd;
+
+    public String getStart() {
+        return mStart;
+    }
+
+    public void setStart(String start) {
+        mStart = start;
+    }
+
+    public String getEnd() {
+        return mEnd;
+    }
+
+    public void setEnd(String end) {
+        mEnd = end;
+    }
+
     public String getTenTK() {
         return mTenTK;
     }
@@ -74,7 +93,7 @@ public class LichKham implements Serializable {
     }
 
     public String getTgBatDau() {
-        return mTgBatDau;
+        return convertUiFormatToDataFormat(mTgBatDau, INPUT_TIME_FORMAT, OUTPUT_TIME_FORMAT);
     }
 
     public void setTgBatDau(String tgBatDau) {
@@ -82,7 +101,7 @@ public class LichKham implements Serializable {
     }
 
     public String getTgKetThuc() {
-        return mTgKetThuc;
+       return convertUiFormatToDataFormat(mTgKetThuc, INPUT_TIME_FORMAT, OUTPUT_TIME_FORMAT);
     }
 
     public void setTgKetThuc(String tgKetThuc) {
@@ -111,7 +130,10 @@ public class LichKham implements Serializable {
         }
     }
 
-    public static final String INPUT_TIME_FORMAT = "MM/dd/yyyy hh:mm:ss aa";
+    public static final String INPUT_TIME_FORMAT = "dd-MM-yyyy hh:mm:ss";
     public static final String OUTPUT_DATE_FORMAT = "dd-MM-yyyy";
+    public static final String INPUT_TIME_FORMAT1 = "MM/dd/yyyy hh:mm:ss aa";
+    public static final String OUTPUT_TIME_FORMAT = "hh:mm";
+
 
 }

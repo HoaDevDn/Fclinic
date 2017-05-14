@@ -1,7 +1,11 @@
 package com.framgia.capstone.ui.datlich;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,12 +23,12 @@ import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.LichKham;
 import com.framgia.capstone.data.model.PhongKham;
 import com.framgia.capstone.utils.RestAPI;
-import io.realm.Realm;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -51,7 +55,7 @@ public class LichTrongFragment extends Fragment
     private PhongKham mPhongKham;
     private String mUser;
 
-    private Realm mRealm;
+    private PendingIntent mPendingIntent;
 
     SimpleDateFormat mFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -70,8 +74,8 @@ public class LichTrongFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_lichtrong, container, false);
 
-        Realm.init(getActivity());
-        mRealm = Realm.getDefaultInstance();
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
         mChonNgay = (TextView) view.findViewById(R.id.text_chonNgay);
         mMgay = (TextView) view.findViewById(R.id.text_ngay);
@@ -107,6 +111,26 @@ public class LichTrongFragment extends Fragment
     @Override
     public void onDangKy(LichKham lichKham) {
         new AsynDatLich().execute(lichKham);
+        nhacLK(lichKham);
+    }
+
+    public void nhacLK(LichKham lichKham) {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        int gio = Integer.parseInt(lichKham.getTgBatDau().substring(0, 2)) - 1;
+        int phut = Integer.parseInt(lichKham.getTgBatDau().substring(3, 5));
+        int ngay = Integer.parseInt(lichKham.getNgay().substring(0, 2));
+        int thang = Integer.parseInt(lichKham.getNgay().substring(3, 5));
+        int nam = Integer.parseInt(lichKham.getNgay().substring(6, 10));
+
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        calendar.set(Calendar.HOUR_OF_DAY, gio);
+        calendar.set(Calendar.MINUTE, phut);
+        calendar.set(Calendar.SECOND, 0);
+        //   calendar.set(Calendar.MONTH, thang);
+        calendar.set(Calendar.DAY_OF_MONTH, ngay);
+        calendar.set(Calendar.YEAR, nam);
+
+        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
     }
 
     @Override
@@ -178,10 +202,12 @@ public class LichTrongFragment extends Fragment
                     lichKham.setMa(jsonObj.getString("Id"));
                     lichKham.setMaPk(mPhongKham.getMaPhongKham());
                     lichKham.setTenTK(mUser);
-                    lichKham.setNgay(jsonObj.getString("Ngay"));
-                    lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
-                    lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
+                    lichKham.setNgay(jsonObj.getString("startTG"));
+                    lichKham.setTgBatDau(jsonObj.getString("startTG"));
+                    lichKham.setTgKetThuc(jsonObj.getString("endTG"));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));
+                    lichKham.setStart(jsonObj.getString("startTG"));
+                    lichKham.setEnd(jsonObj.getString("endTG"));
 
                     list.add(lichKham);
                 }
@@ -222,7 +248,8 @@ public class LichTrongFragment extends Fragment
         protected Void doInBackground(LichKham... params) {
             RestAPI api = new RestAPI();
             try {
-                api.DatLichKham(params[0].getTenTK(), params[0].getMaPk(), params[0].getMa());
+                api.DatLichKham(params[0].getTenTK(), params[0].getMaPk(), params[0].getStart(),
+                        params[0].getEnd(), params[0].getMota());
             } catch (Exception e) {
             }
             return null;
@@ -261,10 +288,12 @@ public class LichTrongFragment extends Fragment
                     lichKham.setMa(jsonObj.getString("Id"));
                     lichKham.setMaPk(mPhongKham.getMaPhongKham());
                     lichKham.setTenTK(mUser);
-                    lichKham.setNgay(jsonObj.getString("Ngay"));
-                    lichKham.setTgBatDau(jsonObj.getString("TGBatDau").substring(0, 5));
-                    lichKham.setTgKetThuc(jsonObj.getString("TGKetThuc").substring(0, 5));
+                    lichKham.setNgay(jsonObj.getString("startTG"));
+                    lichKham.setTgBatDau(jsonObj.getString("startTG"));
+                    lichKham.setTgKetThuc(jsonObj.getString("endTG"));
                     lichKham.setMota(jsonObj.getString("MoTaTime"));
+                    lichKham.setStart(jsonObj.getString("startTG"));
+                    lichKham.setEnd(jsonObj.getString("endTG"));
 
                     list.add(lichKham);
                 }

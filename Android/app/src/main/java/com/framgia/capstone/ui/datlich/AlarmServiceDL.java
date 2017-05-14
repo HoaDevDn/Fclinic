@@ -1,4 +1,4 @@
-package com.framgia.capstone.ui.toathuoc;
+package com.framgia.capstone.ui.datlich;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -6,41 +6,38 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.ui.toathuoc.AlarmReceiver;
+import com.framgia.capstone.ui.toathuoc.ChiTietToaThuocFragment;
 
 /**
  * Created by tri on 08/05/2017.
  */
 
-public class AlarmService extends IntentService {
+public class AlarmServiceDL extends IntentService {
     private NotificationManager alarmNotificationManager;
     private Ringtone ringtone;
 
-    public AlarmService() {
+    public AlarmServiceDL() {
         super("AlarmServiceDL");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         AlarmReceiver.completeWakefulIntent(intent);
-        sendNotification("Đã tới giờ uống thuốc");
+        sendNotification("Còn một tiếng nữa tới giờ đi khám");
     }
 
     private void sendNotification(String msg) {
-
-        Toast.makeText(getApplicationContext(),"thong bao",Toast.LENGTH_SHORT).show();
 
         alarmNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent =
-                PendingIntent.getActivity(this, 0, new Intent(this, ChiTietToaThuocFragment.class),
+                PendingIntent.getActivity(this, 0, new Intent(this, LichTrongFragment.class),
                         0);
 
         NotificationCompat.Builder alamNotificationBuilder =
