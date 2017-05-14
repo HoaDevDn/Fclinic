@@ -302,7 +302,7 @@ public class ChiTietToaThuocFragment extends Fragment
         AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
 
 
-       /* for (int i = 0; i < getNhacThuoc().size(); i++) {
+        for (int i = 0; i < getNhacThuoc().size(); i++) {
 
             NhacThuoc nhacThuoc = getNhacThuoc().get(i);
 
@@ -319,18 +319,19 @@ public class ChiTietToaThuocFragment extends Fragment
 
             manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, mPendingIntent);
-        }*/
+        }
 
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
         mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
         calendar.set(Calendar.MINUTE, 12);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(calendar.MILLISECOND, 0);
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, mPendingIntent);
+                AlarmManager.INTERVAL_DAY, mPendingIntent);*/
     }
 
     public void cancel() {
