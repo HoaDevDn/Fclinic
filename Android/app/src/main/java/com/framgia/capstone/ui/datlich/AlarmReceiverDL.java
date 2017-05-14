@@ -1,4 +1,4 @@
-package com.framgia.capstone.ui.toathuoc;
+package com.framgia.capstone.ui.datlich;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -8,16 +8,17 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.widget.Toast;
+import com.framgia.capstone.ui.toathuoc.WakeLocker;
 
 /**
  * Created by tri on 08/05/2017.
  */
 
-public class AlarmReceiver extends WakefulBroadcastReceiver {
+public class AlarmReceiverDL extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -29,7 +30,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         //this will send a notification message
         ComponentName comp =
-                new ComponentName(context.getPackageName(), AlarmService.class.getName());
+                new ComponentName(context.getPackageName(), AlarmServiceDL.class.getName());
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);
 

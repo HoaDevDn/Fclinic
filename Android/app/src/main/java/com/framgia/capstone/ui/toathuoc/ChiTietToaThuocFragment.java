@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.CTToaThuoc;
 import com.framgia.capstone.data.model.NhacThuoc;
@@ -30,6 +29,7 @@ import io.realm.RealmResults;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -72,13 +72,6 @@ public class ChiTietToaThuocFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*for (int i = 0; i < 5; i++) {
-            CTToaThuoc toaThuoc = new CTToaThuoc();
-            toaThuoc.setTenThuoc("Levothyroxine");
-            toaThuoc.setMoTa("Ngày 3 lần, mỗi lần 1 viên");
-            toaThuoc.setSoLuong(3);
-            mCTToaThuocs.add(toaThuoc);
-        }*/
     }
 
     @Override
@@ -86,7 +79,7 @@ public class ChiTietToaThuocFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
-     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
         mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 */
 
@@ -96,14 +89,6 @@ public class ChiTietToaThuocFragment extends Fragment
 
         Realm.init(getActivity());
         mRealm = Realm.getDefaultInstance();
-
-      /*  for (int i = 0; i < 2; i++) {
-            NhacThuoc nhacThuoc = new NhacThuoc();
-            nhacThuoc.setTime("10:10 PM" + " " + i);
-            nhacThuoc.setId(1 + i);
-            nhacThuoc.setMatoa(mToaThuoc.getMaToaThuoc());
-            mNhacThuocs.add(nhacThuoc);
-        }*/
 
         mTenToa = (TextView) view.findViewById(R.id.text_tentoathuoc_ct);
         mTenUser = (TextView) view.findViewById(R.id.text_user_ct);
@@ -137,44 +122,14 @@ public class ChiTietToaThuocFragment extends Fragment
 
         new AsynListNhacThuoc().execute();
 
-        if (getStatusSW().getTrangThai() == 0) {
+        if (getStatusSW().getTrangThai() == 1) {
             mSwitch.setChecked(true);
-            start();
+            //    start();
         }
 
-        if (getStatusSW().getTrangThai() == 1) mSwitch.setChecked(false);
+        if (getStatusSW().getTrangThai() == 0) mSwitch.setChecked(false);
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.image_back) {
-            addFragment(ToaThuocFragment.newInstance());
-        }
-
-        if ((mSwitch.isChecked())) {
-            //    Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
-            start();
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
-                    status.setTrangThai(1);
-                }
-            });
-        } else {
-            //   Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
-            cancel();
-
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
-                    status.setTrangThai(0);
-                }
-            });
-        }
     }
 
     public void addFragment(Fragment fragment) {
@@ -311,34 +266,69 @@ public class ChiTietToaThuocFragment extends Fragment
         return status;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.image_back) {
+            addFragment(ToaThuocFragment.newInstance());
+        }
+
+        if ((mSwitch.isChecked())) {
+            //    Toast.makeText(getActivity(), "On", Toast.LENGTH_SHORT).show();
+
+            start();
+
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
+                    status.setTrangThai(1);
+                }
+            });
+        } else {
+            //   Toast.makeText(getActivity(), "Off", Toast.LENGTH_SHORT).show();
+            cancel();
+
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Status status = realm.where(Status.class).equalTo("mMaToa", mMatoa).findFirst();
+                    status.setTrangThai(0);
+                }
+            });
+        }
+    }
+
     public void start() {
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
         for (int i = 0; i < getNhacThuoc().size(); i++) {
 
             NhacThuoc nhacThuoc = getNhacThuoc().get(i);
 
-            int gio = Integer.parseInt(nhacThuoc.getTime().substring(0, 2));
-            int phut = Integer.parseInt(nhacThuoc.getTime().substring(3, 5));
-
             Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
             mPendingIntent = PendingIntent.getBroadcast(getActivity(), i, alarmIntent, 0);
 
-            Calendar calendar = Calendar.getInstance();
+            int gio = Integer.parseInt(nhacThuoc.getTime().substring(0, 2));
+            int phut = Integer.parseInt(nhacThuoc.getTime().substring(3, 5));
+
+            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
             calendar.set(Calendar.HOUR_OF_DAY, gio);
             calendar.set(Calendar.MINUTE, phut);
+            calendar.set(Calendar.SECOND, 0);
 
             manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, mPendingIntent);
         }
 
-      /*  Calendar calendar = Calendar.getInstance();
+      /*  Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
+
+        Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 7);
-        calendar.set(Calendar.MINUTE, 31);
+        calendar.set(Calendar.MINUTE, 12);
+        calendar.set(Calendar.SECOND, 0);
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, mPendingIntent);*/
-
     }
 
     public void cancel() {

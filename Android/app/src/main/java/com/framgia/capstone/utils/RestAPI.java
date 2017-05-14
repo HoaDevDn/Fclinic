@@ -235,8 +235,8 @@ public class RestAPI {
         return result;
     }
 
-    public JSONObject DatLichKham(String pkTaiKhoan, int pkMaPhongKham, String pkThoigian)
-            throws Exception {
+    public JSONObject DatLichKham(String pkTaiKhoan, int pkMaPhongKham, String start, String end,
+            String bacsy) throws Exception {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
@@ -244,7 +244,9 @@ public class RestAPI {
         o.put("method", "DatLichKham");
         p.put("pkTaiKhoan", mapObject(pkTaiKhoan));
         p.put("pkMaPhongKham", mapObject(pkMaPhongKham));
-        p.put("pkThoigian", mapObject(pkThoigian));
+        p.put("start", mapObject(start));
+        p.put("end", mapObject(end));
+        p.put("bacsy", mapObject(bacsy));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);

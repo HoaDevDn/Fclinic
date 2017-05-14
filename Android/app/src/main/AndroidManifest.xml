@@ -94,6 +94,15 @@
             android:name=".ui.toathuoc.AlarmReceiver"
             android:enabled="true"/>
 
+
+        <service
+            android:name=".ui.datlich.AlarmServiceDL"
+            android:enabled="true"/>
+
+        <receiver
+            android:name=".ui.datlich.AlarmReceiverDL"
+            android:enabled="true"/>
+
     </application>
 
 </manifest>
