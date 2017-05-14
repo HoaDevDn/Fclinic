@@ -1,6 +1,10 @@
 package com.framgia.capstone.ui.datlich;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +38,7 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
     private List<LichKham> mList = new ArrayList<>();
     private PhongKham mPhongKham;
     private String mUser;
+    private PendingIntent mPendingIntent;
 
     public LichDaDatFragment() {
     }
@@ -74,6 +79,16 @@ public class LichDaDatFragment extends Fragment implements LIchDaDatAdapter.Item
     @Override
     public void onHuy(LichKham lichKham) {
         new AsynHuyLich().execute(lichKham);
+
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
+
+        mPendingIntent =
+                PendingIntent.getBroadcast(getActivity(), Integer.parseInt(lichKham.getMa()),
+                        alarmIntent, 0);
+
+        manager.cancel(mPendingIntent);
     }
 
     public class AsynListLich extends AsyncTask<Void, JSONObject, List<LichKham>> {

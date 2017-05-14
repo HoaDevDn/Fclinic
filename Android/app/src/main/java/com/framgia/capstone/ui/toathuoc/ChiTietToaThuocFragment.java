@@ -308,7 +308,8 @@ public class ChiTietToaThuocFragment extends Fragment
             NhacThuoc nhacThuoc = getNhacThuoc().get(i);
 
             Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
-            mPendingIntent = PendingIntent.getBroadcast(getActivity(), i, alarmIntent, 0);
+            mPendingIntent =
+                    PendingIntent.getBroadcast(getActivity(), nhacThuoc.getId(), alarmIntent, 0);
 
             int gio = Integer.parseInt(nhacThuoc.getTime().substring(0, 2));
             int phut = Integer.parseInt(nhacThuoc.getTime().substring(3, 5));
@@ -319,8 +320,8 @@ public class ChiTietToaThuocFragment extends Fragment
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
 
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, mPendingIntent);
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, mPendingIntent);
             list.add(mPendingIntent);
         }
 

@@ -74,9 +74,6 @@ public class LichTrongFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_lichtrong, container, false);
 
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
-        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
-
         mChonNgay = (TextView) view.findViewById(R.id.text_chonNgay);
         mMgay = (TextView) view.findViewById(R.id.text_ngay);
         mAll = (TextView) view.findViewById(R.id.text_all);
@@ -117,6 +114,12 @@ public class LichTrongFragment extends Fragment
 
     public void nhacLK(LichKham lichKham) {
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
+        mPendingIntent =
+                PendingIntent.getBroadcast(getActivity(), Integer.parseInt(lichKham.getMa()),
+                        alarmIntent, 0);
+
         int gio = Integer.parseInt(lichKham.getTgBatDau().substring(0, 2));
         int phut = Integer.parseInt(lichKham.getTgBatDau().substring(3, 5));
         int ngay = Integer.parseInt(lichKham.getNgay().substring(0, 2));
