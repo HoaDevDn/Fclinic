@@ -111,24 +111,25 @@ public class LichTrongFragment extends Fragment
     @Override
     public void onDangKy(LichKham lichKham) {
         new AsynDatLich().execute(lichKham);
+        mMgay.setText("");
         nhacLK(lichKham);
     }
 
     public void nhacLK(LichKham lichKham) {
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        int gio = Integer.parseInt(lichKham.getTgBatDau().substring(0, 2)) - 1;
+        int gio = Integer.parseInt(lichKham.getTgBatDau().substring(0, 2));
         int phut = Integer.parseInt(lichKham.getTgBatDau().substring(3, 5));
         int ngay = Integer.parseInt(lichKham.getNgay().substring(0, 2));
         int thang = Integer.parseInt(lichKham.getNgay().substring(3, 5));
         int nam = Integer.parseInt(lichKham.getNgay().substring(6, 10));
 
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-        calendar.set(Calendar.HOUR_OF_DAY, gio);
+        calendar.set(Calendar.HOUR_OF_DAY, gio - 1);
         calendar.set(Calendar.MINUTE, phut);
         calendar.set(Calendar.SECOND, 0);
         //   calendar.set(Calendar.MONTH, thang);
         calendar.set(Calendar.DAY_OF_MONTH, ngay);
-        calendar.set(Calendar.YEAR, nam);
+        //   calendar.set(Calendar.YEAR, nam);
 
         manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
     }
@@ -158,6 +159,7 @@ public class LichTrongFragment extends Fragment
         }
         if (v.getId() == R.id.text_all) {
             mMgay.setText("");
+            mKhongLich.setText("");
             new AsynListLich().execute();
         }
     }
