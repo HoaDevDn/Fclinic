@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.media.Ringtone;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 import com.framgia.capstone.R;
 import java.util.Calendar;
 import java.util.Locale;
@@ -35,8 +34,6 @@ public class AlarmService extends IntentService {
     private void sendNotification(String msg) {
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
 
-        Toast.makeText(getApplicationContext(), "thong bao", Toast.LENGTH_SHORT).show();
-
         alarmNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -47,6 +44,9 @@ public class AlarmService extends IntentService {
         NotificationCompat.Builder alamNotificationBuilder =
                 new NotificationCompat.Builder(this).setContentTitle("Thông báo!")
                         .setSmallIcon(R.drawable.ic_notifications_active_black_24dp)
+                        .setContentText(
+                                "Giờ: " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(
+                                        Calendar.MINUTE))
                         .setAutoCancel(true)
                         .setLights(Color.BLUE, 1000, 5000)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
