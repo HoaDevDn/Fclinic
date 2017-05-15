@@ -158,8 +158,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            Toast.makeText(getActivity().getApplicationContext(), "Token success",
-                    Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }
