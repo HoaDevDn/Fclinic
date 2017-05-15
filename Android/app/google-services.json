@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "186686646777",
+    "firebase_url": "https://androidnotification-caa86.firebaseio.com",
+    "project_id": "androidnotification-caa86",
+    "storage_bucket": "androidnotification-caa86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186686646777:android:f36173e948059ccb",
+        "android_client_info": {
+          "package_name": "gcm.play.android.samples.com.gcmquickstart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186686646777-p2ebc6huf41jgskfj18n5g1kdo8nq037.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB8yIaBsHKnwDOuqjC8xSF2vzk9-d11Tk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186686646777:android:88cdfa6c0f776563",
+        "android_client_info": {
+          "package_name": "com.framgia.capstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186686646777-p2ebc6huf41jgskfj18n5g1kdo8nq037.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB8yIaBsHKnwDOuqjC8xSF2vzk9-d11Tk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

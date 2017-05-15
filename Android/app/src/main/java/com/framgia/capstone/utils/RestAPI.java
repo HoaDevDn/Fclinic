@@ -274,9 +274,24 @@ public class RestAPI {
         JSONObject result = null;
         JSONObject o = new JSONObject();
         JSONObject p = new JSONObject();
-        o.put("interface","RestAPI");
+        o.put("interface", "RestAPI");
         o.put("method", "HuyLichKham");
-        p.put("MaDatLich",mapObject(MaDatLich));
+        p.put("MaDatLich", mapObject(MaDatLich));
+        o.put("parameters", p);
+        String s = o.toString();
+        String r = load(s);
+        result = new JSONObject(r);
+        return result;
+    }
+
+    public JSONObject ReciveToken(String taikhoan, String token) throws Exception {
+        JSONObject result = null;
+        JSONObject o = new JSONObject();
+        JSONObject p = new JSONObject();
+        o.put("interface", "RestAPI");
+        o.put("method", "ReciveToken");
+        p.put("taikhoan", mapObject(taikhoan));
+        p.put("token", mapObject(token));
         o.put("parameters", p);
         String s = o.toString();
         String r = load(s);

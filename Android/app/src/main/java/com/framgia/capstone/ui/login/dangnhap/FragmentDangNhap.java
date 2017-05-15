@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import com.framgia.capstone.R;
+import com.framgia.capstone.data.model.User;
 import com.framgia.capstone.ui.chonphongkham.ChonPhongKhamActivity;
 import com.framgia.capstone.ui.home.MainActivity;
 import com.framgia.capstone.utils.JSONParser;
+import com.framgia.capstone.utils.MyFirebaseInstanceIDService;
 import com.framgia.capstone.utils.NetworkUtils;
 import com.framgia.capstone.utils.RestAPI;
 import com.framgia.capstone.widge.ClearEditText;
@@ -38,6 +40,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
     PasswordEditText matKhau;
     Button btnDangNhapFacebook, btnDangNhapGoogle, dangnhap;
     ProgressDialog progressDialog;
+    private String mToken;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
@@ -48,6 +51,11 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
         dangnhap.setOnClickListener(this);
         btnDangNhapFacebook = (Button) view.findViewById(R.id.btnDangNhapFacebook);
         btnDangNhapGoogle = (Button) view.findViewById(R.id.btnDangNhapGoogle);
+
+        MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
+        mToken = myFirebaseInstanceIDService.token();
+        Log.d("TAG", "Main token no broadcast: " + mToken);
+
         return view;
     }
 
@@ -56,9 +64,13 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.btnDangNhap) {
             String taikhoan = taiKhoan.getText().toString();
             String matkhau = matKhau.getText().toString();
+            User user = new User();
+            user.setTenTaiKhoan(taikhoan);
+            user.setToken(mToken);
             NetworkUtils utils = new NetworkUtils(FragmentDangNhap.this.getActivity());
             if (utils.isConnectingToInternet()) {
                 new AsyncDangNhap().execute(taikhoan, matkhau);
+                new AsynGuiToken().execute(user);
             } else {
                 Toast.makeText(getActivity(), "Kiểm tra kết nối mạng1...!", Toast.LENGTH_SHORT)
                         .show();
@@ -115,6 +127,39 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "Sai tên tài khoản hoặc mật khẩu !",
                         Toast.LENGTH_SHORT).show();
             }
+            progressDialog.dismiss();
+        }
+    }
+
+    public class AsynGuiToken extends AsyncTask<User, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(User... params) {
+            RestAPI api = new RestAPI();
+            try {
+                api.ReciveToken(params[0].getTenTaiKhoan(), params[0].getToken());
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Đang xử lý ...");
+                progressDialog.show();
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Toast.makeText(getActivity().getApplicationContext(), "Token success",
+                    Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }
