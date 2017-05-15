@@ -11,6 +11,15 @@ public class User implements Serializable {
     private String mMatKhau;
     private String mEmail;
     private String mNgayTao;
+    private String mToken;
+
+    public String getToken() {
+        return mToken;
+    }
+
+    public void setToken(String token) {
+        mToken = token;
+    }
 
     public User() {
         this.mMaTaiKhoan = 0;
