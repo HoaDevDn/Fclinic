@@ -344,13 +344,12 @@ public class ChiTietToaThuocFragment extends Fragment
         mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);*/
 
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        manager.cancel(mPendingIntent);
 
-        if (list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                manager.cancel(list.get(i));
-            }
-            list.clear();
+        for (NhacThuoc nhacThuoc : getNhacThuoc()) {
+            Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+            mPendingIntent =
+                    PendingIntent.getBroadcast(getActivity(), nhacThuoc.getId(), alarmIntent, 0);
+            manager.cancel(mPendingIntent);
         }
     }
 }
