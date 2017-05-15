@@ -19,6 +19,8 @@
     <string name="title_canhan">Toa thuốc</string>
     <string name="title_gioithieu">Giới Thiệu</string>
     <string name="title_datlich_">Đặt lịch</string>
+    <string name="please_click_back_again_to_exit">Please click BACK again to exit!</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

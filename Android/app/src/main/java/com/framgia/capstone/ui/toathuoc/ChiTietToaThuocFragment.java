@@ -80,10 +80,6 @@ public class ChiTietToaThuocFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_toa_thuoc, container, false);
 
-     /*   Intent alarmIntent = new Intent(getActivity(), AlarmReceiverDL.class);
-        mPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
-*/
-
         mToaThuoc = (ToaThuoc) getArguments().getSerializable("aaaa");
 
         mMatoa = mToaThuoc.getMaToaThuoc();
