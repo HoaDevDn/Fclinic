@@ -3,6 +3,7 @@ package com.framgia.capstone.ui.home;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.framgia.capstone.R;
 import com.framgia.capstone.data.model.BenhRealm;
 import com.framgia.capstone.data.model.ThuocRealm;
@@ -42,6 +44,11 @@ public class MainActivity extends AppCompatActivity
     private String mUser;
     private Realm mRealm;
     private List<ThuocRealm> mList;
+    private boolean mIsDoubleTapBack = false;
+    private Handler mHandler;
+    private Runnable mRunnable;
+    public static final int DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +79,35 @@ public class MainActivity extends AppCompatActivity
         new AsyncDanhSach().execute();
 
         new AsyncDanhSachBenh().execute();
+
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mIsDoubleTapBack = false;
+            }
+        };
     }
 
+    /*  @Override
+      public void onBackPressed() {
+          DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+          if (drawer.isDrawerOpen(GravityCompat.START)) {
+              drawer.closeDrawer(GravityCompat.START);
+          } else {
+              super.onBackPressed();
+          }
+      }*/
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (mIsDoubleTapBack) {
             super.onBackPressed();
+            return;
         }
+        mIsDoubleTapBack = true;
+        Toast.makeText(this, getString(R.string.please_click_back_again_to_exit),
+                Toast.LENGTH_SHORT).show();
+        mHandler.postDelayed(mRunnable, DELAY_TIME_TWO_TAP_BACK_BUTTON);
     }
 
     @Override
